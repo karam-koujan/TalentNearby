@@ -1,0 +1,15 @@
+POST  http://localhost:3000/api/auth/signup/freelancer
+Content-Type: application/json
+
+{
+    "userName":"abderahim",
+      "email":"abderahim@gmail.com",
+      "password":"012454545afa",
+      "country":"morocco",
+      "job":"developer",
+      "address":"manchester",
+      "geoLocation":{
+         "longitude":15151,
+         "latitude":1555
+        }         
+ }

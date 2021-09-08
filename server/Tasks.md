@@ -1,0 +1,13 @@
+- [x] setting up express
+- [x] create a congfig file with env variables
+- [x] create a mongoDb atlas cluster
+- [x] connect to mongoDb cluster
+- [x] setting up unit testing
+- [x] create an error handling middleware
+- [x] signup job 
+- [x] sign up client
+- [x] generate a code
+- [x] send email to user
+- [x] verify code
+- [] sign up admin
+- [] login

@@ -1,0 +1,28 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "a restfull api ",
+  "main": "index.js",
+  "scripts": {
+    "test": "set NODE_ENV=development && jest --detectOpenHandles index.test.js",
+    "dev": "set NODE_ENV=development && nodemon index.js",
+    "prod": "set NODE_ENV=production && nodemon index.js"
+  },
+  "author": "karam",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^27.1.0",
+    "nodemon": "^2.0.12",
+    "supertest": "^6.1.6"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "joi": "^17.4.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.0.4",
+    "nodemailer": "^6.6.3"
+  }
+}
