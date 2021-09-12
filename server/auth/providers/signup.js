@@ -3,7 +3,7 @@ const {ValidationError} = require("../../utils/errors/validationError");
 const Freelancer = require("../../model/Freelancer");
 const bcrypt = require("bcryptjs")
 
-exports.freelancerSignupValidation = (body,next)=>{
+exports.freelancerSignupValidation = (body)=>{
   const validationSchema = Joi.object({
      userName:Joi.string().required(),
      email:Joi.string().email().required(),
@@ -15,8 +15,13 @@ exports.freelancerSignupValidation = (body,next)=>{
      latitude:Joi.number().required()
         
   }) 
- return validationSchema.validateAsync(body).catch(err=>next(new ValidationError(err.details[0].message)))
-}
+  return new Promise((resolve,reject)=>{
+   const {error} =  validationSchema.validate(body); 
+   if(error){
+     reject(new ValidationError(error.details[0].message))
+   }
+   resolve()
+  }) }
 
 exports.isEmailExist = async(userEmail,Model)=>{
   return  new Promise((resolve,reject)=>{
