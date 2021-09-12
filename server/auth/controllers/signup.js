@@ -10,7 +10,7 @@ exports.freelancerSignup = async(req,res,next)=>{
     await isEmailExist(email,Freelancer),
     await  isUserNameExist(userName,Freelancer),
     await createAccount(req.body,next)
-    await sendVerificationEmailCode(email,"http://localhost/api/auth/signup/freelancer")
+    await sendVerificationEmailCode(email,"http://localhost:3000/api/auth/signup/freelancer")
     res.status(201).json({message:"the account is created succesffully",error:false})
    }catch(err){
      next(err)
