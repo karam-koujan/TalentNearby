@@ -3,18 +3,8 @@ const {ValidationError} = require("../../utils/errors/validationError");
 const Freelancer = require("../../model/Freelancer");
 const bcrypt = require("bcryptjs")
 
-exports.freelancerSignupValidation = (body)=>{
-  const validationSchema = Joi.object({
-     userName:Joi.string().required(),
-     email:Joi.string().email().required(),
-     password:Joi.string().min(8).required(),
-     country:Joi.string().required(),
-     job:Joi.string().required(),
-     address:Joi.string().required(),
-     longitude:Joi.number().required(),
-     latitude:Joi.number().required()
-        
-  }) 
+exports.signupValidation = (body,validationSchema)=>{
+
   return new Promise((resolve,reject)=>{
    const {error} =  validationSchema.validate(body); 
    if(error){
