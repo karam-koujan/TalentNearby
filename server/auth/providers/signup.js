@@ -1,4 +1,3 @@
-const Joi = require("joi");
 const {ValidationError} = require("../../utils/errors/validationError");
 const Freelancer = require("../../model/Freelancer");
 const bcrypt = require("bcryptjs")
@@ -31,11 +30,11 @@ exports.isUserNameExist = async(userName,Model)=>{
    })
 })
 }
-exports.createAccount = async(body)=>{
+exports.createAccount = async(body,Model)=>{
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(body.password,salt);
     body.password = hash
-    const freelancer = new Freelancer({...body})
+    const freelancer = new Model({...body})
     await freelancer.save()
   
    }
