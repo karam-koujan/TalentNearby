@@ -21,7 +21,7 @@ exports.freelancerSignup = async(req,res,next)=>{
     await signupValidation(req.body,validationSchema)
     await isEmailExist(email,Freelancer)
     await  isUserNameExist(userName,Freelancer)
-    await createAccount(req.body)
+    await createAccount(req.body,Freelancer)
     await sendVerificationEmailCode(email,"http://localhost:3000/api/auth/signup/freelancer")
     res.status(201).json({message:"the account is created succesffully",error:false})
    }catch(err){
@@ -46,7 +46,7 @@ exports.clientSignup = async(req,res,next)=>{
    await signupValidation(req.body,validationSchema)
    await isEmailExist(email,Client)
    await  isUserNameExist(userName,Client)
-   await createAccount(req.body,next)
+   await createAccount(req.body,Client)
    await sendVerificationEmailCode(email,"http://localhost:3000/api/auth/signup/client")
    res.status(201).json({message:"the account is created succesffully",error:false})
   }catch(err){
