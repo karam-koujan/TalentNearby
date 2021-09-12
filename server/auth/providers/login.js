@@ -1,39 +1,40 @@
 const Joi = require("joi");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const {authToken} = require("../../config/keys/");
-const {StatusError} = require("../../utils/errors/statusError");
-
+const {tokenKey} = require("../../config/keys/");
+const {AuthorizationError} = require("../../utils/errors/authorizationError");
+const {ValidationError} = require("../../utils/errors/validationError");
 exports.loginValidation = (body,next)=>{
   const validationSchema = Joi.object({
       userName:Joi.string().required(),
       email:Joi.string().email().required(),
       password:Joi.string().min(8).required()
   })
- // loginSchema.validateAsync(body).catch(err=>next(new ValidationError(err.details[0].message)))
    return new Promise((resolve,reject)=>{
     const {error} =  validationSchema.validate(body); 
     if(error){
-      reject(new StatusError(error.details[0].message).badRequest())
+      reject(new ValidationError(error.details[0].message))
     }
     resolve()
    }) 
 }
 
 exports.checkUserPassword = async(body,Model)=>{
-  const {userName,email} = body
+  const {userName,email} = body;
   return new Promise((resolve,reject)=>{
+   
         Model.findOne({userName,email},(err,user)=>{
-          if(err) reject(new StatusError("userName or email or password are wrong").forbidden())
-          if(!user.active) reject(new StatusError("your email is unverified please verify your email").forbidden())          
-          const isCorrectPassword = bcrypt.compare(user.password,body.password)
-          isCorrectPassword.then(result=>result?resolve(user):reject(new StatusError("email or password are wrong").forbidden()))
-        })    
+          if(err) return reject()
+          if(!user) return  reject(new AuthorizationError("userName or email or password are wrong"))
+          if(!user.active) return reject(new AuthorizationError("your email is unverified please verify your email"))          
+          const isCorrectPassword = bcrypt.compare(body.password,user.password)
+          isCorrectPassword.then(result=>result?resolve(user):reject(new AuthorizationError("email or password are wrong")))
+        })
   })
 
 }
 exports.generateToken = (id)=>{
-   const token = jwt.sign({id},authToken);
+   const token = jwt.sign({id},tokenKey);
    return token 
 }
 
