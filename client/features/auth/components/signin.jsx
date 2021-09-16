@@ -4,7 +4,7 @@ import {Form,Input,PrimaryBtn,Label,FormText,ForgotPass} from "../templates/";
 
 
 
-const SignIn = ()=>{
+export const SignIn = ()=>{
     return(
         <Form>
             <Label for="userName">UserName</Label>
@@ -22,4 +22,3 @@ const SignIn = ()=>{
         </Form>
     )
 }
-export default SignIn
