@@ -1,25 +1,28 @@
+import * as React from "react";
 import * as Yup from "yup";
+import Spinner from "../../common/components/spinner";
+import Styles from "../templates/style.module.css";
 import {useFormik} from "formik";
-import {Form,Input,InputErr,PrimaryBtn,CheckBox,CheckBoxLabel,Label,SignUpPassword,LongLatitude,Email,CheckBoxTitle} from "../templates/";
-import Styles from "../templates/style.module.css"
-
+import {useRouter} from "next/router";
+import {Form,Input,InputErr,PrimaryBtn,CheckBox,CheckBoxLabel,Label,SignUpPassword,Warning,LongLatitude,Email,CheckBoxTitle} from "../templates/";
+import { usePost } from "../../../hooks/httpReq/usePost";
+import {isFormValid} from "../helpers/isFormValid";
 
 
  const SignUp = ()=>{
-  const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
-
+  const [responseErr,setResponseErr] = React.useState('');
+  const [responseSucceed,setResponseSucceed] = React.useState(false);
+  const [isLoading,setIsLoading] = React.useState(false);
+  const router = useRouter()
   const validationSchema = Yup.object({
     userName:Yup.string().min(3,"userName must have at least 3 letters").max(20,"userName must have at maximum 20").required(),
     email :Yup.string().email("this email is invalid").required(),
-    phoneNumber:Yup.string().matches(phoneRegExp,"phone number is invalid").required(),
     longitude:Yup.number().max(180,"longitude value doesn't get greater than 180").min(-180,"longitude value doesn't get less than -180").required(),
     latitude:Yup.number().max(90,"longitude value doesn't get greater than 90").min(-90,"longitude value doesn't get greater than -90").required(),
     password:Yup.string().min(8,"the password should be at least 8").required(),
-    client:"",
-    talent:"",
-    both:""
+   
   })
-  const {values,errors,touched,handleBlur,handleChange} = useFormik({
+  const {values,errors,touched,handleBlur,handleChange,handleSubmit} = useFormik({
     initialValues:{
       userName:"",
       email :"",
@@ -29,16 +32,39 @@ import Styles from "../templates/style.module.css"
       password:"",
       confirm:"",
       client:"",
-      talent:"",
-      both:""
+      talent:""
     },
     validationSchema,
-    onSumbit:()=>{
-      
+    onSubmit:async()=>{
+      setIsLoading(true)
+      let endpoint = 'http://localhost:8080/api/auth/signup/freelancer';
+       if(values.client){
+         endpoint = 'http://localhost:8080/api/auth/signup/client';
+      }
+     const data = {
+       userName:values.userName,
+       email:values.email,
+       longitude:values.longitude,
+       latitude:values.latitude,
+       password:values.password,
+       country:"morocco",
+       job:"dev",
+       address:"ssss"
+      }
+      try{
+        const response = await usePost(endpoint,data);
+        setResponseSucceed(true)
+      }catch(err){
+        setResponseErr(err.response.data.message)
+      }
+      setIsLoading(false)
     }
+
   })
+  const isValid = isFormValid(errors);
   return(
-      <Form>
+      <Form action="" onSubmit={handleSubmit}>
+        {responseErr?<InputErr style={{'textAlign':'center'}}>{responseErr}</InputErr>:null}
         <div>
         <Label htmlFor="userName">UserName</Label>
         <Input type="text"
@@ -142,7 +168,7 @@ import Styles from "../templates/style.module.css"
         <CheckBoxTitle>
           Do you want to create your account as ?
         </CheckBoxTitle>
-         <div style={{display:"flex",width:"70%","justifyContent":"space-between"}}>
+         <div style={{display:"flex",width:"40%","justifyContent":"space-between"}}>
           <div >
           <CheckBox 
           type="checkbox" 
@@ -152,7 +178,9 @@ import Styles from "../templates/style.module.css"
           value={values.client}
           onChange={handleChange}
           onBlur = {handleBlur}
-          disabled={values.talent||values.both}
+          disabled={values.talent}
+          required={!values.client&&!values.talent}
+
           />
           <CheckBoxLabel htmlFor="client">client</CheckBoxLabel>
           </div>
@@ -166,29 +194,26 @@ import Styles from "../templates/style.module.css"
         value={values.talent}
         onChange={handleChange}
         onBlur = {handleBlur}
-        disabled={values.client||values.both}
+        disabled={values.client}
+        required={!values.client&&!values.talent}
         />
         <CheckBoxLabel htmlFor="talent">talent</CheckBoxLabel>
         </div>
           </div>
-          <div>
-          <CheckBox 
-          type="checkbox" 
-          id="both"  
-          name="both" 
-          arial-label="both" 
-          value={values.both}
-          onChange={handleChange}
-          onBlur = {handleBlur}
-          disabled={values.client||values.talent}
-          />
-          <CheckBoxLabel htmlFor="both">both</CheckBoxLabel>
-        </div>  
         </div>
        
-         <PrimaryBtn>
-           submit
+         <PrimaryBtn type="submit" disabled={!isValid}>
+           {isLoading?<Spinner/>:'sign up'}
+      
          </PrimaryBtn>
+         {responseSucceed?(
+         <Warning>
+              a verification email has been sent to you
+                you cannot sign in with unverified account
+            </Warning>
+         ):null
+         }
+
       </Form>
     
   )
