@@ -28,3 +28,9 @@ margin:0 auto;
 }
 ${FormText}
 `      
+
+export const Warning = styled.p`
+  color :red;
+  font-size:15px;
+  line-height:20px;
+`
