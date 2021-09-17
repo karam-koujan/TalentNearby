@@ -26,7 +26,6 @@ exports.checkUserPassword = async(body,Model)=>{
         Model.findOne({userName,email},(err,user)=>{
           if(err) return reject()
           if(!user) return  reject(new AuthorizationError("userName or email or password are wrong"))
-          if(!user.active) return reject(new AuthorizationError("your email is unverified please verify your email"))          
           const isCorrectPassword = bcrypt.compare(body.password,user.password)
           isCorrectPassword.then(result=>result?resolve(user):reject(new AuthorizationError("email or password are wrong")))
         })

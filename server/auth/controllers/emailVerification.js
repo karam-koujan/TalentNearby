@@ -33,7 +33,7 @@ exports.freelancerEmailVerification = async(req,res,next)=>{
 exports.sendClientEmailVerification = async(req,res,next)=>{
      const {email} = req.body;
      try{
-          await sendVerificationEmailCode(email,"http://localhost:3000/api/auth/signup/freelancer")
+          await sendVerificationEmailCode(email,"http://localhost:8080/api/auth/signup/client")
           return res.json({
                message:"email has been sent",
                error:false

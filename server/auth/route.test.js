@@ -9,7 +9,7 @@ beforeEach((done) => {
   
 
 
-
+/*
   test("POST /api/auth/signup/freelancer",async()=>{
       const res = await  supertest(app).post("/api/auth/signup/freelancer").set("Content-type","application/json").send({
           "userName":"karama",
@@ -66,6 +66,48 @@ test("POST /api/auth/login/client unverified email",async()=>{
     expect(res.body.error).toBeTruthy()
     
 })
+
+test("POST /api/auth/forgotPassword/sendResetPasswordCode",async()=>{
+   const res = await  supertest(app).post("/api/auth/forgotPassword/sendResetPasswordCode").set("Content-type","application/json").send({
+       "email":"karamdoskallas@gmail.com"
+   })
+
+   expect(res.statusCode).toBe(200)
+   expect(res.body.error).toBeFalsy()
+})
+
+test("POST /api/auth/forgotPassword/codeVerification , an expired version",async()=>{
+    const res = await  supertest(app).post("/api/auth/forgotPassword/codeVerification").set("Content-type","application/json").send({
+        "email":"karamdoskallas@gmail.com",
+        "code":708621
+    })
+     
+        expect(res.statusCode).toBe(401)
+        expect(res.body.error).toBeTruthy()
+    
+})
+*/
+/*
+test("POST /api/auth/forgotPassword/codeVerification , a correct version",async()=>{
+    const res = await  supertest(app).post("/api/auth/forgotPassword/codeVerification").set("Content-type","application/json").send({
+        "email":"karamdoskallas@gmail.com",
+        "code":970248
+    })
+     
+        expect(res.statusCode).toBe(200)
+        expect(res.body.error).toBeFalsy()
+    
+})
+*/
+test("POST /api/auth/forgotPassword/sendResetPasswordCode",async()=>{
+    const res = await  supertest(app).post("/api/auth/forgotPassword/sendResetPasswordCode").set("Content-type","application/json").send({
+        "email":"karamdoskallas@gmail.com"
+    })
+ 
+    expect(res.statusCode).toBe(401)
+    expect(res.body.error).toBeTruthy()
+ })
+
 
 
   afterEach((done) => {

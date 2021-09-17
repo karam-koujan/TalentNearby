@@ -1,6 +1,7 @@
 const VerificationCode = require("../../model/VerificationCode");
 const {ownerEmail,ownerPassword} = require("../../config/keys");
 const nodemailer = require("nodemailer");
+const bcrypt = require("bcryptjs");
 const {AuthorizationError} = require("../../utils/errors/authorizationError");
 
 
@@ -13,7 +14,15 @@ exports.isVerificationCodeExist = (email)=>{
     })
   })
 }
-
+exports.isEmailVerified = (email,Model)=>{
+  return new Promise((resolve,reject)=>{
+    Model.findOne({email},(err,user)=>{
+      if(err) return reject()
+      if(user.active) return resolve()
+      return reject(new AuthorizationError("the user email is not verified"))
+    })
+  })
+}
 exports.sendResetPasswordCodeProvider = async(email)=>{
       const verificationCode = Math.floor(100000 + Math.random() * 900000);
       const verificationCodeDoc = new VerificationCode({email,code:verificationCode})
@@ -53,4 +62,18 @@ exports.codeVerificationProvider = (body)=>{
       return resolve()
     })
   })
+}
+
+
+exports.resetPasswordProvider = async(body,Model)=>{
+  const {email,password} = body ;
+  const salt = await bcrypt.genSalt(10);
+  const hash = await bcrypt.hash(password,salt);
+   return new Promise((resolve,reject)=>{
+     Model.findOneAndUpdate({email},{password:hash},(err,user)=>{
+       if(err) return reject();
+       if(!user) return reject(new AuthorizationError("this email doesn't exist"))
+       return resolve()
+     })
+   })    
 }

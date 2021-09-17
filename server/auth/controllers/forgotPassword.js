@@ -1,10 +1,26 @@
-const {isVerificationCodeExist,sendResetPasswordCodeProvider,codeVerificationProvider,isEmailVerified} = require("../providers/forgotPassword");
+const {isVerificationCodeExist,sendResetPasswordCodeProvider,codeVerificationProvider,isEmailVerified,resetPasswordProvider} = require("../providers/forgotPassword");
+const Freelancer = require("../../model/Freelancer")
+const Client = require("../../model/Client")
 
-exports.sendResetPasswordCode = async(req,res,next)=>{
+exports.sendFreelancerResetPasswordCode = async(req,res,next)=>{
     const {email} = req.body
     try{
       await isVerificationCodeExist(email)
-      await isEmailVerified(email)
+      await isEmailVerified(email,Freelancer)
+      await sendResetPasswordCodeProvider(email)
+      return res.json({
+          messsage:"the verification code has been sent successfuly",
+          error:false
+      })
+    }catch(err){
+        next(err)
+    }
+}
+exports.sendClientResetPasswordCode = async(req,res,next)=>{
+    const {email} = req.body
+    try{
+      await isVerificationCodeExist(email)
+      await isEmailVerified(email,Client)
       await sendResetPasswordCodeProvider(email)
       return res.json({
           messsage:"the verification code has been sent successfuly",
@@ -24,4 +40,31 @@ exports.codeVerification = async(req,res,next)=>{
   }catch(err){
       next(err)
   }
+}
+
+
+exports.resetFreelancerPassword = async(req,res,next)=>{
+    const {email,password} = req.body;
+
+    try{
+        await resetPasswordProvider({email,password},Freelancer)
+        return res.json({
+            message:"the password has been reseted successfully",
+            error:false
+        })
+    }catch(err){
+        next(err)
+    }
+}
+exports.resetClientPassword = async(req,res,next)=>{
+    const {email,password} = req.body;
+    try{
+        await resetPasswordProvider({email,password},Client)
+        return res.json({
+            message:"the password has been reseted successfully",
+            error:false
+        })
+    }catch(err){
+        next(err)
+    }
 }
