@@ -14,6 +14,7 @@ const PrimaryBtn = styled(BtnInterface)`
  background-color:${props=>props.theme.primary};
  border:1.5px solid ${props=>props.theme.primary};
  margin:2rem auto 0 auto;
+ width:45%;
  &:hover,&:focus{
     background-color:${props=>props.theme.secondary};
     color:${props=>props.theme.primary};
