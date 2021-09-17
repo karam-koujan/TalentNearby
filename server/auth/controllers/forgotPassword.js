@@ -1,9 +1,10 @@
-const {isVerificationCodeExist,sendResetPasswordCodeProvider,codeVerificationProvider} = require("../providers/forgotPassword");
+const {isVerificationCodeExist,sendResetPasswordCodeProvider,codeVerificationProvider,isEmailVerified} = require("../providers/forgotPassword");
 
 exports.sendResetPasswordCode = async(req,res,next)=>{
     const {email} = req.body
     try{
       await isVerificationCodeExist(email)
+      await isEmailVerified(email)
       await sendResetPasswordCodeProvider(email)
       return res.json({
           messsage:"the verification code has been sent successfuly",

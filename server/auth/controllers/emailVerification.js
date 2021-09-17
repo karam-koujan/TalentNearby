@@ -46,6 +46,7 @@ exports.clientEmailVerification = async(req,res,next)=>{
     const {email,code}  = req.params;
       try{
           await emailVerificationProvider(email,code,Client);
+         res.cookie('isEmailVerified',true) 
          return  res.json({
               message:"the email is verified",
               error:false
