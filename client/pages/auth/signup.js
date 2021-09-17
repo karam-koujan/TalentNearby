@@ -1,5 +1,5 @@
 import Link from "next/link";
-import {MainHeading,SecondaryHeading,Header,FormSection,IntroSection,IntroText,Wrapper,FlexWrapper,PrimaryBtn,SecondaryBtn} from "../../features/auth/templates/";
+import {MainHeading,SecondaryHeading,Header,FormSection,IntroSection,IntroText,Wrapper,Warning,FlexWrapper,PrimaryBtn,SecondaryBtn} from "../../features/auth/templates/";
 import SignUp  from "../../features/auth/components/signup";
 
 const Index = ()=>{
@@ -16,6 +16,7 @@ const Index = ()=>{
             </MainHeading>
               <SignUp/>
             </Wrapper>
+          
         </FormSection>
         <IntroSection style={{"--width":"80%","--margin":"40% 0 0 0"}}>
             <Wrapper>
