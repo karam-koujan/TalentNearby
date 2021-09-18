@@ -4,7 +4,7 @@ import Spinner from "../../common/components/spinner";
 import Styles from "../templates/style.module.css";
 import {useFormik} from "formik";
 import {useRouter} from "next/router";
-import {Form,Input,InputErr,PrimaryBtn,CheckBox,CheckBoxLabel,Label,SignUpPassword,Warning,LongLatitude,Email,CheckBoxTitle} from "../templates/";
+import {Form,Input,InputErr,PrimaryBtn,CheckBox,CheckBoxLabel,Label,SignUpPassword,ServerErr,Warning,LongLatitude,Email,CheckBoxTitle,SecondaryBtn,SlideDownWrapper,InputWrapper} from "../templates/";
 import { usePost } from "../../../hooks/httpReq/usePost";
 import {isFormValid} from "../helpers/isFormValid";
 
@@ -14,6 +14,7 @@ import {isFormValid} from "../helpers/isFormValid";
   const [responseSucceed,setResponseSucceed] = React.useState(false);
   const [isLoading,setIsLoading] = React.useState(false);
   const router = useRouter()
+  const setPost = usePost()
   const validationSchema = Yup.object({
     userName:Yup.string().min(3,"userName must have at least 3 letters").max(20,"userName must have at maximum 20").required(),
     email :Yup.string().email("this email is invalid").required(),
@@ -52,7 +53,7 @@ import {isFormValid} from "../helpers/isFormValid";
        address:"ssss"
       }
       try{
-        const response = await usePost(endpoint,data);
+        await setPost(endpoint,data);
         setResponseSucceed(true)
       }catch(err){
         setResponseErr(err.response.data.message)
@@ -63,9 +64,14 @@ import {isFormValid} from "../helpers/isFormValid";
   })
   const isValid = isFormValid(errors);
   return(
+    <>
+    <SlideDownWrapper from="-280%" to="-110px" condition={responseSucceed}>
+      Congratulation,The account is created
+    </SlideDownWrapper>
+  
       <Form action="" onSubmit={handleSubmit}>
-        {responseErr?<InputErr style={{'textAlign':'center'}}>{responseErr}</InputErr>:null}
-        <div>
+        {responseErr?<ServerErr style={{'textAlign':'center'}}>{responseErr}</ServerErr>:null}
+        <InputWrapper>
         <Label htmlFor="userName">UserName</Label>
         <Input type="text"
         placeholder="Username" 
@@ -78,8 +84,8 @@ import {isFormValid} from "../helpers/isFormValid";
         error={errors.userName&&touched.userName}
         required/>
         {errors.userName&&touched.userName?<InputErr>{errors.userName}</InputErr>:null}
-        </div>
-         <div>
+        </InputWrapper>
+         <InputWrapper>
         <Label htmlFor="email">Email</Label>
         <Email
         type="text" 
@@ -94,9 +100,9 @@ import {isFormValid} from "../helpers/isFormValid";
         required
         />
         {errors.email&&touched.email?<InputErr>{errors.email}</InputErr>:null}
-         </div>
+         </InputWrapper>
         <div className={Styles.inputContainer}>
-          <div>
+          <InputWrapper>
         <Label htmlFor="longitude">longitude</Label>
         <LongLatitude 
         type="number" 
@@ -112,8 +118,8 @@ import {isFormValid} from "../helpers/isFormValid";
         error={errors.longitude && touched.longitude}
         required/>
           {errors.longitude&&touched.longitude?<InputErr>{errors.longitude}</InputErr>:null}
-          </div>
-        <div>
+          </InputWrapper>
+        <InputWrapper>
         <Label htmlFor="latitude">latitude</Label>
         <LongLatitude 
         type="number" 
@@ -129,11 +135,11 @@ import {isFormValid} from "../helpers/isFormValid";
         error={errors.latitude && touched.latitude}
         required/>
         {errors.latitude&&touched.latitude?<InputErr>{errors.latitude}</InputErr>:null}
-        </div>
+        </InputWrapper>
         </div>
        
         <div className={Styles.inputContainer}>
-          <div>
+        <InputWrapper>
         <Label htmlFor="passoword">password</Label>
         <SignUpPassword 
         type="password" 
@@ -147,8 +153,8 @@ import {isFormValid} from "../helpers/isFormValid";
         error={errors.password && touched.password}
         required/>
         {errors.password&&touched.password?<InputErr>{errors.password}</InputErr>:null}
-          </div>
-          <div>
+          </InputWrapper>
+          <InputWrapper>
         <Label htmlFor="confirm-passowrd"> confirm password</Label>
         <SignUpPassword 
         type="password" 
@@ -162,7 +168,7 @@ import {isFormValid} from "../helpers/isFormValid";
         error={values.password!==values.confirm&&values.confirm!==""&&touched.confirm}
         required/>
         {values.password!==values.confirm&&values.confirm!==""?<InputErr>wrong password</InputErr>:null}
-          </div>
+          </InputWrapper>
 
         </div>
         <CheckBoxTitle>
@@ -203,19 +209,10 @@ import {isFormValid} from "../helpers/isFormValid";
         </div>
        
          <PrimaryBtn type="submit" disabled={!isValid}>
-           {isLoading?<Spinner/>:'sign up'}
-      
+           sign up
          </PrimaryBtn>
-         {responseSucceed?(
-         <Warning>
-              a verification email has been sent to you
-                you cannot sign in with unverified account
-            </Warning>
-         ):null
-         }
-
       </Form>
-    
+    </>
   )
 }
 
