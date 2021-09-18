@@ -5,12 +5,14 @@ import styled from "styled-components";
 
 
 const Form = styled.form`
+ 
+
 `
 
 const InputInterface= styled.input`
  border-radius:2px;
  display:block;
- margin:0 0 1.5rem 0;
+ margin:0 0 0rem 0;
  padding:.8rem .5rem;
  width:100%;
  border:1px solid ${({error,theme})=>error?'red':theme.third};
@@ -27,11 +29,15 @@ const InputInterface= styled.input`
 const Input = styled(InputInterface)`
 
 `
-const InputErr = styled.p`
- color:red;
- margin:0;
- transform:translateY(-1.2rem);
+const Err = styled.p`
+color:red;
 `
+const InputErr = styled(Err)`
+ top:80%;
+ position:absolute;
+ font-size:.8rem;
+ `
+ const ServerErr = styled(Err)``
 const SignUpPassword = styled(InputInterface)`
  width:100%; 
 `
@@ -67,5 +73,6 @@ export {
     LongLatitude,
     SignUpPassword,
     Email,
-    InputErr
+    InputErr,
+    ServerErr
 }
