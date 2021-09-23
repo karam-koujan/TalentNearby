@@ -6,7 +6,7 @@ exports.freelancerLogin = async(req,res,next)=>{
       await loginValidation(req.body,next)
      const user = await checkUserPassword(req.body,Freelancer);
      const token = generateToken(user._id)
-     res.cookie('token',token,{httpOnly:true})
+     res.cookie('token',token)
       res.json({
         message:"login secussfully",
         error:false
@@ -15,16 +15,18 @@ exports.freelancerLogin = async(req,res,next)=>{
   }catch(err){
       next(err)
   }
-}
+} 
 
 exports.clientLogin = async(req,res,next)=>{
   try{ 
       await loginValidation(req.body,next)
      const user = await checkUserPassword(req.body,Client);
+     user.password="";
      const token = generateToken(user._id)
-     res.cookie('token',token,{httpOnly:true})
+     res.cookie('token',token)
       res.json({
-        message:"login secussfully",
+        user,
+        token:token,
         error:false
     })
     
