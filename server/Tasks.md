@@ -9,5 +9,9 @@
 - [x] generate a code
 - [x] send email to user
 - [x] verify code
+- [x] login
+- [x] forgot password
 - [] sign up admin
-- [] login
+- [x] get user profile information
+- [x] get users profile information
+- [] get nearest users profile information (id,image,lat,lng)

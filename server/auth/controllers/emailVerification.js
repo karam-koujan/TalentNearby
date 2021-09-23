@@ -34,6 +34,7 @@ exports.sendClientEmailVerification = async(req,res,next)=>{
      const {email} = req.body;
      try{
           await sendVerificationEmailCode(email,"http://localhost:8080/api/auth/signup/client")
+          res.cookie('isEmailVerified',true) 
           return res.json({
                message:"email has been sent",
                error:false

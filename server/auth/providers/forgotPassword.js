@@ -8,6 +8,7 @@ const {AuthorizationError} = require("../../utils/errors/authorizationError");
 exports.isVerificationCodeExist = (email)=>{
   return new Promise((resolve,reject)=>{
     VerificationCode.findOne({email},(err,result)=>{
+        
       if(err) return reject()
       if(result) return reject(new AuthorizationError("the code already sent check your inbox"))
       return resolve()
@@ -18,6 +19,7 @@ exports.isEmailVerified = (email,Model)=>{
   return new Promise((resolve,reject)=>{
     Model.findOne({email},(err,user)=>{
       if(err) return reject()
+      if(!user) return reject(new AuthorizationError("this email doesn't exist"))
       if(user.active) return resolve()
       return reject(new AuthorizationError("the user email is not verified"))
     })

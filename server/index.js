@@ -6,8 +6,10 @@ const bodyParser= require("body-parser");
 const cookieParser = require("cookie-parser");
 const {dbConnection}  = require("./config/keys");
 const app = express();
-const auth = require("./auth/route")
-const port = process.env.PORT || 3000 ;
+const auth = require("./auth/route");
+const profile = require("./profile/route");
+const {tokenVerification,error} = require("./middlewares/")
+const port = process.env.PORT || 8080 ;
 mongoose.connect(dbConnection,()=>console.log("connect"))
 console.log(dbConnection)
 app.use(cors())
@@ -15,15 +17,8 @@ app.use(helmet())
 app.use(cookieParser())
 app.use(bodyParser.json())
 app.use("/api/auth",auth)
-app.use((err,req,res,next)=>{
-    console.log(err)
-    const statusCode = err.statusCode || 500
-    const errorMessage = err.message || err
-    return res.status(statusCode).json({
-        message:errorMessage,
-        error:true
-    })
-})
+app.use("/api/profile",tokenVerification,profile)
+app.use(error)
 
 app.listen(port,()=>console.log(`the app is listenning in port ${port}`))
 
