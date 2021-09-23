@@ -1,0 +1,13 @@
+
+
+.container{
+    width: 40px;
+    position: relative;
+}
+.container div{
+    position:absolute;
+}
+.avatar{
+    top: 4px;
+    left:11px;
+}
