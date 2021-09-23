@@ -19,6 +19,10 @@ const GlobalStyle = createGlobalStyle`
    cursor:pointer;
    outline:none;
  }
+ img{
+   height:auto;
+   width:100%;
+ }
  a{
    cursor:pointer;
  }
