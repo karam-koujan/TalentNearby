@@ -1,0 +1,11 @@
+
+.avatarPosition{
+ position:absolute;   
+ right:2vw;
+ top:1.5vh;
+ transition:opacity .5s ease-in-out;
+}
+
+.avatarPosition:hover,.avatarPosition:focus{
+    opacity: .8;
+}
