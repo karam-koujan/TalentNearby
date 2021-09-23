@@ -34,3 +34,18 @@ export const Warning = styled.p`
   font-size:15px;
   line-height:20px;
 `
+
+export const Err = styled.p`
+color:red;
+`
+export const InputErr = styled(Err)`
+  margin:0;
+ `
+ export const ServerErr = styled(Err)`
+ text-align:center;
+
+ `
+ export const ResponseSucceed = styled.p`
+  color:${props=>props.theme.primary} 
+  text-align:center;
+  ` 

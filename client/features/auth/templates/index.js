@@ -1,8 +1,8 @@
 import {MainHeading,SecondaryHeading} from "./headings"
-import {FormSection,Header,IntroSection,Wrapper,FlexWrapper,SlideDownWrapper,InputWrapper} from "./layout";
-import {IntroText,FormText,ForgotPass,CheckBoxTitle,Warning} from "./text";
+import {FormSection,Header,IntroSection,Wrapper,FlexWrapper,InputWrapper,Model} from "./layout";
+import {IntroText,FormText,ForgotPass,CheckBoxTitle,Warning,InputErr,ServerErr,ResponseSucceed} from "./text";
 import {PrimaryBtn,SecondaryBtn} from "./button";
-import {Form,Input,CheckBox,Label,CheckBoxLabel,LongLatitude,SignUpPassword,Email,InputErr,ServerErr} from "./form";
+import {Form,Input,CheckBox,Label,CheckBoxLabel,LongLatitude,SignUpPassword,Email} from "./form";
 export {
     MainHeading,
     SecondaryHeading,
@@ -27,7 +27,8 @@ export {
     Email,
     InputErr,
     Warning,
-    SlideDownWrapper,
     InputWrapper,
-    ServerErr
+    ServerErr,
+    Model,
+    ResponseSucceed
 }

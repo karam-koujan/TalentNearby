@@ -1,0 +1,9 @@
+.fieldsWrapper{
+    display:flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.fieldsWrapper div{
+    width:45%;
+    margin-left:0rem
+}

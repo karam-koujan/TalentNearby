@@ -1,17 +1,15 @@
 import * as React from "react";
 import * as Yup from "yup";
 import Spinner from "../../common/components/spinner";
-import Styles from "../templates/style.module.css";
+import Styles from "../styles/style.module.css";
 import {useFormik} from "formik";
 import {useRouter} from "next/router";
 import {Form,Input,InputErr,PrimaryBtn,CheckBox,CheckBoxLabel,Label,SignUpPassword,ServerErr,Warning,LongLatitude,Email,CheckBoxTitle,SecondaryBtn,SlideDownWrapper,InputWrapper} from "../templates/";
 import { usePost } from "../../../hooks/httpReq/usePost";
-import {isFormValid} from "../helpers/isFormValid";
 
 
  const SignUp = ()=>{
   const [responseErr,setResponseErr] = React.useState('');
-  const [responseSucceed,setResponseSucceed] = React.useState(false);
   const [isLoading,setIsLoading] = React.useState(false);
   const router = useRouter()
   const setPost = usePost()
@@ -21,8 +19,9 @@ import {isFormValid} from "../helpers/isFormValid";
     longitude:Yup.number().max(180,"longitude value doesn't get greater than 180").min(-180,"longitude value doesn't get less than -180").required(),
     latitude:Yup.number().max(90,"longitude value doesn't get greater than 90").min(-90,"longitude value doesn't get greater than -90").required(),
     password:Yup.string().min(8,"the password should be at least 8").required(),
-   
-  })
+    confirm : Yup.string()
+    .oneOf([Yup.ref("password"), null], "Does not match with password").required('confirm is required'),
+     })
   const {values,errors,touched,handleBlur,handleChange,handleSubmit} = useFormik({
     initialValues:{
       userName:"",
@@ -32,29 +31,28 @@ import {isFormValid} from "../helpers/isFormValid";
       latitude:"",
       password:"",
       confirm:"",
-      client:"",
-      talent:""
+      client:false,
+      talent:false      
     },
     validationSchema,
     onSubmit:async()=>{
       setIsLoading(true)
+      let signupAs = "talent";
       let endpoint = 'http://localhost:8080/api/auth/signup/freelancer';
        if(values.client){
          endpoint = 'http://localhost:8080/api/auth/signup/client';
-      }
+        signupAs = "client"
+        }
      const data = {
        userName:values.userName,
        email:values.email,
        longitude:values.longitude,
        latitude:values.latitude,
-       password:values.password,
-       country:"morocco",
-       job:"dev",
-       address:"ssss"
+       password:values.password
       }
       try{
         await setPost(endpoint,data);
-        setResponseSucceed(true)
+       router.push(`/auth/signin/${signupAs}`)
       }catch(err){
         setResponseErr(err.response.data.message)
       }
@@ -62,15 +60,10 @@ import {isFormValid} from "../helpers/isFormValid";
     }
 
   })
-  const isValid = isFormValid(errors);
+ 
   return(
-    <>
-    <SlideDownWrapper from="-280%" to="-110px" condition={responseSucceed}>
-      Congratulation,The account is created
-    </SlideDownWrapper>
-  
       <Form action="" onSubmit={handleSubmit}>
-        {responseErr?<ServerErr style={{'textAlign':'center'}}>{responseErr}</ServerErr>:null}
+        {responseErr?<ServerErr>{responseErr}</ServerErr>:null}
         <InputWrapper>
         <Label htmlFor="userName">UserName</Label>
         <Input type="text"
@@ -101,7 +94,7 @@ import {isFormValid} from "../helpers/isFormValid";
         />
         {errors.email&&touched.email?<InputErr>{errors.email}</InputErr>:null}
          </InputWrapper>
-        <div className={Styles.inputContainer}>
+        <div className={Styles.fieldsWrapper}>
           <InputWrapper>
         <Label htmlFor="longitude">longitude</Label>
         <LongLatitude 
@@ -138,7 +131,7 @@ import {isFormValid} from "../helpers/isFormValid";
         </InputWrapper>
         </div>
        
-        <div className={Styles.inputContainer}>
+        <div className={Styles.fieldsWrapper}>
         <InputWrapper>
         <Label htmlFor="passoword">password</Label>
         <SignUpPassword 
@@ -167,7 +160,7 @@ import {isFormValid} from "../helpers/isFormValid";
         value={values.confirm}
         error={values.password!==values.confirm&&values.confirm!==""&&touched.confirm}
         required/>
-        {values.password!==values.confirm&&values.confirm!==""?<InputErr>wrong password</InputErr>:null}
+        {errors.confirm&&touched.confirm?<InputErr>{errors.confirm}</InputErr>:null}
           </InputWrapper>
 
         </div>
@@ -208,11 +201,10 @@ import {isFormValid} from "../helpers/isFormValid";
           </div>
         </div>
        
-         <PrimaryBtn type="submit" disabled={!isValid}>
-           sign up
+         <PrimaryBtn type="submit" >
+           {isLoading?<Spinner/>:'sign up'}
          </PrimaryBtn>
       </Form>
-    </>
   )
 }
 

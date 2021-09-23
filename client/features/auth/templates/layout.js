@@ -39,29 +39,40 @@ const Wrapper = styled.div`
   width:var(--width);
 `
 const InputWrapper = styled.div`
-  position:relative;
-  margin:0 0 2rem 0;
+  margin:0 0 1rem 0;
 `
-const SlideDownWrapper  = styled(Wrapper)`
-  background-color:${props=>props.theme.primary};
-  border-radius:3px;
-  box-shadow:1px 1px 10px 2px rgba(0,0,0,.2);
-  color:${props=>props.theme.secondary};
-  left:30%;
-  max-width:400px;
-  opacity:0;
-  padding:1rem 0;
-  position:absolute;
-  text-align:center;
-  width:70%;
-  top:${({from})=>from};
-  transform:translateX(-50%);
-  transition:top 1.5s 1s ease-in,opacity 1.5s 1s ease-in;
-  ${({condition})=>condition?css`
-   opacity:1;
-   top:${({to})=>to}`:null}
 
-`
+ const Model = styled.div`
+  background-color:${props=>props.theme.secondary};
+  display:block; 
+  left:67%;
+  position:absolute;
+  opacity:0;
+  width:350px;
+  top:36%;
+  z-index:-1;
+  transition:all .3s ease-in;
+  ${({condition})=>condition?css`
+  opacity:1;
+  top:35%;
+  transition:all .3s ease-in;
+  z-index:1;
+  `:null
+  }
+
+  & p{
+    color:${props=>props.theme.third};
+
+    cursor:pointer;
+    margin:0;
+    padding:1.5rem 1rem;
+
+    &:hover,&:focus{
+      background-color:#dbdbdb;
+    }
+  }
+
+` 
 
 export {
   Header,
@@ -69,6 +80,6 @@ export {
   FormSection,
   FlexWrapper,
   Wrapper,
-  SlideDownWrapper,
-  InputWrapper
+  InputWrapper,
+  Model
 }
