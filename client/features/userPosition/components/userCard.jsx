@@ -6,7 +6,7 @@ import {Form,SelectJob,JobOptions,Label,TextArea,Button} from "../templates/form
 const UserCard = ({userName,profileImg,...props})=>{
    return(
          <Wrapper {...props}>
-         <Avatar profileImg={profileImg} size="60px" className={Styles.avatar}/>
+         <Avatar userName={userName} profileImg={profileImg} size="60px" className={Styles.avatar}/>
          <UserName>
              {userName}
          </UserName>
