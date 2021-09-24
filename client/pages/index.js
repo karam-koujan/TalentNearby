@@ -8,8 +8,8 @@ const  Index = ()=> {
   const options = {fullscreenControl: false ,disableDoubleClickZoom:true,clickableIcons: false}
   const [newGeolocation,setNewGeoLocation] = React.useState(undefined);
   const [defaultGeolocation,setDefaultGeoLocation] = React.useState(undefined);
-  const [enableMapClick,setEnableMapClick] = React.useState(false);
-  const [showNewUserPosition,setShowNewUserPosition] = React.useState(false);
+  const [disableMapClick,setDisableMapClick] = React.useState(false);
+  const [showNewUserPositionCard,setShowNewUserPositionCard] = React.useState(false);
   const {isLoading,data} = useFetchQuery("user","http://localhost:8080/api/profile/");    
  
  React.useEffect(()=>{  
@@ -32,8 +32,8 @@ const  Index = ()=> {
   },[isLoading,data])
 
   const handleClick = ({lng,lat})=>{
-     setShowNewUserPosition(true)
-     if(!enableMapClick){
+     setShowNewUserPositionCard(true)
+     if(!disableMapClick){
        setNewGeoLocation({
           longitude:lng,
           latitude:lat
@@ -41,8 +41,8 @@ const  Index = ()=> {
 
      } 
   }  
-  const handleOnChildEnter = ()=>setEnableMapClick(true)
-  const handleOnChildLeave = ()=>setEnableMapClick(false)
+  const handleOnChildEnter = ()=>setDisableMapClick(true)
+  const handleOnChildLeave = ()=>setDisableMapClick(false)
   if(!isLoading && defaultGeolocation === undefined){
           return(
           <div>
@@ -62,7 +62,7 @@ const  Index = ()=> {
             onClick={handleClick}
            yesIWantToUseGoogleMapApiInternals 
           >
-            {showNewUserPosition?<UserCard lat={newGeolocation.latitude} lng={newGeolocation.longitude} userName={data.user.userName} onMouseEnter={handleOnChildEnter} onMouseLeave={handleOnChildLeave}   profileImg={data.user.profileImg}/>:null }
+            {showNewUserPositionCard?<UserCard lat={newGeolocation.latitude} lng={newGeolocation.longitude} userName={data.user.userName} onMouseEnter={handleOnChildEnter} onMouseLeave={handleOnChildLeave}   profileImg={data.user.profileImg}/>:null }
             <UserPosition
               lat={data.user.latitude}
               lng={data.user.longitude}
