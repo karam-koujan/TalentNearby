@@ -1,13 +1,16 @@
 
 
 .container{
-    width: 40px;
+    width: 45px;
     position: relative;
+    transform: translate(-50%,-100%);
+    z-index: 1000;
+
 }
-.container div{
-    position:absolute;
-}
+
+
 .avatar{
-    top: 4px;
-    left:11px;
+    left:12px;
+    position: absolute;
+    top: 5px;
 }
