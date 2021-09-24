@@ -1,0 +1,32 @@
+
+
+.container{
+    width: 45px;
+    position: relative;
+    transform: translate(-50%,-100%);
+    z-index: 1000;
+
+}
+
+.cardWrapper{
+  left:-120px;
+  position: absolute;
+  top: -10px;
+  transform: translate(0,0)!important;
+}
+
+
+.avatar{
+  position: relative;
+  margin: 0 auto;
+}
+.avatar::before{
+  border:10px solid #19bd33;
+  border-radius: 50%;
+  content: "";
+   padding: 10px;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  z-index: -1;
+}
