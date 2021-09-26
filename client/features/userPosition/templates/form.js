@@ -8,6 +8,7 @@ export const Form = styled.form`
 `
 
 export const Label = styled.label`
+ color:${(props)=>props.theme.primary};
  display:block;
  font-size:13px;
  margin:.5rem  0;
@@ -30,8 +31,9 @@ export const JobOptions = styled.option`
 `
 
 export const TextArea = styled.textarea`
- border:2px solid ${props=>props.theme.third};
+ border:2px solid ${props=>props.theme.primary};
  border-radius:3px;
+ color:${props=>props.theme.third};
  padding:.5rem;
  resize:none;
  height:100px;
@@ -44,7 +46,7 @@ export const TextArea = styled.textarea`
 `
 
 export const Button = styled.button`
-  background-color:${props=>props.theme.third};
+  background-color:${props=>props.theme.primary};
   border-radius:2px;
   color:white;
   display:block;
@@ -57,4 +59,16 @@ export const Button = styled.button`
       z-index:1;
       opacity:.0rem;
   }
+`
+
+export const Input = styled.input`
+border:2px solid ${props=>props.theme.primary};
+border-radius:3px;
+color:${props=>props.theme.third};
+padding:.5rem;
+width:100%;
+&:focus{
+    border:2px solid ${props=>props.theme.primary};
+    outline:none;
+}
 `

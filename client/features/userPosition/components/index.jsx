@@ -1,13 +1,14 @@
 import * as React from "react";
 import Marker from "../../common/components/marker";
 import Styles from "../styles/styles.module.css";
-import  UserCard from "./userCard";
-const UserPosition = ({userName,profileImg,isProfile,onMouseEnter,onMouseLeave})=>{
-  const [showUserCard,setShowUserCard] = React.useState(false)
+import  ProfileCard from "./profileCard";
+const UserPosition = ({data,isProfile,handleCloseCard,onMouseEnter,onMouseLeave})=>{
+    const [showUserCard,setShowUserCard] = React.useState(false)
+
     return(
         <div className={Styles.container} >
-            {showUserCard?<UserCard className={Styles.cardWrapper} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}  userName={userName}  profileImg={profileImg}/>:null }
-            <Marker color={!isProfile?"green":"red"} onClick={()=>setShowUserCard(!showUserCard)}/>
+            {showUserCard?<ProfileCard handleCloseCard={handleCloseCard(showUserCard,setShowUserCard)} data={data} className={Styles.cardWrapper}  onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}  />:null}
+        <Marker color={!isProfile?"green":"red"} onClick={()=>setShowUserCard(!showUserCard)}/>
         </div>
     )
 }
