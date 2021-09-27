@@ -1,8 +1,7 @@
 import Link from "next/link";
 import Head from "next/head";
-import {MainHeading,SecondaryHeading,Header,FormSection,IntroSection,IntroText,Wrapper,FlexWrapper,PrimaryBtn,SecondaryBtn} from "../../../features/auth/templates/";
 import SignIn from "../../../features/auth/components/signin";
-
+import {MainHeading,SecondaryHeading,Header,FormSection,IntroSection,IntroText,Wrapper,FlexWrapper,PrimaryBtn,SecondaryBtn} from "../../../features/auth/templates/";
 
 
 const Index = ()=>{
@@ -37,7 +36,7 @@ const Index = ()=>{
             <MainHeading>
             Sign in To Project
             </MainHeading>
-            <SignIn signInAs="talent"/>
+            <SignIn signinAs="talent"/>
             </Wrapper>
         </FormSection>
         </FlexWrapper>

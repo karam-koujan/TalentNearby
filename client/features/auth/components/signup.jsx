@@ -51,7 +51,7 @@ import { usePost } from "../../../hooks/httpReq/usePost";
        password:values.password
       }
       try{
-        await setPost(endpoint,data);
+        await setPost(endpoint,data,false);
        router.push(`/auth/signin/${signupAs}`)
       }catch(err){
         setResponseErr(err.response.data.message)

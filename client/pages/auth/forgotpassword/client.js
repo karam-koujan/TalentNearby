@@ -14,7 +14,7 @@ const Index = ()=>{
        <MainHeading style={{'marginTop':'4rem'}}>
            Forgot Password
        </MainHeading>
-       <ForgotPassword/>
+       <ForgotPassword forgotpasswordAs="client"/>
        </Wrapper>
        </>
     )

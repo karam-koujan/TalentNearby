@@ -37,7 +37,7 @@ const Index = ()=>{
             <MainHeading>
             Sign in To Project
             </MainHeading>
-            <SignIn signInAs ="client"/>
+            <SignIn signinAs="client"/>
             </Wrapper>
         </FormSection>
         </FlexWrapper>

@@ -1,10 +1,18 @@
+import * as React from "react";
+import Head from "next/head";
 import Link from "next/link";
-import {MainHeading,SecondaryHeading,Header,FormSection,IntroSection,IntroText,Wrapper,Warning,FlexWrapper,PrimaryBtn,SecondaryBtn} from "../../features/auth/templates/";
+import {MainHeading,SecondaryHeading,Header,FormSection,IntroSection,IntroText,Wrapper,Model,Warning,FlexWrapper,PrimaryBtn,SecondaryBtn} from "../../features/auth/templates/";
 import SignUp  from "../../features/auth/components/signup";
 
 const Index = ()=>{
+    const [show,setShow] = React.useState(false)
     return(
         <>
+        <Head>
+            <title>
+             Sign up
+            </title>
+        </Head>
         <Header>
             <span>Logo</span>
         </Header>
@@ -26,11 +34,17 @@ const Index = ()=>{
             <IntroText>
                 find client and talented people closer to your house .
             </IntroText>
-             <Link href="/auth/signin">
-             <SecondaryBtn>
+         <Model condition={show}>
+             <Link href="/auth/signin/talent">             
+             <p>talent</p>
+             </Link>
+             <Link href="/auth/signin/client">             
+             <p>client</p>
+             </Link>
+         </Model>
+             <SecondaryBtn onClick={()=>setShow(!show)}>
                  Sign In
              </SecondaryBtn>
-             </Link>
             </Wrapper>
         </IntroSection>
         </FlexWrapper>

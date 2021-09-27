@@ -52,6 +52,7 @@ export const Button = styled.button`
   display:block;
   letter-spacing:2px;
   margin:.5rem auto 0 auto;
+  opacity:${({disabled})=>!disabled?1:0.8};
   padding:.5rem 1rem;
   text-transform :uppercase;
 

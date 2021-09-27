@@ -12,6 +12,7 @@ export const UserName = styled.p`
 export const Text = styled.p`
   color:${props=>props.theme.third};
   font-size:.8rem;
+  margin: .2rem 0;
 `
 
 export const Bio = styled(Text)`

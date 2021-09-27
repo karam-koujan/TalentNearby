@@ -1,0 +1,15 @@
+.container{
+    width: 45px;
+    position: relative;
+    transform: translate(-50%,-100%);
+    z-index: 1000;
+
+}
+
+.cardWrapper{
+  left:-120px;
+  position: absolute;
+  top: -10px;
+  transform: translate(0,0)!important;
+}
+

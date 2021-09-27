@@ -2,8 +2,8 @@ import React from 'react';
 import GoogleMapReact from 'google-map-react';
 import Layout from '../features/common/layout/components/';
 import {useFetchQuery} from "../hooks/useFetchQuery"; 
-import UserPosition from "../features/userPosition/components";
-import ProfileCard from "../features/userPosition/components/profileCard";
+import UserMarker from "../features/userMarker";
+import NewPositionCard from '../features/userInfo/components/newPositionCard';
 const  Index = ()=> {
   const options = {fullscreenControl: false ,disableDoubleClickZoom:true,clickableIcons: false}
   const [newGeolocation,setNewGeoLocation] = React.useState(undefined);
@@ -68,9 +68,9 @@ const  Index = ()=> {
             onClick={handleClick}
            yesIWantToUseGoogleMapApiInternals 
           >
-            {showNewUserPositionCard?<ProfileCard handleCloseCard={handleCloseCard(showNewUserPositionCard,setShowNewUserPositionCard)} lat={newGeolocation?newGeolocation.latitude:null} lng={newGeolocation?newGeolocation.longitude:null} data={data.user} onMouseEnter={handleOnChildEnter} onMouseLeave={handleOnChildLeave}   />:null }
+            {showNewUserPositionCard?<NewPositionCard handleCloseCard={handleCloseCard(showNewUserPositionCard,setShowNewUserPositionCard)} lat={newGeolocation?newGeolocation.latitude:null} lng={newGeolocation?newGeolocation.longitude:null} data={data.user} onMouseEnter={handleOnChildEnter} onMouseLeave={handleOnChildLeave}   />:null }
           
-            <UserPosition
+            <UserMarker
               lat={data.user.latitude}
               lng={data.user.longitude}
              data={data.user}

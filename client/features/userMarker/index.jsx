@@ -1,8 +1,8 @@
 import * as React from "react";
-import Marker from "../../common/components/marker";
-import Styles from "../styles/styles.module.css";
-import  ProfileCard from "./profileCard";
-const UserPosition = ({data,isProfile,handleCloseCard,onMouseEnter,onMouseLeave})=>{
+import Marker from "../common/components/marker";
+import Styles from "./styles.module.css";
+import  ProfileCard from "../userInfo/components/profileCard";
+const UserMarker = ({data,isProfile,handleCloseCard,onMouseEnter,onMouseLeave})=>{
     const [showUserCard,setShowUserCard] = React.useState(false)
 
     return(
@@ -12,4 +12,4 @@ const UserPosition = ({data,isProfile,handleCloseCard,onMouseEnter,onMouseLeave}
         </div>
     )
 }
-export default UserPosition;
+export default UserMarker;

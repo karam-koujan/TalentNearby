@@ -34,7 +34,7 @@ const GlobalStyle = createGlobalStyle`
 const lightTheme = {
   primary:"#19BD33",
   secondary:"#ffffff",
-  third:"rgb(25, 24, 71)",
+  third:"#4b6cc1",
   lightGrey:"#f0efef"
 }
 const darkTheme = {

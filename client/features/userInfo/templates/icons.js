@@ -9,7 +9,7 @@ export const PhoneIcon = styled(Icon)`
 
 
 export const Pencil = styled(Icon)`
-  margin-top:.7rem;
+  margin-top:0rem;
 `
 
 export const Close = styled.span`
