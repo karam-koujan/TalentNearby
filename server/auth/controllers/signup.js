@@ -8,9 +8,8 @@ exports.freelancerSignup = async(req,res,next)=>{
     userName:Joi.string().required(),
     email:Joi.string().email().required(),
     password:Joi.string().min(8).required(), 
-    longitude:Joi.number().required(),
-    latitude:Joi.number().required()
-       
+    job :Joi.string().required(),
+    phoneNumber:Joi.string().required()
  }) 
   const {userName,email} = req.body;
    try{
@@ -30,11 +29,10 @@ exports.clientSignup = async(req,res,next)=>{
   const validationSchema = Joi.object({
     userName:Joi.string().required(),
     email:Joi.string().email().required(),
-    password:Joi.string().min(8).required(),
-    longitude:Joi.number().required(),
-    latitude:Joi.number().required()
-       
-  })
+    password:Joi.string().min(8).required(), 
+    job :Joi.string().required(),
+    phoneNumber:Joi.string().required()
+ }) 
   try{
    await signupValidation(req.body,validationSchema)
    await isEmailExist(email,Client)
