@@ -9,5 +9,10 @@ export const Header = styled.header`
  z-index:10000;
 `
 
+export const Aside = styled.aside`
+  background-color:${({theme,isEmailSent})=>isEmailSent?theme.third:theme.primary};
+ 
+
+`
 
 
