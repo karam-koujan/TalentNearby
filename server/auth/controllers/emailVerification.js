@@ -48,10 +48,7 @@ exports.clientEmailVerification = async(req,res,next)=>{
       try{
           await emailVerificationProvider(email,code,Client);
          res.cookie('isEmailVerified',true) 
-         return  res.json({
-              message:"the email is verified",
-              error:false
-          })
+         return  res.redirect("http://localhost:3000")
     }catch(err){
          next(err)
     }
