@@ -8,6 +8,8 @@ const ClientSchema = mongoose.Schema({
   password:{type:String,min:8},
   job:String,
   bio:{type:String,default:""},
+  rating:{type:Number,max:5,min:0,default:0},
+  status:{type:String,default:"client"},
   phoneNumber:{type:String,max:100},
   longitude :{type:Number,default:null},
   latitude:{type:Number,default:null},
