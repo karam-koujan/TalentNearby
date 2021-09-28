@@ -1,13 +1,14 @@
 import  * as React  from "react";
 import Avatar from "../../common/components/avatar";
 import Styles from "../styles/styles.module.css";
+import RatingStars from "../../common/components/ratingStars";
 import { useFormik } from "formik";
 import {Wrapper,FormChildWrapper} from "../templates/layout";
 import {UserName,Text, PhoneNumber,Bio} from "../templates/text";
 import {Form,Label,TextArea,Button, Input} from "../templates/form";
 import {PhoneIcon,Pencil,Close} from "../templates/icons";
 
-const InfoCard = ({data:{userName,profileImg,job,phoneNumber,bio,rating,email},handleCloseCard,onSubmit,errors,disableSubmit,...props})=>{
+const InfoCard = ({data:{userName,profileImg,job,phoneNumber,bio,rating,email,status},handleCloseCard,onSubmit,errors,disableSubmit,...props})=>{
     const [enableElementModification,setEnableElementModification]  = React.useState({
          phoneNumber,
          bio
@@ -39,15 +40,22 @@ const InfoCard = ({data:{userName,profileImg,job,phoneNumber,bio,rating,email},h
          <UserName>
              {userName}
          </UserName>
+         {status==="talent"?<RatingStars rating={rating}/>:null}
          <Form   method="PUT" onSubmit={handleSubmit}>
              {errors?<p>{errors.message}</p>:null}
              <FormChildWrapper>
-             <Label>
-                 Job
-             </Label>
-            <Text>
-                {job}
-            </Text>
+                 {status==="talent"?(
+                     <>
+                     <Label>
+                         Job
+                     </Label>
+                    <Text>
+                        {job}
+                    </Text>
+                    </>              
+                         ):null}
+                     
+                
              </FormChildWrapper>
              <FormChildWrapper>
              <Label>
