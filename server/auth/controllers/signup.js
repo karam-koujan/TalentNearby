@@ -25,13 +25,14 @@ exports.freelancerSignup = async(req,res,next)=>{
 }
 
 exports.clientSignup = async(req,res,next)=>{
-  const {userName,email} = req.body;
+  const {userName,email,status} = req.body;
   const validationSchema = Joi.object({
     userName:Joi.string().required(),
     email:Joi.string().email().required(),
     password:Joi.string().min(8).required(), 
-    job :Joi.string().required(),
-    phoneNumber:Joi.string().required()
+    job :status==="talent"?Joi.string().required():Joi.string(),
+    phoneNumber:Joi.string(),
+    status: Joi.string()
  }) 
   try{
    await signupValidation(req.body,validationSchema)
