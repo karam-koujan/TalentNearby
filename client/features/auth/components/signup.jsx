@@ -16,8 +16,6 @@ import { usePost } from "../../../hooks/httpReq/usePost";
   const validationSchema = Yup.object({
     userName:Yup.string().min(3,"userName must have at least 3 letters").max(20,"userName must have at maximum 20").required(),
     email :Yup.string().email("this email is invalid").required(),
-    longitude:Yup.number().max(180,"longitude value doesn't get greater than 180").min(-180,"longitude value doesn't get less than -180").required(),
-    latitude:Yup.number().max(90,"longitude value doesn't get greater than 90").min(-90,"longitude value doesn't get greater than -90").required(),
     password:Yup.string().min(8,"the password should be at least 8").required(),
     confirm : Yup.string()
     .oneOf([Yup.ref("password"), null], "Does not match with password").required('confirm is required'),
@@ -27,8 +25,7 @@ import { usePost } from "../../../hooks/httpReq/usePost";
       userName:"",
       email :"",
       phoneNumber:"",
-      longitude:"",
-      latitude:"",
+      job:"",
       password:"",
       confirm:"",
       client:false,
@@ -37,22 +34,18 @@ import { usePost } from "../../../hooks/httpReq/usePost";
     validationSchema,
     onSubmit:async()=>{
       setIsLoading(true)
-      let signupAs = "talent";
-      let endpoint = 'http://localhost:8080/api/auth/signup/freelancer';
-       if(values.client){
-         endpoint = 'http://localhost:8080/api/auth/signup/client';
-        signupAs = "client"
+      let data = {
+        userName:values.userName,
+        email:values.email,
+        password:values.password,
+        status:"client"
+       }
+       if(values.talent){
+        data = {...data,status:"talent",job:values.job,phoneNumber:values.phoneNumber}
         }
-     const data = {
-       userName:values.userName,
-       email:values.email,
-       longitude:values.longitude,
-       latitude:values.latitude,
-       password:values.password
-      }
       try{
-        await setPost(endpoint,data,false);
-       router.push(`/auth/signin/${signupAs}`)
+        await setPost("http://localhost:8080/api/auth/signup/client",data,false);
+       router.push(`/auth/signin/client`)
       }catch(err){
         setResponseErr(err.response.data.message)
       }
@@ -92,45 +85,8 @@ import { usePost } from "../../../hooks/httpReq/usePost";
         error={errors.email && touched.email}
         required
         />
-        {errors.email&&touched.email?<InputErr>{errors.email}</InputErr>:null}
-         </InputWrapper>
-        <div className={Styles.fieldsWrapper}>
-          <InputWrapper>
-        <Label htmlFor="longitude">longitude</Label>
-        <LongLatitude 
-        type="number" 
-        placeholder="Longitude" 
-        id="longitude" 
-        name="longitude" 
-        arial-label="longitude" 
-        max="180" 
-        min="-180" 
-        value={values.longitude}
-        onChange={handleChange}
-        onBlur = {handleBlur}
-        error={errors.longitude && touched.longitude}
-        required/>
-          {errors.longitude&&touched.longitude?<InputErr>{errors.longitude}</InputErr>:null}
-          </InputWrapper>
-        <InputWrapper>
-        <Label htmlFor="latitude">latitude</Label>
-        <LongLatitude 
-        type="number" 
-        placeholder="Latitude" 
-        id="latitude" 
-        name="latitude" 
-        arial-label="latitude" 
-        max="90" 
-        min="-90" 
-        value={values.latitude}
-        onChange={handleChange}
-        onBlur = {handleBlur}
-        error={errors.latitude && touched.latitude}
-        required/>
-        {errors.latitude&&touched.latitude?<InputErr>{errors.latitude}</InputErr>:null}
-        </InputWrapper>
-        </div>
        
+      </InputWrapper>       
         <div className={Styles.fieldsWrapper}>
         <InputWrapper>
         <Label htmlFor="passoword">password</Label>
@@ -162,8 +118,37 @@ import { usePost } from "../../../hooks/httpReq/usePost";
         required/>
         {errors.confirm&&touched.confirm?<InputErr>{errors.confirm}</InputErr>:null}
           </InputWrapper>
-
         </div>
+          {values.talent?(
+        <div className={Styles.fieldsWrapper}>
+       <InputWrapper>
+       <Label htmlFor="phoneNumber">phone number</Label>
+       <Input
+        type="tel"    
+        placeholder="phone number"
+        id="phoneNumber" 
+        name="phoneNumber" 
+        aria-label="phoneNumber"
+        value={values.phoneNumber}
+        onChange={handleChange}
+        required
+         />
+       </InputWrapper>  
+       <InputWrapper>
+       <Label htmlFor="job">job</Label>
+       <Input
+        type="text"    
+        placeholder="job"
+        id="job" 
+        name="job" 
+        aria-label="job"
+        value={values.job}
+        onChange={handleChange}
+        required
+         />
+       </InputWrapper>         
+        </div>
+         ):null}
         <CheckBoxTitle>
           Do you want to create your account as ?
         </CheckBoxTitle>
@@ -200,6 +185,7 @@ import { usePost } from "../../../hooks/httpReq/usePost";
         </div>
           </div>
         </div>
+      
        
          <PrimaryBtn type="submit" >
            {isLoading?<Spinner/>:'sign up'}
