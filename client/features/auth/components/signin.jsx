@@ -25,9 +25,9 @@ const SignIn = ()=>{
    
   })
   
-  const {mutate,data} = useMutation(newData=>setPost('http://localhost:8080/api/auth/login/client',newData,false)) ;
+  const {mutateAsync,data} = useMutation(newData=>setPost('http://localhost:8080/api/auth/login/client',newData,false)) ;
  
-  const {values,errors,touched,handleBlur,handleChange,handleSubmit} = useFormik({
+  const {values,touched,errors,handleBlur,handleChange,handleSubmit} = useFormik({
     initialValues:{
       userName:"",
       email :"",
@@ -42,14 +42,13 @@ const SignIn = ()=>{
       password:values.password
      }
      try{
-         mutate(formData)
-        localStorage.setItem('token',data.data.token)  
-        
-        router.push("/")
-     }catch(err){
-       console.log(err)
+     await mutateAsync(formData)
+      localStorage.setItem('token',data.data.token)  
+      router.push("/")
+     }catch(err){       
        setResponseErr(err.response.data.message)
      }
+     
      setIsLoading(false)
     }
   })
