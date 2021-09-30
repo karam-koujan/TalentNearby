@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "react-query";
-import {useUpdate} from "../../../hooks/httpReq/useUpdate";
+import {useUpdate} from "../../../../hooks/httpReq/useUpdate";
 
 import InfoCard from "./infoCard";
 

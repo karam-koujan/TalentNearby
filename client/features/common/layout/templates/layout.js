@@ -11,8 +11,6 @@ export const Header = styled.header`
 
 export const Aside = styled.aside`
   background-color:${({theme,isEmailSent})=>isEmailSent?theme.third:theme.primary};
- 
-
 `
 
 

@@ -1,12 +1,12 @@
 import  * as React  from "react";
-import Avatar from "../../common/components/avatar";
-import Styles from "../styles/styles.module.css";
-import RatingStars from "../../common/components/ratingStars";
+import Avatar from "../../../common/components/avatar";
+import Styles from "../../styles/styles.module.css";
+import RatingStars from "../../../common/components/ratingStars";
 import { useFormik } from "formik";
-import {Wrapper,FormChildWrapper} from "../templates/layout";
-import {UserName,Text, PhoneNumber,Bio} from "../templates/text";
-import {Form,Label,TextArea,Button, Input} from "../templates/form";
-import {PhoneIcon,Pencil,Close} from "../templates/icons";
+import {Wrapper,FormChildWrapper} from "../../templates/layout";
+import {UserName,Text, PhoneNumber,Bio} from "../../templates/text";
+import {Form,Label,TextArea,Button, Input} from "../../templates/form";
+import {PhoneIcon,Pencil,Close} from "../../templates/icons";
 
 const InfoCard = ({data:{userName,profileImg,job,phoneNumber,bio,rating,email,status},handleCloseCard,onSubmit,errors,disableSubmit,...props})=>{
     const [enableElementModification,setEnableElementModification]  = React.useState({

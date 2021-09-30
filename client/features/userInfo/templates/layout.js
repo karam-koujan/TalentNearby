@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled,{css} from "styled-components"
 
 
 export const Wrapper = styled.div`
@@ -12,7 +12,27 @@ export const Wrapper = styled.div`
  width:300px;
  z-index:10000;
 
+  ${({isLoading})=>isLoading?css`
+  height:280px;
+  transform:translate(-40%,-5%); 
+
+  `:null}
 `
 export const FormChildWrapper = styled.div`
  width:100%;
+`
+
+
+export const Circle = styled.div`
+   background-color:lightgrey;
+   border-radius:50%;
+   height:60px;
+   margin:0 auto;
+   width:60px;
+`
+export const Rectangle = styled.div`
+background-color:lightgrey;
+height:10px;
+margin:${({margin})=>margin};
+width:${({width})=>width};
 `

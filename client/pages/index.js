@@ -1,36 +1,42 @@
-import React from 'react';
+import * as React from 'react';
 import GoogleMapReact from 'google-map-react';
 import Layout from '../features/common/layout/components/';
+import ProfileMarker from "../features/userMarker/components/profileMarker";
+import UserMarker from "../features/userMarker/components/userMarker";
+import NewPositionCard from '../features/userInfo/components/profileInfo/newPositionCard';
 import {useFetchQuery} from "../hooks/useFetchQuery"; 
-import UserMarker from "../features/userMarker";
-import NewPositionCard from '../features/userInfo/components/newPositionCard';
+import {useFetchLazyQuery} from "../hooks/useFetchLazyQuery";
 const  Index = ()=> {
   const options = {fullscreenControl: false ,disableDoubleClickZoom:true,clickableIcons: false}
   const [newGeolocation,setNewGeoLocation] = React.useState(undefined);
   const [defaultGeolocation,setDefaultGeoLocation] = React.useState(undefined);
   const [disableMapClick,setDisableMapClick] = React.useState(false);
   const [showNewUserPositionCard,setShowNewUserPositionCard] = React.useState(false);
-  const {isLoading,data} = useFetchQuery("user","http://localhost:8080/api/profile/");    
- 
- React.useEffect(()=>{  
+  const [bounds,setBounds] = React.useState({ne:{lat:undefined,lng:undefined},nw:{lat:undefined,lng:undefined},sw:{lat:undefined}});
+  const profile = useFetchQuery("user","http://localhost:8080/api/profile/");    
+  const users = useFetchLazyQuery("users",`http://localhost:8080/api/position/users/?neLat=${bounds.ne.lat}&neLng=${bounds.ne.lng}&nwLat=${bounds.nw.lat}&nwLng=${bounds.nw.lng}&swLat=${bounds.sw.lat}`,Boolean(bounds.ne.lat))
+
+  React.useEffect(()=>{  
     navigator.geolocation.getCurrentPosition((position)=>{
-      if(!isLoading && data.user.longitude!==position.coords.longitude&&data.user.latitude!==position.coords.latitude ){
-          if(data.user.longitude||data.user.latitude){
-            return setDefaultGeoLocation({
-             longitude:data.user.longitude,
-             latitude:data.user.latitude
-           })
-          }
+      if(!profile.isLoading && profile.data.user.longitude!==position.coords.longitude&&profile.data.user.latitude!==position.coords.latitude ){
+        if(profile.data.user.longitude||profile.data.user.latitude){
+          return setDefaultGeoLocation({
+            longitude:profile.data.user.longitude,
+            latitude:profile.data.user.latitude
+          })
+        }
       }
-        return  setDefaultGeoLocation({
-           longitude:position.coords.longitude,
-           latitude:position.coords.latitude
-         })
-
+      return  setDefaultGeoLocation({
+        longitude:position.coords.longitude,
+        latitude:position.coords.latitude
+      })
+      
     })
+    
     return ()=>setDefaultGeoLocation(undefined)
-  },[isLoading,data])
-
+  },[profile.isLoading,profile.data])
+  
+  
   const handleClick = ({lng,lat})=>{
     if(!disableMapClick){
        setShowNewUserPositionCard(true)
@@ -49,7 +55,7 @@ const  Index = ()=> {
   } 
   const handleOnChildEnter = ()=>setDisableMapClick(true)
   const handleOnChildLeave = ()=>setDisableMapClick(false)
-  if(!isLoading && defaultGeolocation === undefined){
+  if(!profile.isLoading && defaultGeolocation === undefined){
           return(
           <div>
              allow the browser to take geolocation position 
@@ -57,8 +63,8 @@ const  Index = ()=> {
           )
     }
     return (
-       isLoading?<div>isLoading....</div>:(
-         <Layout data={data.user}>
+      profile.isLoading?<div>isLoading....</div>:(
+         <Layout data={profile.data.user}>
        <div style={{ height: '100vh', width: '100%' }}>   
           <GoogleMapReact
             bootstrapURLKeys={{ key:"AIzaSyATBu4y1OPMu1ctdhBFvBy3L1XecgDyG1k"  }}
@@ -66,15 +72,27 @@ const  Index = ()=> {
             defaultZoom={17}
             options={options} 
             onClick={handleClick}
-           yesIWantToUseGoogleMapApiInternals 
+            onChange={({bounds})=>setBounds(bounds)}
+           
+            yesIWantToUseGoogleMapApiInternals 
           >
-            {showNewUserPositionCard?<NewPositionCard handleCloseCard={handleCloseCard(showNewUserPositionCard,setShowNewUserPositionCard)} lat={newGeolocation?newGeolocation.latitude:null} lng={newGeolocation?newGeolocation.longitude:null} data={data.user} onMouseEnter={handleOnChildEnter} onMouseLeave={handleOnChildLeave}   />:null }
-          
-            <UserMarker
-              lat={data.user.latitude}
-              lng={data.user.longitude}
-             data={data.user}
-              isProfile={false}
+            {showNewUserPositionCard?<NewPositionCard handleCloseCard={handleCloseCard(showNewUserPositionCard,setShowNewUserPositionCard)} lat={newGeolocation?newGeolocation.latitude:null} lng={newGeolocation?newGeolocation.longitude:null} data={profile.data.user} onMouseEnter={handleOnChildEnter} onMouseLeave={handleOnChildLeave}   />:null }
+            {!users.isLoading&&!users.disabledFetching?users.data.users.map(({_id,longitude,latitude})=>(
+           <UserMarker  
+           key={_id}
+          handleCloseCard={handleCloseCard}
+          onMouseEnter={handleOnChildEnter} 
+          onMouseLeave={handleOnChildLeave} 
+          lat={latitude}
+          lng={longitude}
+          _id={_id}
+          />
+         )):null}
+
+           <ProfileMarker
+              lat={profile.data.user.latitude}
+              lng={profile.data.user.longitude}
+             data={profile.data.user}
               handleCloseCard={handleCloseCard}
              onMouseEnter={handleOnChildEnter} onMouseLeave={handleOnChildLeave} 
               />

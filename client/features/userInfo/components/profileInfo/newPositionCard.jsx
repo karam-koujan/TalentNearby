@@ -1,6 +1,6 @@
 import InfoCard from "./infoCard";
 import { useMutation, useQueryClient } from "react-query";
-import {usePost} from "../../../hooks/httpReq/usePost";
+import {usePost} from "../../../../hooks/httpReq/usePost";
 
 
 const NewPositionCard = ({handleCloseCard,data,onMouseEnter,onMouseLeave,lng,lat,...props})=>{
