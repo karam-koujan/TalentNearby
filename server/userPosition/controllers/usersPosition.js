@@ -5,10 +5,14 @@ const { findUsers } = require("../providers/usersPosition");
 
 
 exports.usersPosition = async(req,res,next)=>{
-   const {nw,ne,sw} = req.body;
-   
+   const {nwLat,nwLng,neLat,neLng,swLat} = req.query;
+   const bounds = {
+       nw : {lat:nwLat,lng:nwLng},
+       ne : {lat:neLat,lng:neLng},
+       sw : {lat:swLat}
+   }   
    try{ 
-       const users = await findUsers({nw,ne,sw},Client)
+       const users = await findUsers(bounds,Client)
      res.json({
          users
      })
