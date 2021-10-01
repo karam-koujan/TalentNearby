@@ -19,25 +19,25 @@ return(!isLoading?
         <RatingStars rating={data.rating} />
         <DescriptionList>
             <DescriptionTitle>
-                Job :
+                Job 
             </DescriptionTitle>
             <Description>
                 {data.user.job}
             </Description>
             <DescriptionTitle>
-                Phone :
+                Phone 
             </DescriptionTitle>
             <Description>
                 {data.user.phoneNumber}
             </Description>
             <DescriptionTitle>
-                Email :
+                Email 
             </DescriptionTitle>
             <Description>
                 {data.user.email}
             </Description>
             <DescriptionTitle>
-                bio :
+                bio 
             </DescriptionTitle>
             <Description>
                 {data.user.bio}
