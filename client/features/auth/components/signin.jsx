@@ -17,7 +17,6 @@ const SignIn = ()=>{
    const  [isLoading,setIsLoading] = React.useState(false)
   const setPost = usePost();
   const router = useRouter();
-  const queryClient = useQueryClient()
   const validationSchema = Yup.object({
     userName:Yup.string().min(3,"userName must have at least 3 letters").max(20,"userName must have at maximum 20").required(),
     email :Yup.string().email("this email is invalid").required(),
@@ -25,7 +24,6 @@ const SignIn = ()=>{
    
   })
   
-  const {mutateAsync,data} = useMutation(newData=>setPost('http://localhost:8080/api/auth/login/client',newData,false)) ;
  
   const {values,touched,errors,handleBlur,handleChange,handleSubmit} = useFormik({
     initialValues:{
@@ -41,15 +39,16 @@ const SignIn = ()=>{
       email:values.email,
       password:values.password
      }
-     try{
-     await mutateAsync(formData)
-      localStorage.setItem('token',data.data.token)  
+    try{
+      const response = await setPost("http://localhost:8080/api/auth/login/client",formData,false) 
+      localStorage.setItem('token',response.data.token) 
       router.push("/")
-     }catch(err){       
-       setResponseErr(err.response.data.message)
-     }
-     
-     setIsLoading(false)
+    }catch(err){
+        setResponseErr(err.response.data.message)
+
+        setIsLoading(false)
+    }
+    
     }
   })
   const isValid = isFormValid(errors);
