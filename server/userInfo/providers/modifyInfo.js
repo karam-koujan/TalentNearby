@@ -1,3 +1,4 @@
+const { Model } = require("mongoose");
 const { isUserNameExist } = require("../../auth/providers/signup");
 const {ValidationError} = require("../../utils/errors/validationError")
 
@@ -22,3 +23,12 @@ exports.updateInfo = (id,body,Model)=>{
         })
     })
 }
+
+exports.rateUser = async(id,rating,Model)=>{
+    return new Promise((resolve,reject)=>{
+        Model.findByIdAndUpdate(id,{rating},(err,user)=>{
+                 if(err) return reject()
+                 if(!user.active) return reject(new ValidationError('the user email is unverified please verify your email'))
+                 return resolve()
+        })
+    })}

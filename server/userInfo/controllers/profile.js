@@ -8,10 +8,10 @@ exports.getProfile = (req,res)=>{
     }
     )
 }
-exports.getProfileByUserName = async(req,res)=>{
-    const userName = req.params.userName ; 
+exports.getProfileById = async(req,res)=>{
+    const id = req.params.id ; 
     try{
-        const user = await Client.findOne({userName})
+        const user = await Client.findById(id)
         user.password = ""
         res.json({
             user,
@@ -23,8 +23,4 @@ exports.getProfileByUserName = async(req,res)=>{
             error:true
         })
     }
-}
-
-exports.modifyProfileInfo = async()=>{
-    
 }

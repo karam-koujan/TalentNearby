@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router()
-const {getProfile,getProfileByUserName} = require("./controllers/profile");
-const {modifyUserInfo, changeUserPosition} = require("./controllers/modifyInfo")
+const {getProfile,getProfileById} = require("./controllers/profile");
+const {modifyUserInfo, changeUserPosition,rateUser} = require("./controllers/modifyInfo")
 
 router.get("/",getProfile)
-router.get("/:userName",getProfileByUserName)
+router.get("/:id",getProfileById)
    
 router.put("/modifyInfo",modifyUserInfo)
 router.post("/changePosition",changeUserPosition)
 
-
+router.put("/rate",rateUser)
 module.exports = router
