@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
 
-
 const ClientSchema = mongoose.Schema({
   userName : String,
   email : String,
@@ -9,6 +8,7 @@ const ClientSchema = mongoose.Schema({
   job:String,
   bio:{type:String,default:""},
   rating:{type:Number,max:5,min:0,default:0},
+  reviewersNum:{type:Number,default:0},
   status:{type:String,default:"client"},
   phoneNumber:{type:String,max:100},
   longitude :{type:Number,default:null},
