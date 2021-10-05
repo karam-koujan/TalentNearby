@@ -1,11 +1,13 @@
 import {Header as Wrapper } from "../templates/layout";
 import Avatar from "../../components/avatar/";
-import Styles from "../styles/styles.module.css"
-
+import Search from "../../../search/components";
 const Header = ({data})=>{
     return(
        <Wrapper>
-           <Avatar className={Styles.avatarPosition} userName={data.userName} profileImg={data.profileImg} size="45px"/>
+           <p>Logo</p>
+           <Search/>
+           <Avatar  userName={data.userName} profileImg={data.profileImg} size="45px"/>
+           
        </Wrapper>
     )
 }
