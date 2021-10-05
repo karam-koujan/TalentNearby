@@ -5,30 +5,18 @@ import Avatar from "../../common/components/avatar";
 import RatingStars from "../../common/components/ratingStars";
 
 
-const SearchBoard = ()=>{
+const SearchBoard = ({userName,profileImg,rating})=>{
       return(
-        <SearchBoardWrapper>
             
             <UserWrapper>
-            <Avatar userName="Karam" size="45px"/>
+            <Avatar profileImg={profileImg} userName={userName} size="45px"/>
             <div>
                 <UserName>
-                    karam koujan
+                    {userName}
                 </UserName>
-            <RatingStars/>
+         <RatingStars rating={rating}/>
             </div>
             </UserWrapper>
-              
-            <UserWrapper>
-            <Avatar userName="Karam" size="45px"/>
-            <div>
-                <UserName>
-                    karam koujan
-                </UserName>
-            <RatingStars rating={5}/>
-            </div>
-            </UserWrapper>
-        </SearchBoardWrapper>
       )
 }
 
