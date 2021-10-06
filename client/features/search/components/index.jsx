@@ -12,6 +12,7 @@ const Search = ()=>{
     const handleOnChange = (e)=>{
        setUserName(e.target.value)
     } 
+   
   return(
       <Form>
           <SearchBtn>
@@ -26,14 +27,10 @@ const Search = ()=>{
                    <NoResult>No Result</NoResult>
                    </SearchBoardWrapper>
                    )
-                  :(
-                    <SearchBoardWrapper>
-                    <NoResult>is Loading...</NoResult>
-                    </SearchBoardWrapper>
-                  ):data.pages.map((profiles,currentPageIdx)=>(
+                  :null:data.pages.map((profiles,currentPageIdx)=>(
                <SearchBoardWrapper>
-                       { profiles.profiles.map(({userName,profileImg,rating},profileIndex)=>(
-                              <SearchBoard userName={userName}  profileImg={profileImg} rating={rating} key={profileIndex}/>
+                       { profiles.profiles.map(({userName,profileImg,rating,_id},profileIndex)=>(
+                              <SearchBoard userName={userName} _id={_id}  profileImg={profileImg} rating={rating} key={profileIndex}/>
                          ))}
                          {currentPageIdx===data.pages.length-1?<Waypoint onEnter={()=>fetchMore()}/>:null}
                     </SearchBoardWrapper>
