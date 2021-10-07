@@ -1,0 +1,7 @@
+.flex{
+    align-items:center;
+    display: flex;
+}
+.userNameRating{
+    margin:.2rem 0 0 .5rem;
+}
