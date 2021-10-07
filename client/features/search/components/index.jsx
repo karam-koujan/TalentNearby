@@ -15,9 +15,6 @@ const Search = ()=>{
    
   return(
       <Form>
-          <SearchBtn>
-              <SearchIcon className="fa fa-search"></SearchIcon>
-          </SearchBtn>
           <SearchInput name="search" ariaLabel="search" placeholder="Search" onChange={handleOnChange} value={userName}/>
          {userName?(
              <SearchBoardWrapperParent>
@@ -38,6 +35,9 @@ const Search = ()=>{
                 
                 </SearchBoardWrapperParent>
                 ):null}
+          <SearchBtn>
+              <SearchIcon className="fa fa-search"></SearchIcon>
+          </SearchBtn>
          {userName?<Close onClick={()=>setUserName("")}>&#10006;</Close>:null}
       </Form>
   )

@@ -3,18 +3,19 @@ import styled from "styled-components";
 
 
 export const SearchBoard = styled.div`
-  left:-.5rem;
+  left:-.3rem;
   position:absolute;
-  right:-.5rem;
+  right:-.3rem;
   z-index:-1;
 `
 
 export const SearchBoardWrapper = styled.div`
  background-color:${props=>props.theme.secondary};
- box-shadow:1px 1px 3px 1px rgba(0,0,0,.2) , 0px -1px 3px 1px rgba(0,0,0,.2);
- border-radius:3px;
+ box-shadow:1px 1px 2px 1px rgba(0,0,0,.1) , 0px -1px 2px 1px rgba(0,0,0,.1);
+ border-radius:6px;
  padding:4rem 0 1rem 0;
-`
+ transform:translateY(-.3rem);
+ `
 
 
 export const UserWrapper=styled.div`

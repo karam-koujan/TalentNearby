@@ -13,6 +13,6 @@ export const Close = styled.span`
  cursor:pointer;
  font-size:16px;
  position:absolute;
- right:.5rem;
+ right:15%;
  top:22%;
  `

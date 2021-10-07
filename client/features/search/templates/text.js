@@ -12,6 +12,6 @@ export const UserName = styled.span`
 
 
 export const NoResult = styled.p`
-  color:${props=>props.theme.primary};
+  color:${props=>props.theme.third};
   padding-left:.5rem;
 `
