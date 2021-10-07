@@ -10,5 +10,5 @@ export const Wrapper = styled.div`
 
 export const Star = styled.span`
  color:${({checked})=>checked?'orange':'grey'};
- font-size:1.1rem;
+ font-size:${({size})=>size?size:"1.1rem"};
 `
