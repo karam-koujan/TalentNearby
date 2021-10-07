@@ -15,7 +15,19 @@ export const Wrapper = styled.aside`
     backgound-color:transparent;
     width: 0px;
   }
-  
+   animation-name:slide;
+   animation-duration:.5s;
+   animation-timing-function:linear;
+   animation-fill-mode:forwards;
+  @keyframes slide{
+    0%{
+     left:-100%;
+    }
+    100%{
+      left:0;
+    }
+  }
+
   /* Track */
   ::-webkit-scrollbar-track {
     background: #f1f1f1; 
