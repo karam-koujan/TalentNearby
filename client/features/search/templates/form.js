@@ -5,10 +5,10 @@ import styled from "styled-components";
 
 export const Form = styled.form`
   background-color:white;
-  border-radius:4px;
+  border-radius:6px;
   display:flex;
   justify-content:space-between;
-  max-width:300px;
+  max-width:367px;
   position:relative;
   width:80%;
 `

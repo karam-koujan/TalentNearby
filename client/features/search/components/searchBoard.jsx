@@ -17,7 +17,7 @@ const SearchBoard = ({userName,profileImg,rating,_id})=>{
                 <UserName>
                     {userName}
                 </UserName>
-         <RatingStars rating={rating}/>
+         <RatingStars rating={rating} size="1rem"/>
             </div>
             </UserWrapper>
       )
