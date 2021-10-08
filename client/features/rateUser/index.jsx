@@ -12,7 +12,8 @@ const RateUser = ({userName,userId,handleCloseCard,...props})=>{
   const setUpdate = useUpdate();
   const queryClient = useQueryClient()
   const handleRate = (rating)=>{
-       setRating(rating+1)
+       setRating(rating=>rating+1)
+       console.log(rating)
   }
   const {values,handleChange,handleSubmit} = useFormik({
      initialValues:{
@@ -23,7 +24,7 @@ const RateUser = ({userName,userId,handleCloseCard,...props})=>{
            await setUpdate("http://localhost:8080/api/rate/",{text:values.review,talentId:userId,rating})
            console.log("Done")
            queryClient.invalidateQueries(["users",userId])
-           window.location.reload(false); 
+//           window.location.reload(false); 
 
         }catch(err){
         console.log(err)
@@ -36,7 +37,7 @@ const RateUser = ({userName,userId,handleCloseCard,...props})=>{
         <Heading>
             Rate {userName}
         </Heading>
-        <RatingStars enableRating handleRate={handleRate}/>
+        <RatingStars margin="0 auto" handleRate={handleRate} enableRating/>
         <Form action="" onSubmit={handleSubmit}>
           <Label>review</Label>
           <TextArea placeholder="Bio" name="review" value={values.review} onChange={handleChange}/>

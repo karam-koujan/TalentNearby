@@ -8,11 +8,17 @@ export const SearchIcon = styled.span`
   font-size:1.2rem;
 `
 
-export const Close = styled.span`
+const Close = styled.span`
  color:${props=>props.theme.third};
  cursor:pointer;
  font-size:16px;
+`
+export const RemoveSearchText= styled(Close)`
  position:absolute;
  right:15%;
  top:22%;
  `
+
+export const CloseProfileBar = styled(Close)`
+ color:${props=>props.theme.secondary};
+` 

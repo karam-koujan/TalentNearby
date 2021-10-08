@@ -21,7 +21,7 @@ const Profile = ({_id})=>{
         <UserName>
          karam 
          </UserName>
-         <RatingStars rating="5"/>
+         <RatingStars rating="5" margin="0 auto"/>
          <DescriptionList>
            <DescriptionTitle>
              Job
