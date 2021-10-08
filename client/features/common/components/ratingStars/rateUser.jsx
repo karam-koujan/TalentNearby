@@ -6,7 +6,7 @@ import {Wrapper,Star} from "./styles";
 
 
 
-const RateUser = ({handleRate,...props})=>{
+const RateUser = ({handleRate,margin,...props})=>{
  const [rating,setRating] = React.useState(0)
  const [isClicked,setIsClicked] = React.useState(false)
  const handleHover = (id)=> setRating(id)
@@ -22,7 +22,7 @@ const RateUser = ({handleRate,...props})=>{
   }
  
     return(
-    <Wrapper {...props} onClick={handleClick}  onMouseLeave={handleOnLeave}>
+    <Wrapper {...props} style={{'--margin':margin}} onClick={handleClick}  onMouseLeave={handleOnLeave}>
     
          <Star className="fa fa-star"  onMouseEnter={()=>handleHover(1)} checked={1<=rating}/>
          <Star className="fa fa-star" onMouseEnter={()=>handleHover(2)}  checked={2<=rating}/>
