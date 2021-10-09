@@ -28,9 +28,14 @@ export const NoReviews = styled.p`
   margin:0 auto;
   width:fit-content;
 `
-export const ReviewersNum = styled.span`
+export const ReviewersNum = styled.a`
 color:${props=>props.theme.third};
 display:block;
 margin:.5rem auto;
+text-decoration:none;
+transition:text-decoration .2s ease-in-out;
 width:fit-content;
+&:hover,&:focus{
+  text-decoration:underline;
+}
 `

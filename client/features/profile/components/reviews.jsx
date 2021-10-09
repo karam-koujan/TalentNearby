@@ -13,7 +13,7 @@ const Reviews = ({profileId})=>{
     return(
         <>
         <ReviewTitle>reviews</ReviewTitle>
-        <ReviewsWrapper>
+        <ReviewsWrapper id="reviews">
         {status==="loading"?"...isLoading":data.pages.map(page=>(
             page.reviews.length?page.reviews.map(({text,rating,reviewer:{userName,profileImg}},currentReview)=>(
              <React.Fragment>

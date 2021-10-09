@@ -16,6 +16,7 @@ export const Wrapper = styled.aside`
     width: 0px;
   }
    animation-name:slide;
+   animation-direction: alternate;
    animation-duration:.5s;
    animation-timing-function:linear;
    animation-fill-mode:forwards;
