@@ -8,6 +8,7 @@ import Profile from "../features/profile/components";
 import {useFetchQuery} from "../hooks/useFetchQuery"; 
 import {useFetchLazyQuery} from "../hooks/useFetchLazyQuery";
 import {useRouter} from "next/router";
+import RateUser from '../features/rateUser';
 
 const  Index = ()=> {
   const options = {fullscreenControl: false ,disableDoubleClickZoom:true,clickableIcons: false}
@@ -19,29 +20,6 @@ const  Index = ()=> {
   const profile = useFetchQuery("user","http://localhost:8080/api/profile/");    
   const users = useFetchLazyQuery("users",`http://localhost:8080/api/position/users/?neLat=${bounds.ne.lat}&neLng=${bounds.ne.lng}&nwLat=${bounds.nw.lat}&nwLng=${bounds.nw.lng}&swLat=${bounds.sw.lat}`,Boolean(bounds.ne.lat))
   const {query} = useRouter();
-  /*
-  React.useEffect(()=>{  
-    
-    navigator.geolocation.getCurrentPosition((position)=>{
-      if(!profile.isLoading && profile.data.user.longitude!==position.coords.longitude&&profile.data.user.latitude!==position.coords.latitude ){
-        if(profile.data.user.longitude||profile.data.user.latitude){
-          return setDefaultGeoLocation({
-            longitude:profile.data.user.longitude,
-            latitude:profile.data.user.latitude
-          })
-        }
-      }
-
-      return  setDefaultGeoLocation({
-        longitude:position.coords.longitude,
-        latitude:position.coords.latitude
-      })
-      
-    })
-    
-    return ()=>setDefaultGeoLocation(undefined)
-  },[profile.isLoading,profile.data])
-  */
   React.useEffect(()=>{  
     
     if(!profile.isLoading&&!(profile.data.user.longitude&&profile.data.user.latitude)){
@@ -87,7 +65,8 @@ const  Index = ()=> {
       !profile.isLoading?(
         <Layout data={profile.data.user}>
 
-        {query.id?<Profile _id={query.id}/>:null}
+        {query.id?<Profile _id={query.id} profileId={profile.data.user._id}/>:null}
+        {query.talentId&&query.userName?<RateUser userId={query.talentId} userName={query.userName} profile={profile.data.user}/>:null}
        <div style={{ height: '100vh', width: '100%' }}>   
           <GoogleMapReact
             bootstrapURLKeys={{ key:"AIzaSyATBu4y1OPMu1ctdhBFvBy3L1XecgDyG1k"  }}
@@ -123,7 +102,7 @@ const  Index = ()=> {
           </GoogleMapReact>
         </div>
       </Layout>
-     ):<div>isLoading....</div>
+     ):"...isLoading"
      
     )
   
