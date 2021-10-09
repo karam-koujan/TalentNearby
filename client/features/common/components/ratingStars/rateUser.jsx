@@ -15,14 +15,10 @@ const RateUser = ({handleRate,margin,...props})=>{
     setRating(rating)
     handleRate(rating)
  }
- const handleOnLeave = ()=>{
-    if(!isClicked){
-          setRating(0)
-    }
-  }
+ 
  
     return(
-    <Wrapper {...props} style={{'--margin':margin}} onClick={handleClick}  onMouseLeave={handleOnLeave}>
+    <Wrapper {...props} style={{'--margin':margin}} onClick={handleClick}  >
     
          <Star className="fa fa-star"  onMouseEnter={()=>handleHover(1)} checked={1<=rating}/>
          <Star className="fa fa-star" onMouseEnter={()=>handleHover(2)}  checked={2<=rating}/>
