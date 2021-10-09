@@ -10,7 +10,7 @@ import RatingStars from "../../../common/components/ratingStars";
 import Loading from "../loading";
 import RateUser from "../../../rateUser/";
 
-const UserCard = ({_id,handleCloseCard,...props})=>{
+const UserCard = ({_id,profile,handleCloseCard,...props})=>{
   const {isLoading,data} = useFetchQuery(["users",_id],`http://localhost:8080/api/profile/${_id}`) 
   const [rateUser,setRateUser] = React.useState(false) 
   return(!isLoading&&!rateUser?
@@ -47,7 +47,7 @@ const UserCard = ({_id,handleCloseCard,...props})=>{
                 {data.user.bio}
             </Description>
         </DescriptionList>
-      </Wrapper>:rateUser?<RateUser userName={data.user.userName} handleCloseCard={handleCloseCard} userId={data.user._id} {...props}/>:<Loading handleCloseCard={handleCloseCard} {...props}/>
+      </Wrapper>:rateUser?<RateUser profile={profile} userName={data.user.userName} handleCloseCard={handleCloseCard} userId={data.user._id} {...props}/>:<Loading handleCloseCard={handleCloseCard} {...props}/>
   )
 }
 
