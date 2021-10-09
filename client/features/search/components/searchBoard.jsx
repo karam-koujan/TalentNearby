@@ -7,7 +7,7 @@ import RatingStars from "../../common/components/ratingStars";
 const SearchBoard = ({userName,profileImg,rating,_id})=>{
       const router = useRouter();
       const handleClick= ()=>{
-          router.push(`/${_id}`)
+          router.push(`/?id=${_id}`,undefined,{shallow:true})
       }
       return(
             

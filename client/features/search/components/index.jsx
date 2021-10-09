@@ -15,15 +15,16 @@ const Search = ()=>{
        setUserName(e.target.value)
     } 
    const handleSearch = (e)=>{
-       e.preventDefault()
-       const isPageEmpty = !data.pages.length ;
-       if(!isPageEmpty){     
+       e.preventDefault()  
+       const isProfileEmpty = !data.pages.length;
+       if(!isProfileEmpty){
            const userId = data.pages[0].profiles[0]._id;
            push(`/?id=${userId}`)
        }
+       
    }
   return(
-      <Form action="" onSubmit={handleSearch}>
+      <Form onSubmit={handleSearch}>
           <SearchInput name="search" ariaLabel="search" placeholder="Search" onChange={handleOnChange} value={userName}/>
          {userName?(
              <SearchBoardWrapperParent>
@@ -51,7 +52,7 @@ const Search = ()=>{
                 }
              </SearchBoardWrapperParent>
             ):null}       
-          <SearchBtn>
+          <SearchBtn  type="button">
               {query.id?<CloseProfileBar onClick={()=>replace("/",undefined,{ shallow: true })}>&#10006;</CloseProfileBar>:<SearchIcon className="fa fa-search" onClick={handleSearch}></SearchIcon>}
           </SearchBtn>
          {userName?<RemoveSearchText onClick={()=>setUserName("")}>&#10006;</RemoveSearchText>:null}
