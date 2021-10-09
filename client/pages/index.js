@@ -19,7 +19,9 @@ const  Index = ()=> {
   const profile = useFetchQuery("user","http://localhost:8080/api/profile/");    
   const users = useFetchLazyQuery("users",`http://localhost:8080/api/position/users/?neLat=${bounds.ne.lat}&neLng=${bounds.ne.lng}&nwLat=${bounds.nw.lat}&nwLng=${bounds.nw.lng}&swLat=${bounds.sw.lat}`,Boolean(bounds.ne.lat))
   const {query} = useRouter();
+  /*
   React.useEffect(()=>{  
+    
     navigator.geolocation.getCurrentPosition((position)=>{
       if(!profile.isLoading && profile.data.user.longitude!==position.coords.longitude&&profile.data.user.latitude!==position.coords.latitude ){
         if(profile.data.user.longitude||profile.data.user.latitude){
@@ -29,6 +31,7 @@ const  Index = ()=> {
           })
         }
       }
+
       return  setDefaultGeoLocation({
         longitude:position.coords.longitude,
         latitude:position.coords.latitude
@@ -38,8 +41,23 @@ const  Index = ()=> {
     
     return ()=>setDefaultGeoLocation(undefined)
   },[profile.isLoading,profile.data])
-  
-  
+  */
+  React.useEffect(()=>{  
+    
+    if(!profile.isLoading&&!(profile.data.user.longitude&&profile.data.user.latitude)){
+    navigator.geolocation.getCurrentPosition((position)=>{
+     
+        setDefaultGeoLocation({
+         longitude:position.coords.longitude,
+         latitude:position.coords.latitude
+       })
+
+       
+      })
+    }
+      
+    return ()=>setDefaultGeoLocation(undefined)
+  },[profile.isLoading,profile.data])
   const handleClick = ({lng,lat})=>{
     if(!disableMapClick){
        setShowNewUserPositionCard(true)
@@ -58,21 +76,22 @@ const  Index = ()=> {
   } 
   const handleOnChildEnter = ()=>setDisableMapClick(true)
   const handleOnChildLeave = ()=>setDisableMapClick(false)
-  if(!profile.isLoading && defaultGeolocation === undefined){
-          return(
-          <div>
-             allow the browser to take geolocation position 
-          </div>
-          )
-    }
+
+  if(!profile.isLoading&&!(profile.data.user.longitude&&profile.data.user.latitude)&&!defaultGeolocation){
+    return(
+      <div>allow the browser to take geolocation position</div>
+    )
+  }
+
     return (
-      profile.isLoading?<div>isLoading....</div>:(
-         <Layout data={profile.data.user}>
+      !profile.isLoading?(
+        <Layout data={profile.data.user}>
+
         {query.id?<Profile _id={query.id}/>:null}
        <div style={{ height: '100vh', width: '100%' }}>   
           <GoogleMapReact
             bootstrapURLKeys={{ key:"AIzaSyATBu4y1OPMu1ctdhBFvBy3L1XecgDyG1k"  }}
-            defaultCenter={{lat:defaultGeolocation.latitude,lng:defaultGeolocation.longitude}}
+            defaultCenter={defaultGeolocation?{lat:defaultGeolocation.latitude,lng:defaultGeolocation.longitude}:{lat:profile.data.user.latitude,lng:profile.data.user.longitude}}
             defaultZoom={17}
             options={options} 
             onClick={handleClick}
@@ -103,8 +122,8 @@ const  Index = ()=> {
 
           </GoogleMapReact>
         </div>
-        </Layout>
-     )
+      </Layout>
+     ):<div>isLoading....</div>
      
     )
   
