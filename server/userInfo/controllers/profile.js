@@ -30,7 +30,7 @@ exports.getProfileReviews = async(req,res,next)=>{
     const page = parseInt(req.query.page);
     const startIndex = (page - 1)*limit;
     try{
-      const reviews = await Review.find({talent:id}).limit(limit).skip(startIndex);
+      const reviews = await Review.find({talent:id}).populate("reviewer","userName profileImg ").limit(limit).skip(startIndex);
       res.json({
           reviews,
           error:false
