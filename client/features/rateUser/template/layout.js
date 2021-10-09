@@ -21,9 +21,10 @@ export const Modal = styled.div`
  background-color:${props=>props.theme.secondary};
  color:${props=>props.theme.third};
  cursor:pointer;
+ max-width:500px; 
  padding:2rem 2rem;
  position:relative;
- width:500px; 
+ width:800%;
  z-index:10000;
 `
 

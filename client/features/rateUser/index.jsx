@@ -31,8 +31,7 @@ const RateUser = ({userName,profile:{active},userId,...props})=>{
            await setUpdate("http://localhost:8080/api/rate/",{text:values.review,talentId:userId,rating})
            queryClient.invalidateQueries(["users",userId])
            queryClient.invalidateQueries(["reviews",userId])
-           window.location.reload(false); 
-
+           router.replace("/",undefined,{shallow:true})
         }catch(err){
         console.log(err)
       }
@@ -47,10 +46,10 @@ const RateUser = ({userName,profile:{active},userId,...props})=>{
             Rate {userName}
         </Heading>
         <RatingStars margin="0 auto" handleRate={handleRate} enableRating/>
-        <Form action="" onSubmit={handleSubmit}>
+        <Form  onSubmit={handleSubmit}>
           <Label>review</Label>
           <TextArea placeholder="Bio" name="review" value={values.review} onChange={handleChange}/>
-        <Button type="submit"  onSubmit={handleSubmit}>Review</Button>
+        <Button type="submit"  onSubmit={handleSubmit} disabled={!values.review}>Review</Button>
         </Form>
     </Modal>
     </Wrapper>
