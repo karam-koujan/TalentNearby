@@ -11,7 +11,7 @@ const profile = require("./userInfo/route");
 const userPosition = require("./userPosition/route");
 const rateUser = require("./rating/route");
 const search = require("./search/route");
-const {tokenVerification,error} = require("./middlewares/")
+const {tokenVerification,error,isEmailVerified} = require("./middlewares/")
 const port = process.env.PORT || 8080 ;
 mongoose.connect(dbConnection,()=>console.log("connect"))
 console.log(dbConnection)
@@ -22,7 +22,7 @@ app.use(bodyParser.json())
 app.use("/api/auth",auth)
 app.use("/api/profile",tokenVerification,profile)
 app.use("/api/position",tokenVerification,userPosition)
-app.use("/api/rate",tokenVerification,rateUser)
+app.use("/api/rate",tokenVerification,isEmailVerified,rateUser)
 app.use("/api/search",tokenVerification,search)
 app.use(error)
 
