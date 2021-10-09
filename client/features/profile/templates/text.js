@@ -23,3 +23,14 @@ export const ReviewerName = styled.span`
 export const ReviewerText = styled.p`
   color:${props=>props.theme.third};
 `
+export const NoReviews = styled.p`
+  color:${props=>props.theme.third};
+  margin:0 auto;
+  width:fit-content;
+`
+export const ReviewersNum = styled.span`
+color:${props=>props.theme.third};
+display:block;
+margin:.5rem auto;
+width:fit-content;
+`

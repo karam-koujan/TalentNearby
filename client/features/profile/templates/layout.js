@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled,{css} from "styled-components";
 
 
 export const Wrapper = styled.aside`
@@ -45,6 +45,10 @@ export const Wrapper = styled.aside`
 `
 
 export const ProfileImgWrapper = styled.div`
+ ${({profileImg})=>!profileImg?css`
+  background-color:${props=>props.theme.third};
+  height:200px;
+ `:null}
   width:100%; 
 `
 
