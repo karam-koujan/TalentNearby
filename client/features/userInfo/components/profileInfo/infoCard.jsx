@@ -4,16 +4,16 @@ import Styles from "../../styles/styles.module.css";
 import RatingStars from "../../../common/components/ratingStars";
 import { useFormik } from "formik";
 import {Wrapper,FormChildWrapper} from "../../templates/layout";
-import {UserName,Text, PhoneNumber,Bio} from "../../templates/text";
+import {UserName,Text, PhoneNumber,Bio,ErrMsg} from "../../templates/text";
 import {Form,Label,TextArea,Button, Input} from "../../templates/form";
 import {PhoneIcon,Pencil,Close} from "../../templates/icons";
 
-const InfoCard = ({data:{userName,profileImg,job,phoneNumber,bio,rating,email,status},handleCloseCard,onSubmit,errors,disableSubmit,...props})=>{
+const InfoCard = ({data:{userName,profileImg,job,phoneNumber,bio,rating,email,status,active},handleCloseCard,onSubmit,errors,disableSubmit,...props})=>{
     const [enableElementModification,setEnableElementModification]  = React.useState({
          phoneNumber,
          bio
         })
-    
+     const [err,setErr] = React.useState("");
         const {values,handleChange,handleSubmit} = useFormik({
             initialValues : {
                 phoneNumber,
@@ -25,16 +25,20 @@ const InfoCard = ({data:{userName,profileImg,job,phoneNumber,bio,rating,email,st
                   phoneNumber:values.phoneNumber,
                   bio:values.bio
               }  
-              onSubmit(formData)
-             console.log(errors)
-              if(!errors){
-                  window.location.reload(false); 
+
+              if(!active){
+                 return setErr("please verifiy your email")
               }
+              onSubmit(formData)
+             
+                  
+              
             }
    })   
 
     return(
          <Wrapper {...props} >
+             {err?<ErrMsg>{err}</ErrMsg>:null}
              <Close className={Styles.close} onClick={handleCloseCard}>&#10006;</Close>
          <Avatar userName={userName} profileImg={profileImg} size="60px" className={Styles.avatar}/>
          <UserName>

@@ -6,17 +6,17 @@ import InfoCard from "./infoCard";
 const ProfileCard = ({handleCloseCard,data,onMouseEnter,onMouseLeave,...props})=>{
    
     const setUpdate = useUpdate()
-    const {mutate,errors} = useMutation(newData=>setUpdate("http://localhost:8080/api/profile/modifyInfo",newData))
+    const mutation = useMutation(newData=>setUpdate("http://localhost:8080/api/profile/modifyInfo",newData))
     const client = useQueryClient()  
 
    const onSubmit = (data)=>{
-     mutate(data)
+     mutation.mutate(data)
      client.invalidateQueries('user')
    }
    
 
    return(
-      <InfoCard {...props} onSubmit={onSubmit} handleCloseCard={handleCloseCard}  data={data} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} errors={errors}/>
+      <InfoCard {...props} onSubmit={onSubmit} handleCloseCard={handleCloseCard}  data={data} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} />
    )
 }
 
