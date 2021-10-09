@@ -87,6 +87,7 @@ const  Index = ()=> {
           handleCloseCard={handleCloseCard}
           onMouseEnter={handleOnChildEnter} 
           onMouseLeave={handleOnChildLeave} 
+          profile={profile.data.user}
           lat={latitude}
           lng={longitude}
           _id={_id}
