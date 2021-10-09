@@ -1,18 +1,20 @@
 import * as React from "react";
 import RatingStars from "../common/components/ratingStars";
 import { Heading } from "./template/heading";
-import {Wrapper} from "./template/layout";
+import {Wrapper,Modal} from "./template/layout";
 import { ErrMsg } from "./template/text";
 import {Form,TextArea,Label,Button} from "./template/form";
 import {useFormik} from "formik";
 import {useUpdate} from "../../hooks/httpReq/useUpdate";
 import {Close} from "./template/icons";
 import {useQueryClient} from "react-query";
-const RateUser = ({userName,profile:{active},userId,handleCloseCard,...props})=>{
+import { Router, useRouter } from "next/router";
+const RateUser = ({userName,profile:{active},userId,...props})=>{
   const [rating,setRating] = React.useState(0)
   const [err,setErr] = React.useState("")
   const setUpdate = useUpdate();
   const queryClient = useQueryClient()
+  const router = useRouter()
   const handleRate = (rating)=>{
        setRating(rating=>rating+1)
        console.log(rating)
@@ -37,9 +39,10 @@ const RateUser = ({userName,profile:{active},userId,handleCloseCard,...props})=>
      }
   })
   return(
-    <Wrapper {...props}>
+    <Wrapper>
+    <Modal {...props}>
       {err?<ErrMsg>{err}</ErrMsg>:null}
-              <Close  onClick={handleCloseCard}>&#10006;</Close>
+      <Close onClick={()=>router.replace("/",undefined,{shallow:true})}>&#10006;</Close>
         <Heading>
             Rate {userName}
         </Heading>
@@ -49,6 +52,7 @@ const RateUser = ({userName,profile:{active},userId,handleCloseCard,...props})=>
           <TextArea placeholder="Bio" name="review" value={values.review} onChange={handleChange}/>
         <Button type="submit"  onSubmit={handleSubmit}>Review</Button>
         </Form>
+    </Modal>
     </Wrapper>
   )
 }
