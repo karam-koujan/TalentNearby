@@ -16,8 +16,7 @@ const RateUser = ({userName,profile:{active},userId,...props})=>{
   const queryClient = useQueryClient()
   const router = useRouter()
   const handleRate = (rating)=>{
-       setRating(rating=>rating+1)
-       console.log(rating)
+       setRating(rating)
   }
   const {values,handleChange,handleSubmit} = useFormik({
      initialValues:{
