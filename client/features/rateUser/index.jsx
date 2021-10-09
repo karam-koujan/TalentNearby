@@ -2,13 +2,15 @@ import * as React from "react";
 import RatingStars from "../common/components/ratingStars";
 import { Heading } from "./template/heading";
 import {Wrapper} from "./template/layout";
+import { ErrMsg } from "./template/text";
 import {Form,TextArea,Label,Button} from "./template/form";
 import {useFormik} from "formik";
 import {useUpdate} from "../../hooks/httpReq/useUpdate";
 import {Close} from "./template/icons";
 import {useQueryClient} from "react-query";
-const RateUser = ({userName,userId,handleCloseCard,...props})=>{
+const RateUser = ({userName,profile:{active},userId,handleCloseCard,...props})=>{
   const [rating,setRating] = React.useState(0)
+  const [err,setErr] = React.useState("")
   const setUpdate = useUpdate();
   const queryClient = useQueryClient()
   const handleRate = (rating)=>{
@@ -21,10 +23,13 @@ const RateUser = ({userName,userId,handleCloseCard,...props})=>{
      },
      onSubmit :async()=>{
       try{
+           if(!active){
+             setErr("please verifiy your email")
+           }
            await setUpdate("http://localhost:8080/api/rate/",{text:values.review,talentId:userId,rating})
-           console.log("Done")
            queryClient.invalidateQueries(["users",userId])
-//           window.location.reload(false); 
+           queryClient.invalidateQueries(["reviews",userId])
+           window.location.reload(false); 
 
         }catch(err){
         console.log(err)
@@ -33,6 +38,7 @@ const RateUser = ({userName,userId,handleCloseCard,...props})=>{
   })
   return(
     <Wrapper {...props}>
+      {err?<ErrMsg>{err}</ErrMsg>:null}
               <Close  onClick={handleCloseCard}>&#10006;</Close>
         <Heading>
             Rate {userName}
