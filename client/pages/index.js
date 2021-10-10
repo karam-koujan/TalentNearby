@@ -4,7 +4,8 @@ import Layout from '../features/common/layout/components/';
 import ProfileMarker from "../features/userMarker/components/profileMarker";
 import UserMarker from "../features/userMarker/components/userMarker";
 import NewPositionCard from '../features/userInfo/components/profileInfo/newPositionCard';
-import Profile from "../features/profile/components";
+import Profile from "../features/profile/components/profile";
+import User from "../features/profile/components/user";
 import {useFetchQuery} from "../hooks/useFetchQuery"; 
 import {useFetchLazyQuery} from "../hooks/useFetchLazyQuery";
 import {useRouter} from "next/router";
@@ -65,7 +66,8 @@ const  Index = ()=> {
       !profile.isLoading?(
         <Layout data={profile.data.user}>
 
-        {query.id?<Profile _id={query.id} profileId={profile.data.user._id}/>:null}
+        {query.id===profile.data.user._id?<Profile data={profile.data.user}/>:null}
+        {query.id&&query.id!==profile.data.user._id?<User _id={query.id} profileId={profile.data.user._id}/>:null}
         {query.talentId&&query.userName?<RateUser userId={query.talentId} userName={query.userName} profile={profile.data.user}/>:null}
        <div style={{ height: '100vh', width: '100%' }}>   
           <GoogleMapReact
