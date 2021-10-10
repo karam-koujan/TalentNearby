@@ -22,6 +22,8 @@ export const ReviewerName = styled.span`
 
 export const ReviewerText = styled.p`
   color:${props=>props.theme.third};
+  font-size:.9rem;
+  margin:.5rem 0 0 0;
 `
 export const NoReviews = styled.p`
   color:${props=>props.theme.third};
@@ -38,4 +40,9 @@ width:fit-content;
 &:hover,&:focus{
   text-decoration:underline;
 }
+`
+export const ErrorMsg= styled.span`
+ color:red;  
+ margin:.5rem 0;
+ font-size:.8rem;
 `

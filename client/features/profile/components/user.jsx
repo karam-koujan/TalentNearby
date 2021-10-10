@@ -1,4 +1,4 @@
-import RatingStars from "../../common/components/ratingStars/";
+import RatingStars from "../../common/components/ratingStars";
 import Reviews from "./reviews";
 import { useFetchQuery } from "../../../hooks/useFetchQuery";
 import {ProfileImgWrapper,Wrapper} from "../templates/layout";
