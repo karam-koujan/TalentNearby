@@ -12,7 +12,6 @@ import { useFormik } from "formik";
 import { useMutation,useQueryClient } from "react-query";
 import  {useUpdate} from "../../../hooks/httpReq/useUpdate";
 import { useUpload } from "../../../hooks/useUpload";
-import UpdateProfileImg from "./updateProfileImg";
 
 
 const Profile = ({data:{userName,profileImg,status,bio,active,rating,reviewersNum,job,email,phoneNumber,_id}})=>{

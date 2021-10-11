@@ -63,23 +63,7 @@ export const ReviewWrapper = styled.div`
 
 export const UserNameRatingWrapper = styled.div``
 
-export const ModalWrapper = styled.div`
- align-items:center;
- background-color:red;
- bottom:0;
- display:flex;
- justify-content:center;
- position:absolute;
- right:0;
- top:0;
- width:100%;
- z-index:1;
-`
 
-export const Modal = styled.div`
- background-color:${props=>props.theme.secondary};
- width:400px;
-`
 export const UploadImgElementsWrapper=styled.div`
  align-items:center;
  bottom:0;
