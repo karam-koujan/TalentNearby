@@ -21,6 +21,15 @@ const  Index = ()=> {
   const profile = useFetchQuery("user","http://localhost:8080/api/profile/");    
   const users = useFetchLazyQuery("users",`http://localhost:8080/api/position/users/?neLat=${bounds.ne.lat}&neLng=${bounds.ne.lng}&nwLat=${bounds.nw.lat}&nwLng=${bounds.nw.lng}&swLat=${bounds.sw.lat}`,Boolean(bounds.ne.lat))
   const {query} = useRouter();
+ const  router = useRouter()
+  const [showPage,setShowPage] = React.useState(false)
+  React.useEffect(()=>{
+    const isUserLogged = localStorage.getItem("token");
+    if(!isUserLogged){
+     return router.push("/auth/signin")
+    }
+    setShowPage(true)
+ },[]) 
   React.useEffect(()=>{  
     
     if(!profile.isLoading&&!(profile.data.user.longitude&&profile.data.user.latitude)){
@@ -55,7 +64,10 @@ const  Index = ()=> {
   } 
   const handleOnChildEnter = ()=>setDisableMapClick(true)
   const handleOnChildLeave = ()=>setDisableMapClick(false)
-
+  if(!showPage){
+    return null
+  }
+   
   if(!profile.isLoading&&!(profile.data.user.longitude&&profile.data.user.latitude)&&!defaultGeolocation){
     return(
       <div>allow the browser to take geolocation position</div>
@@ -104,10 +116,11 @@ const  Index = ()=> {
           </GoogleMapReact>
         </div>
       </Layout>
-     ):"...isLoading"
+     ):null
      
     )
   
 }
 
 export default Index;
+
