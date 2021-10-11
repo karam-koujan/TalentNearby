@@ -19,9 +19,10 @@ const Search = ()=>{
        const isProfileEmpty = !data.pages.length;
        if(!isProfileEmpty){
            const userId = data.pages[0].profiles[0]._id;
+           
            push(`/?id=${userId}`)
-       }
-       
+        }
+        
    }
   return(
       <Form onSubmit={handleSearch}>
@@ -39,7 +40,7 @@ const Search = ()=>{
                             data.pages.map((profiles,currentPageIdx)=>(
                                 <>
                                 {profiles.profiles.map(({userName,profileImg,rating,_id},profileIndex)=>(
-                                      <SearchBoard userName={userName} _id={_id}  profileImg={profileImg} rating={rating} key={profileIndex}/>
+                                      <SearchBoard setUserName={setUserName} userName={userName} _id={_id}  profileImg={profileImg} rating={rating} key={profileIndex}/>
                                  ))}
                                  {currentPageIdx===data.pages.length-1?<Waypoint onEnter={()=>fetchMore()}/>:null}                                
                                 </>

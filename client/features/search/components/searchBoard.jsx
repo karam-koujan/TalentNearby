@@ -4,10 +4,11 @@ import { UserName } from "../templates/text";
 import Avatar from "../../common/components/avatar";
 import RatingStars from "../../common/components/ratingStars";
 
-const SearchBoard = ({userName,profileImg,rating,_id})=>{
+const SearchBoard = ({userName,profileImg,rating,_id,setUserName})=>{
       const router = useRouter();
       const handleClick= ()=>{
           router.push(`/?id=${_id}`,undefined,{shallow:true})
+          setUserName("")
       }
       return(
             
