@@ -20,18 +20,15 @@ const  Index = ()=> {
   const [bounds,setBounds] = React.useState({ne:{lat:undefined,lng:undefined},nw:{lat:undefined,lng:undefined},sw:{lat:undefined}});
   const profile = useFetchQuery("user","http://localhost:8080/api/profile/");    
   const users = useFetchLazyQuery("users",`http://localhost:8080/api/position/users/?neLat=${bounds.ne.lat}&neLng=${bounds.ne.lng}&nwLat=${bounds.nw.lat}&nwLng=${bounds.nw.lng}&swLat=${bounds.sw.lat}`,Boolean(bounds.ne.lat))
-  const {query} = useRouter();
- const  router = useRouter()
+  const {query,push} = useRouter();
   const [showPage,setShowPage] = React.useState(false)
-  React.useEffect(()=>{
+  
+  React.useEffect(()=>{  
     const isUserLogged = localStorage.getItem("token");
     if(!isUserLogged){
-     return router.push("/auth/signin")
+     return push("/auth/signin")
     }
     setShowPage(true)
- },[]) 
-  React.useEffect(()=>{  
-    
     if(!profile.isLoading&&!(profile.data.user.longitude&&profile.data.user.latitude)){
     navigator.geolocation.getCurrentPosition((position)=>{
      
