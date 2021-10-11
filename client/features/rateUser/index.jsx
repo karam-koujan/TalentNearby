@@ -7,13 +7,14 @@ import {Form,TextArea,Label,Button} from "./template/form";
 import {useFormik} from "formik";
 import {useUpdate} from "../../hooks/httpReq/useUpdate";
 import {Close} from "./template/icons";
-import {useQueryClient} from "react-query";
+import {useMutation, useQueryClient} from "react-query";
 import { Router, useRouter } from "next/router";
 const RateUser = ({userName,profile:{active},userId,...props})=>{
   const [rating,setRating] = React.useState(0)
   const [err,setErr] = React.useState("")
   const setUpdate = useUpdate();
   const queryClient = useQueryClient()
+  const mutation = useMutation(newData=>setUpdate("http://localhost:8080/api/rate/",newData))
   const router = useRouter()
   const handleRate = (rating)=>{
        setRating(rating)
@@ -27,9 +28,13 @@ const RateUser = ({userName,profile:{active},userId,...props})=>{
            if(!active){
              setErr("please verifiy your email")
            }
-           await setUpdate("http://localhost:8080/api/rate/",{text:values.review,talentId:userId,rating})
-           queryClient.invalidateQueries(["users",userId])
-           queryClient.invalidateQueries(["reviews",userId])
+           mutation.mutate({text:values.review,talentId:userId,rating},{
+             onSuccess:()=>{
+              queryClient.invalidateQueries(["users",userId])
+              queryClient.invalidateQueries(["reviews",userId])
+             }
+           })
+          
            router.replace("/",undefined,{shallow:true})
         }catch(err){
         console.log(err)

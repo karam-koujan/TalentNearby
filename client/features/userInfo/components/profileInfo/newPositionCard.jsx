@@ -8,9 +8,10 @@ const NewPositionCard = ({handleCloseCard,data,onMouseEnter,onMouseLeave,lng,lat
     const {mutate,errors} = useMutation(newData=>setPost("http://localhost:8080/api/profile/changePosition",newData))
     const client = useQueryClient()  
     const onSubmit = (data)=>{
+        
         mutate({...data,longitude:lng,latitude:lat})
         client.invalidateQueries('user')
-
+        window.location.reload(true)
     }
    
     return(

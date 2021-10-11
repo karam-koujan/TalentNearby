@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
  padding:1rem 0;
  transform:translate(-50%,-100%); 
  width:300px;
- z-index:10000;
+ z-index:1;
 
   ${({isLoading})=>isLoading?css`
   height:280px;

@@ -7,7 +7,7 @@ export const Header = styled.header`
   display:flex;
   justify-content:space-between;
   left:0;
-  padding:.5rem 1rem;
+  padding:1rem ;
   position:absolute;
   right:0;
   width:100%;
@@ -17,6 +17,6 @@ export const Header = styled.header`
 
 export const Aside = styled.aside`
   background-color:${({theme,isEmailSent})=>isEmailSent?theme.third:theme.primary};
-`
+  `
 
 

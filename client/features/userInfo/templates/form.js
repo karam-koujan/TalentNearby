@@ -26,9 +26,7 @@ width:100%;
 }
 `
 
-export const JobOptions = styled.option`
- 
-`
+
 
 export const TextArea = styled.textarea`
  border:2px solid ${props=>props.theme.primary};

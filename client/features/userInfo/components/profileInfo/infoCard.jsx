@@ -44,7 +44,7 @@ const InfoCard = ({data:{userName,profileImg,job,phoneNumber,bio,rating,email,st
          <UserName>
              {userName}
          </UserName>
-         {status==="talent"?<RatingStars rating={rating}/>:null}
+         {status==="talent"?<RatingStars margin="0 auto" rating={rating}/>:null}
          <Form   method="PUT" onSubmit={handleSubmit}>
              {errors?<p>{errors.message}</p>:null}
              <FormChildWrapper>
