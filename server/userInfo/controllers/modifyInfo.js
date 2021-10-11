@@ -1,6 +1,6 @@
 const Joi = require("joi");
 const Client = require("../../model/Client");
-const {validation,updateInfo} = require("../providers/modifyInfo");
+const {validation,updateInfo,updateProfileImg} = require("../providers/modifyInfo");
 exports.modifyUserInfo = async (req,res,next)=>{
      const validationSchema = Joi.object({
          phoneNumber : Joi.string(),
@@ -35,4 +35,20 @@ exports.changeUserPosition = async (req,res,next)=>{
     }catch(err){
         next(err)
     }
+}
+
+
+
+exports.updateProfileImg = async(req,res,next)=>{
+    const {_id} = req.user ;
+    const {profileImg} = req.body;
+   try{
+    await updateProfileImg(profileImg,_id)
+    res.status(201).json({
+        message:"profile image changes",
+        error:false
+    })
+   }catch(err){
+             next(err)
+   }
 }

@@ -1,6 +1,6 @@
 const Client = require("../../model/Client");
 const Review = require("../../model/Review");
-
+const {calculateDistance} = require("../providers/profile");
 exports.getProfile = (req,res)=>{
     res.json({
         user:req.user,
@@ -10,11 +10,13 @@ exports.getProfile = (req,res)=>{
 }
 exports.getProfileById = async(req,res)=>{
     const id = req.params.id ; 
+    const profile = req.user;
     try{
         const user = await Client.findById(id)
-        user.password = ""
+        const distance = calculateDistance(profile.latitude,user.latitude,profile.longitude,user.longitude)
+        user.password = "";
         res.json({
-            user,
+            user:{...user._doc,distance},
             error:false
         })
     }catch{

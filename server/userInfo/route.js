@@ -1,13 +1,15 @@
 const express = require("express");
 const router = express.Router()
-const {getProfile,getProfileById} = require("./controllers/profile");
-const {modifyUserInfo, changeUserPosition,rateUser} = require("./controllers/modifyInfo")
-
+const {getProfile,getProfileById,getProfileReviews} = require("./controllers/profile");
+const {modifyUserInfo, changeUserPosition,updateProfileImg} = require("./controllers/modifyInfo")
+const {isEmailVerified} = require("../middlewares/");
 router.get("/",getProfile)
 router.get("/:id",getProfileById)
    
-router.put("/modifyInfo",modifyUserInfo)
-router.post("/changePosition",changeUserPosition)
+router.put("/modifyInfo",isEmailVerified,modifyUserInfo)
+router.put("/updateProfileImg",updateProfileImg)
+router.post("/changePosition",isEmailVerified,changeUserPosition)
 
-router.put("/rate",rateUser)
+
+router.get("/reviews/:id",getProfileReviews)
 module.exports = router

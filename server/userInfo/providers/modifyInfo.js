@@ -1,7 +1,6 @@
-const { Model } = require("mongoose");
-const { isUserNameExist } = require("../../auth/providers/signup");
+const Client = require("../../model/Client");
 const {ValidationError} = require("../../utils/errors/validationError")
-
+const {AuthorizationError} = require("../../utils/errors/authorizationError")
 
 exports.validation = (body,schema)=>{
      
@@ -24,11 +23,13 @@ exports.updateInfo = (id,body,Model)=>{
     })
 }
 
-exports.rateUser = async(id,rating,Model)=>{
-    return new Promise((resolve,reject)=>{
-        Model.findByIdAndUpdate(id,{rating},(err,user)=>{
-                 if(err) return reject()
-                 if(!user.active) return reject(new ValidationError('the user email is unverified please verify your email'))
-                 return resolve()
-        })
-    })}
+
+
+exports.updateProfileImg = (image,_id)=>{
+      return new Promise((resolve,reject)=>{
+        Client.findByIdAndUpdate(_id,{profileImg:image},(err)=>{
+            if(err) return reject(new AuthorizationError('profileImg update unauthorized'))
+            return resolve()
+        }) 
+    }) 
+}
