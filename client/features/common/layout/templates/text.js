@@ -12,3 +12,12 @@ export const VerifiyEmail = styled.span`
  cursor:pointer;
  text-decoration:underline;
 `
+export const BoxElement=styled.p`
+ color:${props=>props.theme.third};
+ cursor:pointer;
+ margin:0;
+ padding:1rem 1rem;
+ &:hover,&:focus{
+     background-color:rgba(0,0,0,.1);
+ }
+`
