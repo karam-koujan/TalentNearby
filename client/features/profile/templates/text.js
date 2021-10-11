@@ -23,7 +23,7 @@ export const ReviewerName = styled.span`
 export const ReviewerText = styled.p`
   color:${props=>props.theme.third};
   font-size:.9rem;
-  margin:.5rem 0 0 0;
+  margin:.5rem 0 0 3rem;
 `
 export const NoReviews = styled.p`
   color:${props=>props.theme.third};

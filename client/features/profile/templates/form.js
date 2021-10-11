@@ -47,3 +47,24 @@ export const Button = styled.button`
       opacity:.0rem;
   }
 `
+export const UploadImgBtn = styled.button`
+  background-color:${props=>props.theme.third}; 
+  border-radius:1000px;
+  color:${props=>props.theme.secondary};
+  letter-spacing:1px;
+  padding:.8rem 1rem;
+  position:relative;
+  text-transform:uppercase;
+  top:0%;
+  &>span,&>input{
+    cursor:pointer;
+  }
+`
+export const UpdateProfileImgBtn = styled.button`
+  color:${props=>props.theme.third};
+  display:block;
+  font-size:1rem;
+  font-weight:700;
+  & span{
+  }
+`

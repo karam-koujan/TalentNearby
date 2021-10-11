@@ -46,6 +46,7 @@ export const Wrapper = styled.aside`
 `
 
 export const ProfileImgWrapper = styled.div`
+  position:relative;
  ${({profileImg})=>!profileImg?css`
   background-color:${props=>props.theme.third};
   height:200px;
@@ -61,3 +62,32 @@ export const ReviewWrapper = styled.div`
 `
 
 export const UserNameRatingWrapper = styled.div``
+
+export const ModalWrapper = styled.div`
+ align-items:center;
+ background-color:red;
+ bottom:0;
+ display:flex;
+ justify-content:center;
+ position:absolute;
+ right:0;
+ top:0;
+ width:100%;
+ z-index:1;
+`
+
+export const Modal = styled.div`
+ background-color:${props=>props.theme.secondary};
+ width:400px;
+`
+export const UploadImgElementsWrapper=styled.div`
+ align-items:center;
+ bottom:0;
+ cursor:pointer;
+ flex-direction:column;
+ display:flex;
+ justify-content:center;
+ position:absolute;
+ top:0;
+ width:100%;
+`

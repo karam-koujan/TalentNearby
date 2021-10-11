@@ -15,3 +15,19 @@ export const Close =styled.span`
  color:${props=>props.theme.third};
  cursor:pointer;
 `
+
+export const ChangeProfileImgIcon = styled.span`
+ align-items:center;
+ background-color:${props=>props.theme.third};
+ border-radius:50%;
+ color:${props=>props.theme.secondary};
+ display:flex;
+ justify-content:center;
+ font-size:1.5rem;
+ height:40px;
+ width:40px;
+
+ &:hover,&:focus{
+   opacity:.7;
+ }
+`

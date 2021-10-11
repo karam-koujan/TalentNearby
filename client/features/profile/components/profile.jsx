@@ -2,15 +2,17 @@ import * as React from "react";
 import RatingStars from "../../common/components/ratingStars/";
 import Reviews from "./reviews";
 import Styles from "../styles/styles.module.css";
-import {ProfileImgWrapper,Wrapper} from "../templates/layout";
+import {ProfileImgWrapper,UploadImgElementsWrapper,Wrapper} from "../templates/layout";
 import {ReviewersNum, UserName,ErrorMsg} from "../templates/text";
 import { Discription,DescriptionList,DescriptionTitle } from "../templates/list";
-import {Icon,Pencil,Close} from "../templates/icons";
-import { TextArea,Input,Button} from "../templates/form";
+import {Icon,Pencil,Close, ChangeProfileImgIcon} from "../templates/icons";
+import { TextArea,Input,Button,UploadImgBtn, UpdateProfileImgBtn} from "../templates/form";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import { useMutation,useQueryClient } from "react-query";
 import  {useUpdate} from "../../../hooks/httpReq/useUpdate";
+import { useUpload } from "../../../hooks/useUpload";
+import UpdateProfileImg from "./updateProfileImg";
 
 
 const Profile = ({data:{userName,profileImg,status,bio,active,rating,reviewersNum,job,email,phoneNumber,_id}})=>{
@@ -19,10 +21,14 @@ const Profile = ({data:{userName,profileImg,status,bio,active,rating,reviewersNu
         phoneNumber,
         bio
        })
+       const [file,setFile] = React.useState("")  
+       const [uploadedImg,setUploadedImg] = React.useState("")
+       const [hoverOnProfileImg,setHoverOnProfileImg] = React.useState(false)
        const setUpdate = useUpdate()
-       const mutation = useMutation(newData=>setUpdate("http://localhost:8080/api/profile/modifyInfo",newData))
+       const infoMutation = useMutation(newData=>setUpdate("http://localhost:8080/api/profile/modifyInfo",newData))
+       const profileImgMutation = useMutation(newData=>setUpdate("http://localhost:8080/api/profile/updateProfileImg",newData))
        const client = useQueryClient()  
-   
+       const setUpload = useUpload()
     
       
     const [err,setErr] = React.useState("");
@@ -41,8 +47,11 @@ const Profile = ({data:{userName,profileImg,status,bio,active,rating,reviewersNu
              if(!active){
                 return setErr("please verifiy your email")
              }
-             mutation.mutate(formData)
-             client.invalidateQueries('user')
+             infoMutation.mutate(formData,{
+               onSuccess:()=>{
+                 client.invalidateQueries('user')
+               }
+             })
              setEnableElementModification({
                 phoneNumber:true,
                 bio:true
@@ -50,19 +59,57 @@ const Profile = ({data:{userName,profileImg,status,bio,active,rating,reviewersNu
              window.location.reload(true)
            }
   })   
-    
+  const handleUpload = async(e)=>{
+    console.log(e.target.files[0])
+        try{
+           setFile(e.target.files[0])
+           const imgUrl = await setUpload(e.target.files[0],"image");
+           console.log(imgUrl)
+           setUploadedImg(imgUrl)       
+          }catch(err){
+            console.log(err)
+        }
+  }  
+ const handleUpdateProfileImg = ()=>{
+     profileImgMutation.mutate({profileImg:uploadedImg},{
+       onSuccess:()=>{
+         client.invalidateQueries("user")
+       }
+     })
+     setUploadedImg("")
+ }
      return(
+       
       <Wrapper>
           <>
-          <ProfileImgWrapper profileImg={profileImg}>
-            {profileImg?<img loading="lazy" src={profileImg}  alt={`${userName} image`}/>:null}
+          <ProfileImgWrapper profileImg={uploadedImg||profileImg} onMouseEnter={()=>setHoverOnProfileImg(true)} onMouseLeave={()=>setHoverOnProfileImg(false)}>
+            {profileImg?<img loading="lazy" src={uploadedImg?uploadedImg:profileImg}  alt={`${userName} image`}/>:null}
+             {uploadedImg?(
+                    <div className={Styles.uploadImgIconsWrapper}>
+                      <UpdateProfileImgBtn onClick={()=>setUploadedImg("")}>
+                    <ChangeProfileImgIcon className="fa fa-close"></ChangeProfileImgIcon>
+                      </UpdateProfileImgBtn>
+                      <UpdateProfileImgBtn onClick={handleUpdateProfileImg}>
+                    <ChangeProfileImgIcon className="fa fa-check">
+                    </ChangeProfileImgIcon>
+                      </UpdateProfileImgBtn>
+                  </div>
+            ):null}
+             <UploadImgElementsWrapper>
+           {!uploadedImg&&hoverOnProfileImg?(
+           <UploadImgBtn>
+            <span>change profile image</span>
+            <input  type="file" className={Styles.inputFile} ariaLabel="change your profile image" onChange={handleUpload}/>
+          </UploadImgBtn>
+           ):null}
+             </UploadImgElementsWrapper>
           </ProfileImgWrapper>
           <UserName>
            {userName}
            </UserName>
            {status==="talent"?(
                  <>
-                 <RatingStars rating={rating} margin="0 auto"  />
+                 <RatingStars tooltip="your rating" rating={rating} margin="0 auto"  />
                  <ReviewersNum href="#reviews">{reviewersNum} reviews</ReviewersNum>
                  </>
            ):null}

@@ -23,7 +23,7 @@ const Profile = ({_id,profileId})=>{
          </UserName>
          {data.user.status==="talent"?(
                <>
-<              RatingStars rating={data.user.rating} margin="0 auto"  onClick={profileId!==_id?()=>router.push(`/?talentId=${_id}&userName=${data.user.userName}`,undefined,{shallow:true}):null}/>
+            <RatingStars tooltip={`rate ${data.user.userName}`} rating={data.user.rating} style={{'cursor':'pointer','margin':'0 auto'}}   onClick={profileId!==_id?()=>router.push(`/?talentId=${_id}&userName=${data.user.userName}`,undefined,{shallow:true}):null}/>
                <ReviewersNum href="#reviews">{data.user.reviewersNum} reviews</ReviewersNum>
                </>
          ):null}
