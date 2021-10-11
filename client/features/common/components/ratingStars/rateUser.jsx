@@ -18,8 +18,7 @@ const RateUser = ({handleRate,margin,...props})=>{
  
  
     return(
-    <Wrapper {...props} style={{'--margin':margin}} onClick={handleClick}  >
-    
+    <Wrapper {...props} style={{'--margin':margin}}  onClick={handleClick}  >
          <Star className="fa fa-star"  onMouseEnter={()=>handleHover(1)} checked={1<=rating}/>
          <Star className="fa fa-star" onMouseEnter={()=>handleHover(2)}  checked={2<=rating}/>
          <Star className="fa fa-star"  onMouseEnter={()=>handleHover(3)}   checked={3<=rating}/>
