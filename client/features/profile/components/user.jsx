@@ -28,8 +28,15 @@ const Profile = ({_id,profileId})=>{
                </>
          ):null}
          <DescriptionList>
+         
          {data.user.status==="talent"?(
            <>
+           <DescriptionTitle>
+             distance
+           </DescriptionTitle>
+           <Discription>
+             {data.user.distance}
+           </Discription>
            <DescriptionTitle>
              job
            </DescriptionTitle>
