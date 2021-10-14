@@ -10,6 +10,7 @@ import {useFetchQuery} from "../hooks/useFetchQuery";
 import {useFetchLazyQuery} from "../hooks/useFetchLazyQuery";
 import {useRouter} from "next/router";
 import RateUser from '../features/rateUser';
+import { useQueryClient } from 'react-query';
 
 const  Index = ()=> {
   const options = {fullscreenControl: false ,disableDoubleClickZoom:true,clickableIcons: false}
@@ -22,7 +23,7 @@ const  Index = ()=> {
   const users = useFetchLazyQuery("users",`http://localhost:8080/api/position/users/?neLat=${bounds.ne.lat}&neLng=${bounds.ne.lng}&nwLat=${bounds.nw.lat}&nwLng=${bounds.nw.lng}&swLat=${bounds.sw.lat}`,Boolean(bounds.ne.lat))
   const {query,push} = useRouter();
   const [showPage,setShowPage] = React.useState(false)
-  
+  const client = useQueryClient()
   React.useEffect(()=>{  
     const isUserLogged = localStorage.getItem("token");
     if(isUserLogged===null){
@@ -59,6 +60,12 @@ const  Index = ()=> {
       setDisableMapClick(false)
     }
   } 
+  const handleFetchTalents = ({bounds})=>{
+    console.log(bounds)
+    setBounds(bounds)
+    client.invalidateQueries('users')
+   
+  }
   const handleOnChildEnter = ()=>setDisableMapClick(true)
   const handleOnChildLeave = ()=>setDisableMapClick(false)
   if(!showPage){
@@ -85,8 +92,7 @@ const  Index = ()=> {
             defaultZoom={17}
             options={options} 
             onClick={handleClick}
-            onChange={({bounds})=>setBounds(bounds)}
-           
+            onChange={handleFetchTalents}
             yesIWantToUseGoogleMapApiInternals 
           > 
             {showNewUserPositionCard?<NewPositionCard handleCloseCard={handleCloseCard(showNewUserPositionCard,setShowNewUserPositionCard)} lat={newGeolocation?newGeolocation.latitude:null} lng={newGeolocation?newGeolocation.longitude:null} data={profile.data.user} onMouseEnter={handleOnChildEnter} onMouseLeave={handleOnChildLeave}   />:null }
