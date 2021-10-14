@@ -1,6 +1,7 @@
-import axios  from "axios"
-
+import axios  from "axios";
+import { useRouter } from "next/router";
 export const useFetch = ()=>{
+    const router = useRouter()
     return async(endPoint,token=true)=>{
          const headers = {
             "Content-Type":"application/json"
@@ -10,10 +11,11 @@ export const useFetch = ()=>{
         }
         try{
             const response = await axios.get(endPoint,{headers});
-            console.log(response)
             return response.data
         }catch(err){
-            console.log(err)
+                 if(err.response.message="invalid token"){
+                   return  router.push("/auth/signin")
+                 }
         }
     }
 }
