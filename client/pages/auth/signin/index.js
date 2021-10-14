@@ -18,7 +18,7 @@ const Index = ()=>{
         </Header>
      <FlexWrapper>
         <IntroSection style={{"--width":"80%","--margin":"40% 0 0 0"}}>
-            <Wrapper>
+            <Wrapper >
             <SecondaryHeading>
                 welcome to project
             </SecondaryHeading>

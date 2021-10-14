@@ -25,8 +25,8 @@ const  Index = ()=> {
   
   React.useEffect(()=>{  
     const isUserLogged = localStorage.getItem("token");
-    if(!isUserLogged){
-     return push("/auth/signin")
+    if(isUserLogged===null){
+      return push("/auth/signin")
     }
     setShowPage(true)
     if(!profile.isLoading&&!(profile.data.user.longitude&&profile.data.user.latitude)){
