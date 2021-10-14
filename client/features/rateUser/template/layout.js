@@ -24,7 +24,7 @@ export const Modal = styled.div`
  max-width:500px; 
  padding:2rem 2rem;
  position:relative;
- width:800%;
+ width:80%;
  z-index:10000;
 `
 

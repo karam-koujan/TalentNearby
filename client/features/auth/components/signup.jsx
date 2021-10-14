@@ -4,7 +4,7 @@ import Spinner from "../../common/components/spinner";
 import Styles from "../styles/style.module.css";
 import {useFormik} from "formik";
 import {useRouter} from "next/router";
-import {Form,Input,InputErr,PrimaryBtn,CheckBox,CheckBoxLabel,Label,SignUpPassword,ServerErr,Warning,LongLatitude,Email,CheckBoxTitle,SecondaryBtn,SlideDownWrapper,InputWrapper} from "../templates/";
+import {Form,Input,LinkText,InputErr,Text,PrimaryBtn,CheckBox,CheckBoxLabel,Label,SignUpPassword,ServerErr,Warning,LongLatitude,Email,CheckBoxTitle,SecondaryBtn,SlideDownWrapper,InputWrapper} from "../templates/";
 import { usePost } from "../../../hooks/httpReq/usePost";
 
 
@@ -152,8 +152,8 @@ import { usePost } from "../../../hooks/httpReq/usePost";
         <CheckBoxTitle>
           Do you want to create your account as ?
         </CheckBoxTitle>
-         <div style={{display:"flex",width:"40%","justifyContent":"space-between"}}>
-          <div >
+         <div style={{display:"flex",width:"100%",}}>
+          <div style={{margin:"0 1rem 0 0"}}>
           <CheckBox 
           type="checkbox" 
           id="client"  
@@ -186,7 +186,9 @@ import { usePost } from "../../../hooks/httpReq/usePost";
           </div>
         </div>
       
-       
+       <Text>
+         already have an account ?<LinkText href="/auth/signin">sign in</LinkText>
+       </Text>
          <PrimaryBtn type="submit" >
            {isLoading?<Spinner/>:'sign up'}
          </PrimaryBtn>

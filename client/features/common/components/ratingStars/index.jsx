@@ -10,7 +10,7 @@ const RatingStars = ({rating,enableRating,handleRate,tooltip,handleClick,size,ma
          <Star className="fa fa-star"  checked={3<=rating} size={size}/>
          <Star className="fa fa-star"  checked={4<=rating} size={size}/>
          <Star className="fa fa-star"  checked={5<=rating} size={size}/>
-         <span className="tooltiptext">{tooltip}</span>
+         {tooltip?<span className="tooltiptext">{tooltip}</span>:null}
 
      </Wrapper>
         )

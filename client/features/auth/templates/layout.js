@@ -1,5 +1,5 @@
 import styled,{css} from "styled-components";
-
+import {media} from "../../../styles/media";
 
 const Header = styled.header`
 padding:2rem 3rem;
@@ -16,6 +16,9 @@ const IntroSection = styled.section`
  flex-direction:column;
  width:40%;
  z-index:0;
+ @media(max-width:${media.small}){
+   display:none;
+ } 
 `
 
 const FormSection = styled.section`
@@ -24,6 +27,9 @@ const FormSection = styled.section`
  display:flex;
  flex-direction:column;
  width:60%;
+ @media(max-width:${media.small}){
+  width:100%;
+}
 `
 
 const FlexWrapper = styled.main`
@@ -32,11 +38,18 @@ const FlexWrapper = styled.main`
  width:100%;
  position:absolute;
  top:0;
+ @media(max-width:${media.small}){
+  display:block;
+}
 `
 
 const Wrapper = styled.div`
   margin:var(--margin);
   width:var(--width);
+  @media(max-width:${media.small}){
+    padding:0 1rem;
+    width:100%;
+  }
 `
 const InputWrapper = styled.div`
   margin:0 0 1rem 0;

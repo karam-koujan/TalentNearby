@@ -7,7 +7,7 @@ import {useRouter} from "next/router";
 import {useMutation,useQueryClient} from "react-query";
 import { usePost } from "../../../hooks/httpReq/usePost";
 import {isFormValid} from "../helpers/isFormValid";
-import {Form,Input,PrimaryBtn,Label,ForgotPass,InputErr,InputWrapper,ServerErr} from "../templates/";
+import {Form,Input,PrimaryBtn,Label,ForgotPass,InputErr,InputWrapper,ServerErr,Text,LinkText} from "../templates/";
 
 
 
@@ -74,6 +74,10 @@ const SignIn = ()=>{
         {errors.password&&touched.password?<InputErr>{errors.password}</InputErr>:null}
 
           </InputWrapper>
+          <Text>
+         Dont have account ? 
+         <LinkText href="/auth/signup">   sign up</LinkText>
+       </Text>
         <Link href={`/auth/forgotpassword/talent`}>
         <ForgotPass>
             Forgot your password ?
