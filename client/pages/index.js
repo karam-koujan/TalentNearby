@@ -11,63 +11,66 @@ import {useFetchLazyQuery} from "../hooks/useFetchLazyQuery";
 import {useRouter} from "next/router";
 import RateUser from '../features/rateUser';
 import { useQueryClient } from 'react-query';
+import { reducer } from '../reducers/mainPage';
 
 const  Index = ()=> {
   const options = {fullscreenControl: false ,disableDoubleClickZoom:true,clickableIcons: false}
-  const [newGeolocation,setNewGeoLocation] = React.useState(undefined);
-  const [defaultGeolocation,setDefaultGeoLocation] = React.useState(undefined);
-  const [disableMapClick,setDisableMapClick] = React.useState(false);
-  const [showNewUserPositionCard,setShowNewUserPositionCard] = React.useState(false);
-  const [bounds,setBounds] = React.useState({ne:{lat:undefined,lng:undefined},nw:{lat:undefined,lng:undefined},sw:{lat:undefined}});
+  const [state,dispatch] = React.useReducer(reducer,{
+    newGeolocation:undefined,
+    defaultGeolocation:undefined,
+    disableMapClick:false,
+    showNewUserPositionCard:false,
+    bounds:{ne:{lat:undefined,lng:undefined},nw:{lat:undefined,lng:undefined},sw:{lat:undefined}},
+    showPage:false
+  })
+  const {newGeolocation,defaultGeolocation,disableMapClick,showNewUserPositionCard,bounds,showPage} = state
   const profile = useFetchQuery("user","http://localhost:8080/api/profile/");    
   const users = useFetchLazyQuery("users",`http://localhost:8080/api/position/users/?neLat=${bounds.ne.lat}&neLng=${bounds.ne.lng}&nwLat=${bounds.nw.lat}&nwLng=${bounds.nw.lng}&swLat=${bounds.sw.lat}`,Boolean(bounds.ne.lat))
   const {query,push} = useRouter();
-  const [showPage,setShowPage] = React.useState(false)
   const client = useQueryClient()
   React.useEffect(()=>{  
     const isUserLogged = localStorage.getItem("token");
     if(isUserLogged===null){
       return push("/auth/signin")
     }
-    setShowPage(true)
+    dispatch({type:"set_showPage",payload:true})
     if(!profile.isLoading&&!(profile.data.user.longitude&&profile.data.user.latitude)){
     navigator.geolocation.getCurrentPosition((position)=>{
      
-        setDefaultGeoLocation({
-         longitude:position.coords.longitude,
-         latitude:position.coords.latitude
-       })
+       dispatch({type:"set_defaultGeoLocation",payload:{
+        longitude:position.coords.longitude,
+        latitude:position.coords.latitude
+      }})
 
        
       })
     }
       
-    return ()=>setDefaultGeoLocation(undefined)
+    return ()=>dispatch({type:"set_defaultGeoLocation",payload:undefined})
   },[profile.isLoading,profile.data])
   const handleClick = ({lng,lat})=>{
     if(!disableMapClick){
-       setShowNewUserPositionCard(true)
-       setNewGeoLocation({
-          longitude:lng,
-          latitude:lat
-        })
+       dispatch({type:"set_showNewUserPositionCard",payload:true})
+       dispatch({type:"set_newGeoLocation",payload:{
+        longitude:lng,
+        latitude:lat
+      }})
 
      } 
   } 
-  const handleCloseCard = (state,setState)=>{
+  const handleCloseCard = (dispatch)=>{
     return ()=>{
-      setState(false)
-      setDisableMapClick(false)
+      dispatch({type:"set_showNewUserPositionCard",payload:false})
+      dispatch({type:"set_disableMapClick",payload:false})
     }
   } 
   const handleFetchTalents = ({bounds})=>{
-    console.log(bounds)
-    setBounds(bounds)
+    dispatch({type:"set_bounds",payload:bounds})
     client.invalidateQueries('users')
    
   }
-  const handleOnChildEnter = ()=>setDisableMapClick(true)
-  const handleOnChildLeave = ()=>setDisableMapClick(false)
+  const handleOnChildEnter = ()=>dispatch({type:"set_disableMapClick",payload:true})
+  const handleOnChildLeave = ()=>dispatch({type:"set_disableMapClick",payload:false})
   if(!showPage){
     return null
   }
@@ -95,7 +98,7 @@ const  Index = ()=> {
             onChange={handleFetchTalents}
             yesIWantToUseGoogleMapApiInternals 
           > 
-            {showNewUserPositionCard?<NewPositionCard handleCloseCard={handleCloseCard(showNewUserPositionCard,setShowNewUserPositionCard)} lat={newGeolocation?newGeolocation.latitude:null} lng={newGeolocation?newGeolocation.longitude:null} data={profile.data.user} onMouseEnter={handleOnChildEnter} onMouseLeave={handleOnChildLeave}   />:null }
+            {showNewUserPositionCard?<NewPositionCard handleCloseCard={handleCloseCard(dispatch)} lat={newGeolocation?newGeolocation.latitude:null} lng={newGeolocation?newGeolocation.longitude:null} data={profile.data.user} onMouseEnter={handleOnChildEnter} onMouseLeave={handleOnChildLeave}   />:null }
             {!users.isLoading&&!users.disabledFetching?users.data.users.map(({_id,longitude,latitude})=>(
            <UserMarker  
            key={_id}
