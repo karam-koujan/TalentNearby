@@ -1,4 +1,5 @@
 import * as React from "react";
+import Head from "next/head";
 import RatingStars from "../../common/components/ratingStars/";
 import Reviews from "./reviews";
 import Styles from "../styles/styles.module.css";
@@ -7,7 +8,6 @@ import {ReviewersNum, UserName,ErrorMsg} from "../templates/text";
 import { Discription,DescriptionList,DescriptionTitle } from "../templates/list";
 import {Icon,Pencil,Close, ChangeProfileImgIcon} from "../templates/icons";
 import { TextArea,Input,Button,UploadImgBtn, UpdateProfileImgBtn} from "../templates/form";
-import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import { useMutation,useQueryClient } from "react-query";
 import  {useUpdate} from "../../../hooks/httpReq/useUpdate";
@@ -15,7 +15,6 @@ import { useUpload } from "../../../hooks/useUpload";
 
 
 const Profile = ({data:{userName,profileImg,status,bio,active,rating,reviewersNum,job,email,phoneNumber,_id}})=>{
-     const router = useRouter()  
      const [enableElementModification,setEnableElementModification]  = React.useState({
         phoneNumber,
         bio
@@ -81,6 +80,9 @@ const Profile = ({data:{userName,profileImg,status,bio,active,rating,reviewersNu
        
       <Wrapper>
           <>
+          <Head>
+            <title>{userName}</title>
+          </Head>
           <ProfileImgWrapper profileImg={uploadedImg||profileImg} onMouseEnter={()=>setHoverOnProfileImg(true)} onMouseLeave={()=>setHoverOnProfileImg(false)}>
             {profileImg?<img loading="lazy" src={uploadedImg?uploadedImg:profileImg}  alt={`${userName} image`}/>:null}
              {uploadedImg?(

@@ -1,3 +1,4 @@
+import Head from "next/head";
 import RatingStars from "../../common/components/ratingStars";
 import Reviews from "./reviews";
 import { useFetchQuery } from "../../../hooks/useFetchQuery";
@@ -15,6 +16,9 @@ const Profile = ({_id,profileId})=>{
     <Wrapper>
       {isLoading?null:(
         <>
+          <Head>
+            <title>{data.user.userName}</title>
+          </Head>
         <ProfileImgWrapper profileImg={data.user.profileImg}>
           {data.user.profileImg?<img loading="lazy" src={data.user.profileImg}  alt={`${data.user.userName} image`}/>:null}
         </ProfileImgWrapper>
