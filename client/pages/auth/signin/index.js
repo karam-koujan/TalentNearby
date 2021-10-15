@@ -10,7 +10,7 @@ const Index = ()=>{
      <>
      <Head>
          <title>
-            Client | Sign in 
+            Sign in 
          </title>
      </Head>
      <Header>
