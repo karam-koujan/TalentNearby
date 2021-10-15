@@ -53,8 +53,8 @@ const Search = ()=>{
                 }
              </SearchBoardWrapperParent>
             ):null}       
-          <SearchBtn  type="button">
-              {query.id?<CloseProfileBar onClick={()=>replace("/",undefined,{ shallow: true })}>&#10006;</CloseProfileBar>:<SearchIcon className="fa fa-search" onClick={handleSearch}></SearchIcon>}
+          <SearchBtn  type="button" onClick={query.id?()=>replace("/",undefined,{ shallow: true }):handleSearch}>
+              {query.id?<CloseProfileBar>&#10006;</CloseProfileBar>:<SearchIcon className="fa fa-search"></SearchIcon>}
           </SearchBtn>
          {userName?<RemoveSearchText onClick={()=>setUserName("")}>&#10006;</RemoveSearchText>:null}
       </Form>
