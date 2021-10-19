@@ -7,14 +7,14 @@ const Index = ()=>{
        <>
        <Head>
            <title>
-               Talent | forgot password 
+               forgot password 
            </title>
        </Head>
        <Wrapper style={{'width':'40%','margin':'0 auto'}}>
        <MainHeading style={{'marginTop':'4rem'}}>
            Forgot Password
        </MainHeading>
-       <ForgotPassword forgotpasswordAs="client"/>
+       <ForgotPassword />
        </Wrapper>
        </>
     )

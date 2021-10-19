@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 
 export const Header = styled.header`
-  align-items:center;
+  align-items:flex-start;
   display:flex;
   justify-content:space-between;
   left:0;
@@ -23,23 +23,37 @@ export const Box =styled.div`
  background-color:${props=>props.theme.secondary};
  max-width:200px;
  position:absolute;
- right:1rem;
+ right:5rem;
  width:80%;
- 
  animation-name:fade-in;
  animation-duration:.3s;
  animation-fill-mode:forwards;
  animation-timing-function:ease-in;
  @keyframes fade-in{
-   from{
-    opacity:0;
-    top:90%;
-   }
-   to{
-     opacity:1;
-     top:100%;
-   }
- }
+  from{
+   opacity:0;
+  }
+  to{
+    opacity:1;
+  }
+} 
 `
+export const AvatarBox = styled(Box)`
+ top:16%;
+`
+export const FilterBox = styled(Box)`
+ padding:1rem;
+ top:70%;
+ `
 
-
+export const AvatarFilterWrapper = styled.div`
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+`
+export const FilterWrapper = styled.div`
+ align-self:center;
+ cursor:pointer;
+ margin:2rem 0 0 0;
+ width:30px;
+`

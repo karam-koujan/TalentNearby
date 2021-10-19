@@ -76,13 +76,11 @@ const SignIn = ()=>{
           </InputWrapper>
           <Text>
          Dont have account ? 
-         <LinkText href="/auth/signup">   sign up</LinkText>
+         <LinkText href="/signup">   sign up</LinkText>
        </Text>
-        <Link href={`/auth/forgotpassword/talent`}>
-        <ForgotPass>
+        <ForgotPass href="/auth/forgotpassword">
             Forgot your password ?
         </ForgotPass>
-        </Link>
         <PrimaryBtn type="submit" disabled={isValid}>
      {isLoading?<Spinner/>:'sign in'}
         </PrimaryBtn>

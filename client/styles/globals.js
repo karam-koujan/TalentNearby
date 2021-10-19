@@ -32,14 +32,15 @@ const GlobalStyle = createGlobalStyle`
 
  .tooltip {
   position: relative;
+
 }
 
 .tooltip .tooltiptext {
   top:-200%;
-  left:-10%;
+  left:-35%;
   visibility: hidden;
-  width: 120px;
   background-color: black;
+  width: 140px;
   color: #fff;
   text-align: center;
   padding: 5px 0;

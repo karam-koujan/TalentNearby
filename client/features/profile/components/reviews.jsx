@@ -31,7 +31,7 @@ const Reviews = ({profileId})=>{
           </ReviewWrapper>
           {currentReview === page.reviews.length -2 && hasNextPage ? <Waypoint onEnter={()=>fetchMore()}/>:null}
              </React.Fragment>            
-            )):<NoReviews>no reviews</NoReviews>
+            )):<NoReviews>No Reviews</NoReviews>
        ))}
       </ReviewsWrapper>
       

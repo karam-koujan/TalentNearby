@@ -12,7 +12,7 @@ import {useRouter} from "next/router";
 import RateUser from '../features/rateUser';
 import { useQueryClient } from 'react-query';
 import { reducer } from '../reducers/mainPage';
-
+import {keys} from '../config/dev';
 const  Index = ()=> {
   const options = {fullscreenControl: false ,disableDoubleClickZoom:true,clickableIcons: false}
   const [state,dispatch] = React.useReducer(reducer,{
@@ -24,9 +24,9 @@ const  Index = ()=> {
     showPage:false
   })
   const {newGeolocation,defaultGeolocation,disableMapClick,showNewUserPositionCard,bounds,showPage} = state
-  const profile = useFetchQuery("user","http://localhost:8080/api/profile/");    
-  const users = useFetchLazyQuery("users",`http://localhost:8080/api/position/users/?neLat=${bounds.ne.lat}&neLng=${bounds.ne.lng}&nwLat=${bounds.nw.lat}&nwLng=${bounds.nw.lng}&swLat=${bounds.sw.lat}`,Boolean(bounds.ne.lat))
   const {query,push} = useRouter();
+  const profile = useFetchQuery("user","http://localhost:8080/api/profile/");    
+  const users = useFetchLazyQuery("users",`http://localhost:8080/api/position/users/?neLat=${bounds.ne.lat}&neLng=${bounds.ne.lng}&nwLat=${bounds.nw.lat}&nwLng=${bounds.nw.lng}&swLat=${bounds.sw.lat}&job=${query.job}&rating=${query.rating}`,Boolean(bounds.ne.lat),true,{})
   const client = useQueryClient()
   React.useEffect(()=>{  
     const isUserLogged = localStorage.getItem("token");
@@ -36,7 +36,6 @@ const  Index = ()=> {
     dispatch({type:"set_showPage",payload:true})
     if(!profile.isLoading&&!(profile.data.user.longitude&&profile.data.user.latitude)){
     navigator.geolocation.getCurrentPosition((position)=>{
-     
        dispatch({type:"set_defaultGeoLocation",payload:{
         longitude:position.coords.longitude,
         latitude:position.coords.latitude
@@ -69,6 +68,7 @@ const  Index = ()=> {
     client.invalidateQueries('users')
    
   }
+ 
   const handleOnChildEnter = ()=>dispatch({type:"set_disableMapClick",payload:true})
   const handleOnChildLeave = ()=>dispatch({type:"set_disableMapClick",payload:false})
   if(!showPage){
@@ -90,15 +90,15 @@ const  Index = ()=> {
         {query.talentId&&query.userName?<RateUser userId={query.talentId} userName={query.userName} profile={profile.data.user}/>:null}
        <div style={{ height: '100vh', width: '100%' }}>   
           <GoogleMapReact
-            bootstrapURLKeys={{ key:"AIzaSyATBu4y1OPMu1ctdhBFvBy3L1XecgDyG1k"  }}
+            bootstrapURLKeys={{ key:keys.boostrapUrlKey  }}
             defaultCenter={defaultGeolocation?{lat:defaultGeolocation.latitude,lng:defaultGeolocation.longitude}:{lat:profile.data.user.latitude,lng:profile.data.user.longitude}}
             defaultZoom={17}
             options={options} 
             onClick={handleClick}
             onChange={handleFetchTalents}
+            onZoomChange={handleFetchTalents}
             yesIWantToUseGoogleMapApiInternals 
           > 
-            {showNewUserPositionCard?<NewPositionCard handleCloseCard={handleCloseCard(dispatch)} lat={newGeolocation?newGeolocation.latitude:null} lng={newGeolocation?newGeolocation.longitude:null} data={profile.data.user} onMouseEnter={handleOnChildEnter} onMouseLeave={handleOnChildLeave}   />:null }
             {!users.isLoading&&!users.disabledFetching?users.data.users.map(({_id,longitude,latitude})=>(
            <UserMarker  
            key={_id}
@@ -118,6 +118,7 @@ const  Index = ()=> {
               handleCloseCard={handleCloseCard}
              onMouseEnter={handleOnChildEnter} onMouseLeave={handleOnChildLeave} 
               />
+            {showNewUserPositionCard?<NewPositionCard handleCloseCard={handleCloseCard(dispatch)} lat={newGeolocation?newGeolocation.latitude:null} lng={newGeolocation?newGeolocation.longitude:null} data={profile.data.user} onMouseEnter={handleOnChildEnter} onMouseLeave={handleOnChildLeave}   />:null }
 
           </GoogleMapReact>
         </div>

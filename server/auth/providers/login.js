@@ -33,7 +33,9 @@ exports.checkUserPassword = async(body,Model)=>{
 
 }
 exports.generateToken = (id)=>{
-   const token = jwt.sign({id},tokenKey);
+   const token = jwt.sign({id},tokenKey,{
+     expiresIn:"7d"
+   });
    console.log(token)
    return `Bearer ${token}` 
 }

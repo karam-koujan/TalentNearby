@@ -5,11 +5,11 @@ export const Wrapper = styled.aside`
   background-color:${props=>props.theme.secondary};
   bottom :0;
   box-shadow:1px 0 5px rgba(0,0,0,.2);
-  position:absolute;
-  top:0;
   max-width:400px;
-  width:100%;
   overflow-Y:auto;
+  position:fixed;
+  top:0;
+  width:100%;
   z-index:1;
   ::-webkit-scrollbar {
     backgound-color:transparent;
@@ -49,7 +49,7 @@ export const ProfileImgWrapper = styled.div`
   position:relative;
  ${({profileImg})=>!profileImg?css`
   background-color:${props=>props.theme.third};
-  height:200px;
+  height:250px;
  `:null}
   width:100%; 
 `

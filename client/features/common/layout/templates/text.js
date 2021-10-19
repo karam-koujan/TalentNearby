@@ -21,3 +21,10 @@ export const BoxElement=styled.p`
      background-color:rgba(0,0,0,.1);
  }
 `
+export const FilterTitle = styled.span`
+ color:${props=>props.theme.primary};
+ display:block;
+ font-size:1.2rem;
+ margin:0 0 .8rem  0;
+ text-transform:capitalize;
+`

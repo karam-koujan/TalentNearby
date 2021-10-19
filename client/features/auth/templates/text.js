@@ -23,6 +23,7 @@ ${FormText}
 export const ForgotPass = styled.a`
 display:block;
 margin:0 auto;
+text-decoration:none;
 &:hover,&:focus{
     text-decoration:underline;
 }

@@ -9,10 +9,8 @@ import {Form,Input,Label,InputErr,PrimaryBtn,InputWrapper,ServerErr, ResponseSuc
 
 
 
-const ForgotPassword = ({forgotpasswordAs})=>{
+const ForgotPassword = ()=>{
   const [resetPassword,setResetPassword] = React.useState(false);
- // const [responseErr,setResponseErr] = React.useState('');
-  //const [responseSucceed,setResponseSucceed]= React.useState('');
   const [state,dispatch] = React.useReducer(serverStateReducer,{
     resErr:"",
     resSucceed:""
@@ -32,55 +30,51 @@ const ForgotPassword = ({forgotpasswordAs})=>{
         },
         validationSchema,
         onSubmit : async()=>{
-          let status= "freelancer";
-          if(forgotpasswordAs!=="talent"){
-            status="client"
-          }
+
           if(resetPassword && values.code){
              try{
-             await setPost(`http://localhost:8080/api/auth/forgotPassword/resetPassword/${status}`,{email:values.email,password:values.password})
+             await setPost("http://localhost:8080/api/auth/forgotPassword/resetPassword/client",{email:values.email,password:values.password},false)
              
-             //setResponseErr('')
+            
              dispatch({type:"res__error",payload:""})
-             return router.push(`/auth/signin/${forgotpasswordAs}`)
+             return router.push("/auth/signin")
             }catch(err){
-              //setResponseSucceed('')
+              
               dispatch({type:"res__succeed",payload:""})
-              //return setResponseErr(err.response.data.message)
+              
                return dispatch({type:"res__error",payload:err.response.data.message}) 
             }
         }
         if(values.code&&!resetPassword){
             try{
-              await setPost(`http://localhost:8080/api/auth/forgotPassword/codeVerification/`,{email:values.email,code:values.code})
-             //setResponseErr('')
+              await setPost("http://localhost:8080/api/auth/forgotPassword/codeVerification/",{email:values.email,code:values.code},false)
+             
              dispatch({type:"res__succeed",payload:""}) 
+             dispatch({type:"res__error",payload:""}) 
+
              return setResetPassword(true)
             }catch(err){
-              //setResponseSucceed('')
+              
               dispatch({type:"res__succeed",payload:""})
-              //return setResponseErr(err.response.data.message)
+            
                return dispatch({type:"res__error",payload:err.response.data.message}) 
 
             }
           }
           
             try{
-              await setPost(`http://localhost:8080/api/auth/forgotPassword/sendResetPasswordCode/${status}`,{email:values.email})
+              await setPost("http://localhost:8080/api/auth/forgotPassword/sendResetPasswordCode/client",{email:values.email},false)
                dispatch({type:"res__error",payload:""}) 
-              //setResponseErr('')
-              //return setResponseSucceed('The verification Email is sent')
               return dispatch({type:"res__succeed",payload:'The verification Email is sent'})  
             }catch(err){
-              //setResponseSucceed('')
-              rdispatch({type:"res__succeed",payload:""})  
+              dispatch({type:"res__succeed",payload:""})  
 
-              //return   setResponseErr(err.response.data.message)
                 return  dispatch({type:"res__error",payload:err.response.data.message}) 
   
             }
         }
     })
+console.log(touched)
       return(
         <>
         {resErr?<ServerErr>{resErr}</ServerErr>:null}
@@ -139,21 +133,21 @@ const ForgotPassword = ({forgotpasswordAs})=>{
            </InputWrapper>
            <InputWrapper>
           <Label for="confirm-password">
-            Password
+           Confirm Password
           </Label>
          <Input 
          type="password"
          name="confirm"
          placeholder="confirm"
-         id="confirm-password"
+         id="confirm"
          value={values.confirm}
          onChange={handleChange}
          onBlur ={handleBlur}
-         error={values.password!==values.confirm && touched.confirm}
+         error={values.password!==values.confirm && values.confirm}
          disabled={!resetPassword}
          required
          />
-         {values.password!==values.confirm && touched.confirm?<InputErr>Wrong Password</InputErr>:null}
+         {values.password!==values.confirm &&values.confirm?<InputErr>Wrong Password</InputErr>:null}
            </InputWrapper>
            <PrimaryBtn type="submit">
                  Submit

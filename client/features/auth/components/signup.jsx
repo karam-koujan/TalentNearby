@@ -9,6 +9,19 @@ import { usePost } from "../../../hooks/httpReq/usePost";
 
 
  const SignUp = ()=>{
+  const [defaultGeoLocation,setDefaultGeoLocation] = React.useState(undefined) 
+  React.useEffect(()=>{
+      navigator.geolocation.getCurrentPosition((position)=>{
+          setDefaultGeoLocation(
+            {
+          longitude:position.coords.longitude,
+          latitude:position.coords.latitude
+          }
+        )
+      })
+    
+  },[])
+  
   const [responseErr,setResponseErr] = React.useState('');
   const [isLoading,setIsLoading] = React.useState(false);
   const router = useRouter()
@@ -34,18 +47,23 @@ import { usePost } from "../../../hooks/httpReq/usePost";
     validationSchema,
     onSubmit:async()=>{
       setIsLoading(true)
+      if(!defaultGeoLocation){
+        setResponseErr("enable geoLocation in your browser")
+      }
       let data = {
         userName:values.userName,
         email:values.email,
         password:values.password,
-        status:"client"
+        status:"client",
+        longitude:defaultGeoLocation.longitude,
+        latitude:defaultGeoLocation.latitude
        }
        if(values.talent){
         data = {...data,status:"talent",job:values.job,phoneNumber:values.phoneNumber}
         }
       try{
         await setPost("http://localhost:8080/api/auth/signup/client",data,false);
-       router.push(`/auth/signin/client`)
+       router.push(`/auth/signin/`)
       }catch(err){
         setResponseErr(err.response.data.message)
       }

@@ -48,9 +48,9 @@ export const Button = styled.button`
   }
 `
 export const UploadImgBtn = styled.button`
-  background-color:${props=>props.theme.third}; 
+  background-color:${props=>props.theme.secondary}; 
   border-radius:1000px;
-  color:${props=>props.theme.secondary};
+  color:${props=>props.theme.third};
   letter-spacing:1px;
   padding:.8rem 1rem;
   position:relative;

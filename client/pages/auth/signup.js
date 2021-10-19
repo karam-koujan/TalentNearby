@@ -1,11 +1,10 @@
 import * as React from "react";
 import Head from "next/head";
-import Link from "next/link";
-import {MainHeading,SecondaryHeading,Header,FormSection,IntroSection,IntroText,Wrapper,Model,Warning,FlexWrapper,PrimaryBtn,SecondaryBtn} from "../../features/auth/templates/";
 import SignUp  from "../../features/auth/components/signup";
-
+import {MainHeading,SecondaryHeading,Header,FormSection,IntroSection,IntroText,Wrapper,SecondaryBtn,FlexWrapper} from "../../features/auth/templates/";
+import {useRouter} from "next/router";
 const Index = ()=>{
-    const [show,setShow] = React.useState(false)
+  const router = useRouter()
     return(
         <>
         <Head>
@@ -34,15 +33,8 @@ const Index = ()=>{
             <IntroText>
                 find client and talented people closer to your house .
             </IntroText>
-         <Model condition={show}>
-             <Link href="/auth/signin/talent">             
-             <p>talent</p>
-             </Link>
-             <Link href="/auth/signin/client">             
-             <p>client</p>
-             </Link>
-         </Model>
-             <SecondaryBtn onClick={()=>setShow(!show)}>
+        
+             <SecondaryBtn onClick={()=>router.push("/signin")}>
                  Sign In
              </SecondaryBtn>
             </Wrapper>

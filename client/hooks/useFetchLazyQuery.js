@@ -4,9 +4,9 @@ import { useFetch } from "./httpReq/useFetch";
 
 
 
-export const useFetchLazyQuery = (query,endPoint,isEnabled)=>{
+export const useFetchLazyQuery = (query,endPoint,isEnabled,token=true,data)=>{
     const setFetch= useFetch()
-    const res  = useLazyQuery(query,()=>setFetch(endPoint),isEnabled)
+    const res  = useLazyQuery(query,()=>setFetch(endPoint,token,data),isEnabled)
     if(!isEnabled){
       return {disabledFetching:true}
     }

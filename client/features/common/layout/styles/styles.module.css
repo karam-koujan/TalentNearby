@@ -9,3 +9,7 @@
 .avatarPosition:hover,.avatarPosition:focus{
     opacity: .8;
 }
+.link{
+    color: inherit;
+    text-decoration: none;
+}

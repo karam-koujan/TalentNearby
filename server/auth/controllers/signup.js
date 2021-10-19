@@ -32,7 +32,9 @@ exports.clientSignup = async(req,res,next)=>{
     password:Joi.string().min(8).required(), 
     job :status==="talent"?Joi.string().required():Joi.string(),
     phoneNumber:Joi.string(),
-    status: Joi.string()
+    status: Joi.string(),
+    longitude:Joi.number(),
+    latitude:Joi.number()
  }) 
   try{
    await signupValidation(req.body,validationSchema)

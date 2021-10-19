@@ -4,7 +4,6 @@ const {usersPosition} = require("./controllers/usersPosition");
 
 
 router.get("/users",usersPosition)
-
 module.exports = router
 
 

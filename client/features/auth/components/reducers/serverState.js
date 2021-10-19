@@ -5,7 +5,7 @@ export const serverStateReducer = (state,action)=>{
          case "res__succeed":
             return {...state,resSucceed:action.payload}
         case "res__error":
-            return {...state,resError:action.payload}
+            return {...state,resErr:action.payload}
         case "isLoading":
             return {...state,isLoading:action.payload}   
         default :

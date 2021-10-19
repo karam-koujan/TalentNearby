@@ -4,7 +4,7 @@ export const reducer = (state,action)=>{
           case "set_newGeoLocation" :
               return {...state,newGeolocation:action.payload}
           case "set_defaultGeoLocation" :
-              return {...state,defaultGeoLocation:action.payload}    
+              return {...state,defaultGeolocation:action.payload}    
           case "set_disableMapClick" :
              return {...state,disableMapClick:action.payload}    
           case "set_showNewUserPositionCard" :
@@ -12,6 +12,8 @@ export const reducer = (state,action)=>{
           case "set_bounds" :
                      return {...state,bounds:action.payload}
           case "set_showPage" :
-                         return {...state,showPage:action.payload}                          
+                         return {...state,showPage:action.payload}
+          default :
+            return state;                                             
     }
  }

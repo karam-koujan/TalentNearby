@@ -27,6 +27,7 @@ export const ReviewerText = styled.p`
 `
 export const NoReviews = styled.p`
   color:${props=>props.theme.third};
+  padding:2rem 0;
   margin:0 auto;
   width:fit-content;
 `
