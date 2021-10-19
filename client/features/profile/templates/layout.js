@@ -47,9 +47,9 @@ export const Wrapper = styled.aside`
 
 export const ProfileImgWrapper = styled.div`
   position:relative;
+  height:250px;
  ${({profileImg})=>!profileImg?css`
   background-color:${props=>props.theme.third};
-  height:250px;
  `:null}
   width:100%; 
 `
