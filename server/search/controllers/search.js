@@ -21,7 +21,8 @@ exports.search_user = async(req,res,next)=>{
      })
    }
    try{
-     const profiles = await Client.find({userName : {$regex:`^${userName}` , $options:"xi"},status:"talent"},"userName profileImg  rating").limit(limit).skip(startIndex);
+     console.log(userName)
+     const profiles = await Client.find({userName : {$regex:`^${userName}` , $options:"i"},status:"talent"},"userName profileImg  rating").limit(limit).skip(startIndex);
    return  res.json({
          profiles
      })
