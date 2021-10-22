@@ -2,6 +2,7 @@ import Head from "next/head";
 
 
 const SEO = ({data:{userName,profileImg,job,bio}})=>{
+    console.log(userName)
        return(
            <Head>
             <title>{userName}</title>

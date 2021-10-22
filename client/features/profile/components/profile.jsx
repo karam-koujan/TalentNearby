@@ -85,10 +85,9 @@ const Profile = ({data:{userName,profileImg,status,bio,active,rating,reviewersNu
      setUploadedImg("")
  }
      return(
-       
+         <>       
+          <SEO data={{userName,profileImg,bio,job}}/>
       <Wrapper>
-          <>
-          <SEO data={data}/>
           <ProfileImgWrapper profileImg={uploadedImg||profileImg} onMouseEnter={()=>setHoverOnProfileImg(true)} onMouseLeave={()=>setHoverOnProfileImg(false)}>
             {profileImg||uploadedImg?<img loading="lazy" src={uploadedImg?uploadedImg:profileImg}  alt={`${userName} image`}/>:null}
              {uploadedImg?(
@@ -186,9 +185,9 @@ const Profile = ({data:{userName,profileImg,status,bio,active,rating,reviewersNu
              </Button>):null} 
            {status==="talent"?<Reviews profileId={_id}/>:null}
   
-          </>
         
       </Wrapper>
+    </>
     )
 }
 export default Profile ;
