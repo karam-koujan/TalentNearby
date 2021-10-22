@@ -15,10 +15,14 @@ const RateUser = ({handleRate,margin,...props})=>{
     setRating(rating)
     handleRate(rating)
  }
- 
+ const handleMouseLeave = ()=>{
+    if(!isClicked){
+       return  setRating(0)
+    }
+ }
  
     return(
-    <Wrapper {...props} style={{'--margin':margin}}  onClick={handleClick}  >
+    <Wrapper {...props} style={{'--margin':margin}}  onClick={handleClick} aria-label="rating stars"  onMouseLeave={handleMouseLeave}>
          <Star className="fa fa-star"  onMouseEnter={()=>handleHover(1)} checked={1<=rating}/>
          <Star className="fa fa-star" onMouseEnter={()=>handleHover(2)}  checked={2<=rating}/>
          <Star className="fa fa-star"  onMouseEnter={()=>handleHover(3)}   checked={3<=rating}/>

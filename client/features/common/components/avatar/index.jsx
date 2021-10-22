@@ -5,7 +5,7 @@ const Avatar = ({userName,profileImg,size,className,...props})=>{
      return(
        profileImg?(
             <ProfileImg size={size} className={className} {...props}>
-                 <img src={profileImg}/>
+                 <img src={profileImg} alt={`${userName} profile image`}/>
           </ProfileImg>
           ):(
       <DefaultAvatar size={size} className={className} {...props}>

@@ -207,7 +207,7 @@ import { usePost } from "../../../hooks/httpReq/usePost";
        <Text>
          already have an account ?<LinkText href="/auth/signin">sign in</LinkText>
        </Text>
-         <PrimaryBtn type="submit" >
+         <PrimaryBtn type="submit" name="sign up">
            {isLoading?<Spinner/>:'sign up'}
          </PrimaryBtn>
       </Form>

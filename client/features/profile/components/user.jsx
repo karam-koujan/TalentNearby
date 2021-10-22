@@ -1,4 +1,3 @@
-import Head from "next/head";
 import RatingStars from "../../common/components/ratingStars";
 import Reviews from "./reviews";
 import { useFetchQuery } from "../../../hooks/useFetchQuery";
@@ -7,6 +6,7 @@ import {ReviewersNum, UserName} from "../templates/text";
 import { Discription,DescriptionList,DescriptionTitle } from "../templates/list";
 import {Icon} from "../templates/icons";
 import { useRouter } from "next/router";
+import SEO from "../../common/components/SEO/user";
 
 
 const Profile = ({_id,profileId})=>{
@@ -16,9 +16,7 @@ const Profile = ({_id,profileId})=>{
     <Wrapper>
       {isLoading?null:(
         <>
-          <Head>
-            <title>{data.user.userName}</title>
-          </Head>
+         <SEO data={data.user}/>
         <ProfileImgWrapper profileImg={data.user.profileImg}>
           {data.user.profileImg?<img loading="lazy" src={data.user.profileImg}  alt={`${data.user.userName} image`}/>:null}
         </ProfileImgWrapper>

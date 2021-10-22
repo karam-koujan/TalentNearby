@@ -19,7 +19,7 @@ const OptionsBox = ({showBox,data})=>{
                  go to profile
                 </BoxElement>
                 <BoxElement >
-                   <a href="/" className={Styles.link }> back to position</a>
+                   <a href="/" className={Styles.link }> back to your position</a>
                 </BoxElement>
                 <BoxElement onClick={handleLogout}>
                     Logout

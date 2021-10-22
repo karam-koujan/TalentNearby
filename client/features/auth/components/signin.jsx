@@ -81,7 +81,7 @@ const SignIn = ()=>{
         <ForgotPass href="/auth/forgotpassword">
             Forgot your password ?
         </ForgotPass>
-        <PrimaryBtn type="submit" disabled={isValid}>
+        <PrimaryBtn type="submit" name="sign in" disabled={isValid}>
      {isLoading?<Spinner/>:'sign in'}
         </PrimaryBtn>
         </Form>

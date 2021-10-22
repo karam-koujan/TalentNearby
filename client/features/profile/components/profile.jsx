@@ -1,5 +1,5 @@
 import * as React from "react";
-import Head from "next/head";
+import * as Yup from "yup";
 import RatingStars from "../../common/components/ratingStars/";
 import Reviews from "./reviews";
 import Styles from "../styles/styles.module.css";
@@ -12,10 +12,15 @@ import { useFormik } from "formik";
 import { useMutation,useQueryClient } from "react-query";
 import  {useUpdate} from "../../../hooks/httpReq/useUpdate";
 import { useUpload } from "../../../hooks/useUpload";
+import SEO from "../../common/components/SEO/user";
 
 
 const Profile = ({data:{userName,profileImg,status,bio,active,rating,reviewersNum,job,email,phoneNumber,_id}})=>{
-     const [enableElementModification,setEnableElementModification]  = React.useState({
+  const validationSchema = Yup.object({
+    phoneNumber:Yup.string(),
+    bio:Yup.string().max(300,"the maximum is 300 word")
+  })   
+  const [enableElementModification,setEnableElementModification]  = React.useState({
         phoneNumber,
         bio
        })
@@ -35,6 +40,8 @@ const Profile = ({data:{userName,profileImg,status,bio,active,rating,reviewersNu
                phoneNumber,
                bio
            },
+           validationSchema
+           ,
            onSubmit:()=>{
         
              const formData = {
@@ -71,7 +78,8 @@ const Profile = ({data:{userName,profileImg,status,bio,active,rating,reviewersNu
  const handleUpdateProfileImg = ()=>{
      profileImgMutation.mutate({profileImg:uploadedImg},{
        onSuccess:()=>{
-         client.invalidateQueries("user")
+         client.invalidateQueries("user",{exact:true})
+         location.reload()
        }
      })
      setUploadedImg("")
@@ -80,11 +88,9 @@ const Profile = ({data:{userName,profileImg,status,bio,active,rating,reviewersNu
        
       <Wrapper>
           <>
-          <Head>
-            <title>{userName}</title>
-          </Head>
+          <SEO data={data}/>
           <ProfileImgWrapper profileImg={uploadedImg||profileImg} onMouseEnter={()=>setHoverOnProfileImg(true)} onMouseLeave={()=>setHoverOnProfileImg(false)}>
-            {profileImg?<img loading="lazy" src={uploadedImg?uploadedImg:profileImg}  alt={`${userName} image`}/>:null}
+            {profileImg||uploadedImg?<img loading="lazy" src={uploadedImg?uploadedImg:profileImg}  alt={`${userName} image`}/>:null}
              {uploadedImg?(
                     <div className={Styles.uploadImgIconsWrapper}>
                       <UpdateProfileImgBtn onClick={()=>setUploadedImg("")}>
@@ -100,7 +106,7 @@ const Profile = ({data:{userName,profileImg,status,bio,active,rating,reviewersNu
            {!uploadedImg&&hoverOnProfileImg?(
            <UploadImgBtn>
             <span>change profile image</span>
-            <input  type="file" className={Styles.inputFile} ariaLabel="change your profile image" onChange={handleUpload}/>
+            <input  type="file" className={Styles.inputFile} aria-label="change your profile image" onChange={handleUpload}/>
           </UploadImgBtn>
            ):null}
              </UploadImgElementsWrapper>
@@ -175,7 +181,7 @@ const Profile = ({data:{userName,profileImg,status,bio,active,rating,reviewersNu
              
            </DescriptionList>
             {!enableElementModification.bio||!enableElementModification.phoneNumber?(
-            <Button type="submit" onClick={handleSubmit} >
+            <Button type="submit" name="modify your information" onClick={handleSubmit} >
                  submit
              </Button>):null} 
            {status==="talent"?<Reviews profileId={_id}/>:null}

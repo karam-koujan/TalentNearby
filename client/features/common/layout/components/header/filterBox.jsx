@@ -20,18 +20,18 @@ const FilterBox = ({showFilterBox})=>{
     }) 
     return(
         showFilterBox?<Wrapper>
-            <FilterTitle>Filter By</FilterTitle>
+            <FilterTitle>Filter</FilterTitle>
             <form>
                 <Label>
                     Job
                 </Label>
-                <Input type="text" placeholder="search a job" name="job" value={values.job} onChange={handleChange}/>
+                <Input type="text" placeholder="job" name="job" value={values.job} onChange={handleChange}/>
                 <Label>
                     Rating
                 </Label>
                 <RatingStars handleRate={handleRate} enableRating/>
-                <Button href={values.job&&!rating?`/?job=${values.job}`:rating&&!values.job?`/?rating=${rating}`:`/?rating=${rating}&job=${values.job}`}>
-                    filter by
+                <Button name="filter" href={values.job&&!rating?`/?job=${values.job}`:rating&&!values.job?`/?rating=${rating}`:`/?rating=${rating}&job=${values.job}`}>
+                    submit
                 </Button>
             </form>
         </Wrapper>:null

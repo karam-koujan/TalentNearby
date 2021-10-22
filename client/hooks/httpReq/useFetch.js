@@ -9,7 +9,6 @@ export const useFetch = ()=>{
         if(token){
             headers["token"] = localStorage.getItem("token")
         }
-        console.log("data",data)
         try{
             const response = await axios.get(endPoint,{headers,params:data});
             return response.data

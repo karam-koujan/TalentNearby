@@ -50,8 +50,14 @@ export const ProfileImgWrapper = styled.div`
   height:250px;
  ${({profileImg})=>!profileImg?css`
   background-color:${props=>props.theme.third};
+  height:250px;
  `:null}
   width:100%; 
+
+  &>img{
+    height:100%;
+    object-fit:cover;
+  }
 `
 
 export const ReviewsWrapper =styled.div`

@@ -26,7 +26,7 @@ const Search = ()=>{
    }
   return(
       <Form onSubmit={handleSearch}>
-          <SearchInput name="search" ariaLabel="search" placeholder="Search" onChange={handleOnChange} value={userName}/>
+          <SearchInput name="search" aria-label="search" placeholder="Search" onChange={handleOnChange} value={userName}/>
          {userName?(
              <SearchBoardWrapperParent>
              {!data.pages.length?!isResultExist?
@@ -38,12 +38,12 @@ const Search = ()=>{
                       <SearchBoardWrapper>
                             { 
                             data.pages.map((profiles,currentPageIdx)=>(
-                                <>
+                                <React.Fragment key={currentPageIdx}>
                                 {profiles.profiles.map(({userName,profileImg,rating,_id},profileIndex)=>(
                                       <SearchBoard setUserName={setUserName} userName={userName} _id={_id}  profileImg={profileImg} rating={rating} key={profileIndex}/>
                                  ))}
                                  {currentPageIdx===data.pages.length-1?<Waypoint onEnter={()=>fetchMore()}/>:null}                                
-                                </>
+                                </React.Fragment>
                               )
                                
                                )
@@ -53,7 +53,7 @@ const Search = ()=>{
                 }
              </SearchBoardWrapperParent>
             ):null}       
-          <SearchBtn  type="button" onClick={query.id?()=>replace("/",undefined,{ shallow: true }):handleSearch}>
+          <SearchBtn  type="button" name={query.id?"close the profile":"search for a user"} onClick={query.id?()=>replace("/",undefined,{ shallow: true }):handleSearch}>
               {query.id?<CloseProfileBar>&#10006;</CloseProfileBar>:<SearchIcon className="fa fa-search"></SearchIcon>}
           </SearchBtn>
          {userName?<RemoveSearchText onClick={()=>setUserName("")}>&#10006;</RemoveSearchText>:null}

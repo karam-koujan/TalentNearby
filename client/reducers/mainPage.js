@@ -13,7 +13,10 @@ export const reducer = (state,action)=>{
                      return {...state,bounds:action.payload}
           case "set_showPage" :
                          return {...state,showPage:action.payload}
-          default :
+          
+         case "get_users":
+              return {...state,users:action.payload} 
+         default :
             return state;                                             
     }
  }

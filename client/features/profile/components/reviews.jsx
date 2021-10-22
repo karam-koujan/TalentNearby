@@ -14,10 +14,11 @@ const Reviews = ({profileId})=>{
         <>
         <ReviewTitle>reviews</ReviewTitle>
         <ReviewsWrapper id="reviews">
-        {status==="loading"?"...isLoading":data.pages.map(page=>(
-            page.reviews.length?page.reviews.map(({text,rating,reviewer:{userName,profileImg}},currentReview)=>(
-             <React.Fragment>
-          <ReviewWrapper>
+        {status==="loading"?"...isLoading":data.pages.map((page,currentPageIdx)=>(
+          <React.Fragment key={currentPageIdx}>
+            {page.reviews.length?page.reviews.map(({text,rating,reviewer:{userName,profileImg}},currentReview)=>(
+          <React.Fragment key={currentReview}>
+          <ReviewWrapper >
              <div className={Styles.flex}>
                <Avatar userName={userName} profileImg={profileImg} size="40px"/>
              <div className={Styles.userNameRating}>
@@ -30,8 +31,10 @@ const Reviews = ({profileId})=>{
              </ReviewerText>
           </ReviewWrapper>
           {currentReview === page.reviews.length -2 && hasNextPage ? <Waypoint onEnter={()=>fetchMore()}/>:null}
+          </React.Fragment>
+          )):<NoReviews>No Reviews</NoReviews>}
              </React.Fragment>            
-            )):<NoReviews>No Reviews</NoReviews>
+            
        ))}
       </ReviewsWrapper>
       

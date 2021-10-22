@@ -7,28 +7,35 @@ import NewPositionCard from '../features/userInfo/components/profileInfo/newPosi
 import Profile from "../features/profile/components/profile";
 import User from "../features/profile/components/user";
 import {useFetchQuery} from "../hooks/useFetchQuery"; 
-import {useFetchLazyQuery} from "../hooks/useFetchLazyQuery";
 import {useRouter} from "next/router";
 import RateUser from '../features/rateUser';
-import { useQueryClient } from 'react-query';
 import { reducer } from '../reducers/mainPage';
 import {keys} from '../config/dev';
+import { useFetch } from '../hooks/httpReq/useFetch';
+import SEO from "../features/common/components/SEO/mainPage";
 const  Index = ()=> {
   const options = {fullscreenControl: false ,disableDoubleClickZoom:true,clickableIcons: false}
   const [state,dispatch] = React.useReducer(reducer,{
     newGeolocation:undefined,
     defaultGeolocation:undefined,
     disableMapClick:false,
+    users:undefined,
     showNewUserPositionCard:false,
     bounds:{ne:{lat:undefined,lng:undefined},nw:{lat:undefined,lng:undefined},sw:{lat:undefined}},
     showPage:false
   })
-  const {newGeolocation,defaultGeolocation,disableMapClick,showNewUserPositionCard,bounds,showPage} = state
+  const {newGeolocation,defaultGeolocation,disableMapClick,showNewUserPositionCard,users,bounds,showPage} = state
   const {query,push} = useRouter();
   const profile = useFetchQuery("user","http://localhost:8080/api/profile/");    
-  const users = useFetchLazyQuery("users",`http://localhost:8080/api/position/users/?neLat=${bounds.ne.lat}&neLng=${bounds.ne.lng}&nwLat=${bounds.nw.lat}&nwLng=${bounds.nw.lng}&swLat=${bounds.sw.lat}&job=${query.job}&rating=${query.rating}`,Boolean(bounds.ne.lat),true,{})
-  const client = useQueryClient()
-  React.useEffect(()=>{  
+  const setFetch = useFetch()
+  React.useMemo(()=>{
+        if(Boolean(bounds.ne.lat)){
+          setFetch(`http://localhost:8080/api/position/users/?neLat=${bounds.ne.lat}&neLng=${bounds.ne.lng}&nwLat=${bounds.nw.lat}&nwLng=${bounds.nw.lng}&swLat=${bounds.sw.lat}&job=${query.job}&rating=${query.rating}`)
+          .then(({users})=>dispatch({type:"get_users",payload:users}))
+        }
+        return null
+  },[bounds,query.job,query.rating])
+  React.useEffect(()=>{ 
     const isUserLogged = localStorage.getItem("token");
     if(isUserLogged===null){
       return push("/auth/signin")
@@ -65,8 +72,7 @@ const  Index = ()=> {
   } 
   const handleFetchTalents = ({bounds})=>{
     dispatch({type:"set_bounds",payload:bounds})
-    client.invalidateQueries('users')
-   
+
   }
  
   const handleOnChildEnter = ()=>dispatch({type:"set_disableMapClick",payload:true})
@@ -82,9 +88,11 @@ const  Index = ()=> {
   }
 
     return (
-      !profile.isLoading?(
+      <>
+     <SEO/>
+      {!profile.isLoading?(
         <Layout data={profile.data.user}>
-
+        
         {query.id===profile.data.user._id?<Profile data={profile.data.user}/>:null}
         {query.id&&query.id!==profile.data.user._id?<User _id={query.id} profileId={profile.data.user._id}/>:null}
         {query.talentId&&query.userName?<RateUser userId={query.talentId} userName={query.userName} profile={profile.data.user}/>:null}
@@ -99,12 +107,10 @@ const  Index = ()=> {
             onZoomChange={handleFetchTalents}
             yesIWantToUseGoogleMapApiInternals 
           > 
-            {!users.isLoading&&!users.disabledFetching?users.data.users.map(({_id,longitude,latitude})=>(
+            {users?users.map(({_id,longitude,latitude})=>(
            <UserMarker  
            key={_id}
-          handleCloseCard={handleCloseCard}
-          onMouseEnter={handleOnChildEnter} 
-          onMouseLeave={handleOnChildLeave} 
+       
           profile={profile.data.user}
           lat={latitude}
           lng={longitude}
@@ -123,8 +129,8 @@ const  Index = ()=> {
           </GoogleMapReact>
         </div>
       </Layout>
-     ):null
-     
+     ):null}
+     </>
     )
   
 }

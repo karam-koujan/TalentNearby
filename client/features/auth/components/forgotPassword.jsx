@@ -63,9 +63,10 @@ const ForgotPassword = ()=>{
           }
           
             try{
-              await setPost("http://localhost:8080/api/auth/forgotPassword/sendResetPasswordCode/client",{email:values.email},false)
-               dispatch({type:"res__error",payload:""}) 
-              return dispatch({type:"res__succeed",payload:'The verification Email is sent'})  
+                await setPost("http://localhost:8080/api/auth/forgotPassword/sendResetPasswordCode/client",{email:values.email},false)
+                 dispatch({type:"res__error",payload:""}) 
+                return dispatch({type:"res__succeed",payload:'The verification Email is sent'})  
+              
             }catch(err){
               dispatch({type:"res__succeed",payload:""})  
 
@@ -74,14 +75,13 @@ const ForgotPassword = ()=>{
             }
         }
     })
-console.log(touched)
       return(
         <>
         {resErr?<ServerErr>{resErr}</ServerErr>:null}
         {resSucceed?<ResponseSucceed >{resSucceed}</ResponseSucceed>:null} 
         <Form action="" onSubmit={handleSubmit} style={{"--width":"80%","--maxWidth":"400px","margin":"0 auto"}}>
           <InputWrapper>
-          <Label for="email">
+          <Label htmlFor="email">
             Email
           </Label>
          <Input 
@@ -98,7 +98,7 @@ console.log(touched)
          {errors.email&&touched.email?<InputErr>{errors.email}</InputErr>:null}
            </InputWrapper>
            <InputWrapper>
-          <Label for="verification-code">
+          <Label htmlFor="verification-code">
             Verification Code
           </Label>
          <Input 
@@ -114,7 +114,7 @@ console.log(touched)
          {errors.code&&touched.code?<InputErr>{errors.code}</InputErr>:null}
            </InputWrapper>
            <InputWrapper>
-          <Label for="password">
+          <Label htmlFor="password">
             Password
           </Label>
          <Input 
@@ -132,7 +132,7 @@ console.log(touched)
          {errors.password&&touched.password?<InputErr>{errors.password}</InputErr>:null}
            </InputWrapper>
            <InputWrapper>
-          <Label for="confirm-password">
+          <Label htmlFor="confirm-password">
            Confirm Password
           </Label>
          <Input 
@@ -149,7 +149,7 @@ console.log(touched)
          />
          {values.password!==values.confirm &&values.confirm?<InputErr>Wrong Password</InputErr>:null}
            </InputWrapper>
-           <PrimaryBtn type="submit">
+           <PrimaryBtn type="submit" name="change password">
                  Submit
            </PrimaryBtn>
          </Form>
