@@ -1,5 +1,4 @@
 const {ValidationError} = require("../../utils/errors/validationError");
-const Freelancer = require("../../model/Freelancer");
 const bcrypt = require("bcryptjs")
 
 exports.signupValidation = (body,validationSchema)=>{

@@ -49,7 +49,7 @@ exports.sendResetPasswordCodeProvider = async(email)=>{
         subject: "Password reset code", 
         text: "take the reset password code bellow", 
         html: `
-        <h1 style="color:"#19BD33";text-align:center;">Reset Password</h1>
+        <h1 style="color:"black";text-align:center;">Reset Password</h1>
         <p style="font-size:17px;">${verificationCode}</p>
         `  
       });

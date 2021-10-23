@@ -1,7 +1,6 @@
 import * as React from "react";
-import Head from "next/head";
 import SignUp  from "../../features/auth/components/signup";
-import SEO from "../../../features/common/components/SEO/signup"
+import SEO from "../../features/common/components/SEO/signup";
 import {MainHeading,SecondaryHeading,Header,FormSection,IntroSection,IntroText,Wrapper,SecondaryBtn,FlexWrapper} from "../../features/auth/templates/";
 import {useRouter} from "next/router";
 const Index = ()=>{

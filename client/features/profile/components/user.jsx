@@ -61,12 +61,16 @@ const Profile = ({_id,profileId})=>{
             <Icon className="fa fa-envelope"></Icon>
             {data.user.email}
            </Discription>
+           {data.user.bio?(
+             <>
            <DescriptionTitle>
             bio
            </DescriptionTitle>
            <Discription>
             {data.user.bio}
            </Discription>
+           </>
+           ):null}
          </DescriptionList>
          {data.user.status==="talent"?<Reviews profileId={data.user._id}/>:null}
 

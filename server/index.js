@@ -13,8 +13,12 @@ const rateUser = require("./rating/route");
 const search = require("./search/route");
 const {tokenVerification,error,isEmailVerified} = require("./middlewares/")
 const port = process.env.PORT || 8080 ;
-mongoose.connect(dbConnection,()=>console.log("connect"))
+
+
+mongoose.connect(dbConnection).then(()=>console.log("please connect")).catch(err=>console.log(err))
 console.log(dbConnection)
+
+
 app.use(cors())
 app.use(helmet())
 app.use(cookieParser())

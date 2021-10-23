@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Head from "next/head";
 import {MainHeading,SecondaryHeading,Header,FormSection,IntroSection,IntroText,Wrapper,FlexWrapper,PrimaryBtn,SecondaryBtn} from "../../../features/auth/templates";
 import SignIn from "../../../features/auth/components/signin";
 import SEO from "../../../features/common/components/SEO/signin"

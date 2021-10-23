@@ -4,7 +4,7 @@ const {validation,updateInfo,updateProfileImg} = require("../providers/modifyInf
 exports.modifyUserInfo = async (req,res,next)=>{
      const validationSchema = Joi.object({
          phoneNumber : Joi.string(),
-         bio : Joi.string().max(100)
+         bio : Joi.string().max(300)
      }).or('phoneNumber','bio')
      try{
          await validation(req.body,validationSchema)
@@ -21,7 +21,7 @@ exports.modifyUserInfo = async (req,res,next)=>{
 exports.changeUserPosition = async (req,res,next)=>{
     const validationSchema = Joi.object({
         phoneNumber : Joi.string(),
-        bio : Joi.string().max(100),
+        bio : Joi.string().max(300),
         longitude:Joi.number().required(),
         latitude:Joi.number().required()
     }).or('phoneNumber','bio')
