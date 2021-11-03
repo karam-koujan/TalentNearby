@@ -1,7 +1,7 @@
 
 
 
- exports.calculateDistance = (lat1,lat2, lon1, lon2)=>{
+exports.calculateDistance = (lat1,lat2, lon1, lon2)=>{
 
 // The math module contains a function
 // named toRadians which converts from
