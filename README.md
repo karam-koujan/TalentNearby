@@ -1,4 +1,7 @@
 # side-project
-find freelancers closer to your home
+Find freelancers closer to your home .
 
-[![local freelancers](https://img.youtube.com/vi/R8xZW8OGD9Q/0.jpg)](https://youtu.be/R8xZW8OGD9Q "local freelancers")
+[![local freelancers talent account](https://img.youtube.com/vi/R8xZW8OGD9Q/0.jpg)](https://youtu.be/R8xZW8OGD9Q "local freelancers talent account")
+
+[![local freelancers client account](https://img.youtube.com/vi/jB0xAQdsnfE/0.jpg)](https://youtu.be/jB0xAQdsnfE "local freelancers client account")
+
