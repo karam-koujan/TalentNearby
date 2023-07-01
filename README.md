@@ -1,13 +1,19 @@
-# side-project
-Find freelancers closer to your home .
+# TalentNearby
 
-## Demo Video 
+TalentNearby is a powerful web application designed to help you find talented individuals in your local area. Whether you're looking for skilled professionals, creative minds, or specialized services, TalentNearby connects you with the talent you need, right in your neighborhood.
 
-### Talent Account
+![TalentNearby Demo](./ezgif.com-optimize.gif)
 
-[![local freelancers talent account](https://img.youtube.com/vi/R8xZW8OGD9Q/0.jpg)](https://youtu.be/R8xZW8OGD9Q "local freelancers talent account")
+## Client
 
-### Client Account
+```bash
+cd client
+npm run dev
+```
 
-[![local freelancers client account](https://img.youtube.com/vi/jB0xAQdsnfE/0.jpg)](https://youtu.be/jB0xAQdsnfE "local freelancers client account")
+## Server
 
+```bash
+cd server
+npm run dev
+```
