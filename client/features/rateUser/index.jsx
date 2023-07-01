@@ -47,9 +47,7 @@ const RateUser = ({ userName, profile: { active }, userId, ...props }) => {
     <Wrapper>
       <Modal {...props}>
         {err ? <ErrMsg>{err}</ErrMsg> : null}
-        {!active ? (
-          <ErrMsg>you cannot rate user without verifying your Email</ErrMsg>
-        ) : null}
+
         <Close
           onClick={() => router.replace("/", undefined, { shallow: true })}
         >
