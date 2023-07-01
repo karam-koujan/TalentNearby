@@ -4,6 +4,8 @@ TalentNearby is a powerful web application designed to help you find talented in
 
 ![TalentNearby Demo](./ezgif.com-optimize.gif)
 
+![TalentNearby Demo](./ezgif.com-video-to-gif.mp4)
+
 ## Client
 
 ```bash
